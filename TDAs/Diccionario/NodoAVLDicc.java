@@ -1,4 +1,4 @@
-package TDAs;
+package TDAs.Diccionario;
 
 public class NodoAVLDicc {
     Comparable clave;
@@ -14,14 +14,17 @@ public class NodoAVLDicc {
         derecho = null;
         altura = 0;
     }
+    
     public Comparable getClave() {
         return clave;
     }
+    
     public void auxCabmio(Comparable id, Object dato){
         //Solo se utiliza para reemplazo al eliminar
         clave = id;
         this.dato = dato;
     }
+    
     public Object getDato() {
         return dato;
     }
@@ -57,6 +60,7 @@ public class NodoAVLDicc {
     public void setDerecho(NodoAVLDicc derecho) {
         this.derecho = derecho;
     }
+    
     public int calcularBalance(){
         /*Indica el balance del nodo mediante la diferencia de altura de su hijo izquierdo y su hiijo derecho.
         Balance 1 : implica que la altura subárbol izquierdo es mayor que la altura 

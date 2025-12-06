@@ -1,6 +1,9 @@
-package TDAs;
+package TDAs.Diccionario;
+
+import TDAs.Lista;
 
 public class Diccionario {
+    //Utilizado para almacenar la información de las Ciudades.
     private NodoAVLDicc raiz;
     
     public Diccionario(){

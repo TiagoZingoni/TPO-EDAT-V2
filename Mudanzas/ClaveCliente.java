@@ -15,23 +15,14 @@ public class ClaveCliente {
     public int getNumeroDocumento() {
         return numeroDocumento;
     }
+    
     //para hashmap
-    public String getClaveString(){
-        return tipoDocumento + numeroDocumento;
+    public String toString(){
+        return tipoDocumento +";"+ numeroDocumento;
     }
-    /* BORRAR? 
     @Override
-    public int hashCode() {
-        return (tipoDocumento + numeroDocumento).hashCode();
+    public boolean equals(Object clave2){
+        return (this.toString()).equals(clave2.toString());
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof ClaveCliente)) return false;
-        ClaveCliente c = (ClaveCliente) o;
-        return c.tipoDocumento.equals(this.tipoDocumento)
-                && c.numeroDocumento == this.numeroDocumento;
-    }
-    */
 }
 

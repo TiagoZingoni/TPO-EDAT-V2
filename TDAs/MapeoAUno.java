@@ -1,5 +1,7 @@
 package TDAs;
 
+import Mudanzas.ClaveCliente;
+
 // MapeoAUno Hash Abierto
 public class MapeoAUno {
     private int TAMANO; //Constante del limite
@@ -122,10 +124,28 @@ public class MapeoAUno {
         //devuelve falso si hay al menos un par cargado en el mapeo y verdadero en caso contrario.
         return cant==0;
     }
-    
+
+    public int longitud(){
+        //retorna el tamaño total de la tabla
+        return TAMANO;
+    }
+
+    public int cantElementosCargados(){
+        //retorna solo la cantidad de elementos cargados
+        return cant;
+    }
+
     private int funcionHash(Object dominio){
-        //Se opera con clave tipo cadena
-        return 0;
+        /* Como la función hash deberá estar definida sólo para el tipo del
+        dominio uso .datosFuncionHash() para mantener la solicitud del string generalizada*/
+        //suma de los valores ASCII para cada carácter de la cadena y resultado MOD TAMANIO como clave
+        String cadena = dominio.toString();
+        int suma = 0, limite = cadena.length();
+        //Para cada caracter de cadena:
+        for(int i =0;i<limite; i++){
+            suma = suma + cadena.charAt(i);
+        }
+        return Math.abs(suma%TAMANO);
     }
 }
 

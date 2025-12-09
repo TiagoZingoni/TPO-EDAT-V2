@@ -40,4 +40,10 @@ public class DatosCliente {
     public void setEmail(String mail){
         this.email = mail;
     }
+
+    // lista de datos
+    public String toString(){
+        //para el listado de clientes
+        return nombre+";"+apellido+";"+telefono+";"+email+";";
+    }
 }

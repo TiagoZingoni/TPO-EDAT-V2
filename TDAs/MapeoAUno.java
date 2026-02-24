@@ -10,7 +10,7 @@ public class MapeoAUno {
 
     public MapeoAUno(int tamanoLista){
         this.TAMANO = tamanoLista;
-        this.tabla = new NodoHashMapeo[TAMANO-1];
+        this.tabla = new NodoHashMapeo[TAMANO];
         this.cant = 0;
     }
 
@@ -135,6 +135,32 @@ public class MapeoAUno {
         return cant;
     }
 
+    //METODO DE PRUEBAS
+    @Override
+    public String toString(){
+        String cadena = "";
+        int cantAgregados = 0, posicion=0;//posicion = pos actual en la tabla
+        NodoHashMapeo nodoActual = null;
+
+        while(cantAgregados < cant && posicion<TAMANO){
+        //itera mientras el limite sea menor a la cantidad de elementos en la tabla, para que no recorra toda la tabla si ya no quedan más elementos
+            nodoActual=tabla[posicion];
+            while(nodoActual!=null){
+                cadena = cadena + nodoActual.getRango().toString()+nodoActual.getDominio().toString()+"\n";
+                cantAgregados++;//se suma un agregado a la tabla
+                nodoActual = nodoActual.getEnlace();
+            }
+            posicion++;
+        }
+        return cadena;
+    }
+    public boolean vaciar(){
+        for(int i = 0; i<TAMANO;i++){
+            tabla[i]=null;
+        }
+        cant = 0;
+        return true;
+    }
     private int funcionHash(Object dominio){
         /* Como la función hash deberá estar definida sólo para el tipo del
         dominio uso .datosFuncionHash() para mantener la solicitud del string generalizada*/

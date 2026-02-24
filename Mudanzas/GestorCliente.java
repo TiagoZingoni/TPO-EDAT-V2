@@ -26,7 +26,7 @@ public class GestorCliente {
         int limite = listaClaves.longitud(); // sirve cualquiera de las 2 longitudes
         for(int i = 1; i <= limite; i++){
             //Generamos la listas
-            lista = "P;"+listaClaves.recuperar(i).toString() + listaDatos.recuperar(i).toString()+"\n";
+            lista = lista+"P;"+listaClaves.recuperar(i).toString() + listaDatos.recuperar(i).toString()+"\n";
         }
         return lista;
     }
@@ -68,5 +68,13 @@ public class GestorCliente {
             datosCliente.setEmail(email);;
         }
         return datosClienteAux != null;
+    }
+    
+    //De testeo
+    public int cantidadPersonas(){
+        return almacenClientes.cantElementosCargados();
+    }
+    public boolean vaciar(){
+        return almacenClientes.vaciar();
     }
 }

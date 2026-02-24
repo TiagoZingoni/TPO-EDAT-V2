@@ -44,6 +44,6 @@ public class DatosCliente {
     // lista de datos
     public String toString(){
         //para el listado de clientes
-        return nombre+";"+apellido+";"+telefono+";"+email+";";
+        return ";"+nombre+";"+apellido+";"+telefono+";"+email+";";
     }
 }

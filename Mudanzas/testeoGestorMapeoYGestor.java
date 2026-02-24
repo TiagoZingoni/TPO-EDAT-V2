@@ -27,13 +27,21 @@ public class testeoGestorMapeoYGestor {
         gestorCliente.altaCliente(new ClaveCliente("DNI",48567890), new DatosCliente("Tomás", "Agustín", 1160123456, "tomasAgustin@gmail.com"));
 
         System.out.println(gestorCliente.listarClientes());//debería dar la lista de 20 jugadores
-        System.out.println(gestorCliente.cantidadPersonas());
+        System.out.println("Cantidad de elementos cargados: "+gestorCliente.cantidadPersonas());
         gestorCliente.bajaCliente(new ClaveCliente("DNI",47098765));
-        //debería eliminar a Ezequiel Duarte y bajar la cant de personas:
-        System.out.println(gestorCliente.cantidadPersonas());
+        //debería eliminar a uno y bajar la cant de personas:
+        System.out.println("Se elimina uno");
+        System.out.println("Cantidad de elementos cargados: "+gestorCliente.cantidadPersonas());
+        System.out.println("Estructura actual:");
+        System.out.println(gestorCliente.estructuraToString());
         gestorCliente.vaciar();
         System.out.println("Vaciado. Debería dar 0: "+gestorCliente.cantidadPersonas());
+        System.out.println("Estructura actual:");
+        System.out.println(gestorCliente.estructuraToString());
         gestorCliente.altaCliente(new ClaveCliente("DNI",48567890), new DatosCliente("Tomás", "Agustín", 1160123456, "tomasAgustin@gmail.com"));
+         
         System.out.println("Chequeo una sola alta. Debería dar 1: "+gestorCliente.cantidadPersonas());
+         System.out.println("Estructura actual:");
+        System.out.println(gestorCliente.estructuraToString());
     }
 }

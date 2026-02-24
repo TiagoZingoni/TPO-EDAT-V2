@@ -92,8 +92,8 @@ public class MapeoAUno {
         //itera mientras el limite sea menor a la cantidad de elementos en la tabla, para que no recorra toda la tabla si ya no quedan más elementos
             nodoActual=tabla[posicion];
             while(nodoActual!=null){
-                lista.insertar(nodoActual.getDominio(),cantAgregados+1);
                 cantAgregados++;//se suma un agregado a la table
+                lista.insertar(nodoActual.getDominio(),cantAgregados);
                 nodoActual = nodoActual.getEnlace();
             }
             posicion++;
@@ -151,6 +151,7 @@ public class MapeoAUno {
                 nodoActual = nodoActual.getEnlace();
             }
             posicion++;
+            System.out.println(posicion);
         }
         return cadena;
     }
@@ -172,6 +173,26 @@ public class MapeoAUno {
             suma = suma + cadena.charAt(i);
         }
         return Math.abs(suma%TAMANO);
+    }
+    public String toStringEstructura(){
+        NodoHashMapeo nodoActual = null;
+        NodoHashMapeo nodoAux = null;
+        String tablaString="";
+        //Utilizado para MostrarSistema, permite ver la estructura de MapeoAUno y su contenido.
+        for(int i=0;i<TAMANO;i++){
+            //Mostramos toda la tabla, tanto los espacios vacíos como no, esto es una elección, podrían no mostrarse los vacíos y recorrer menos.
+            nodoActual=tabla[i];
+            nodoAux=tabla[i];
+            tablaString = tablaString +"["+(i)+"] --> "; //Todos los casilleros se escriben
+            while(nodoAux!=null){
+                //si no son nulos se pone su contenido, el while itera sobre los que ocupan un mismo casillero
+                tablaString = tablaString +nodoAux.getDominio().toString()+"--"+nodoAux.getRango().toString();
+                nodoAux=nodoAux.getEnlace();
+                tablaString = tablaString + " --> ";
+            }
+            tablaString = tablaString+"\n";//salto para cada casillero, mejor legibilidad
+        }
+        return tablaString;
     }
 }
 

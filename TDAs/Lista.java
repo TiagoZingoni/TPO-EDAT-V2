@@ -14,7 +14,7 @@ public class Lista {
     public boolean insertar(Object elemento, int pos) {
         //inserta un elemento en la lista
         boolean exito = true;
-        if (pos < 1 || pos > longitud + 1) {//Detecta si     la pos ingresada es invalida
+        if (pos < 1 || pos > longitud + 1) {//Detecta si la pos ingresada es invalida
             exito = false;
         } else {
             if (pos == 1) {//Caso especial, crear el primer nodo
@@ -66,15 +66,15 @@ public class Lista {
     public Object recuperar(int pos) {
         Object elemento;
         if (pos < 1 || pos > longitud) {
-            elemento = "Posicion invalida";
+            throw new IndexOutOfBoundsException("Posicion invalida");
         } else {
             Nodo aux = this.cabecera;
             int i = 1;
-            while (i < pos - 1) {
+            while (i < pos) {
                 aux = aux.getEnlace();
                 i++;
             }
-            elemento = aux.getEnlace().getElemento();
+            elemento = aux.getElemento();
         }
         return elemento;
     }

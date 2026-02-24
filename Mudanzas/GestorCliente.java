@@ -77,4 +77,7 @@ public class GestorCliente {
     public boolean vaciar(){
         return almacenClientes.vaciar();
     }
+    public String estructuraToString(){
+        return almacenClientes.toStringEstructura();
+    }
 }

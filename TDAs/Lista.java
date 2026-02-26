@@ -1,6 +1,7 @@
-package TDAs;
+package tdas;
 
 public class Lista {
+
     private Nodo cabecera;
     private int longitud;
 
@@ -113,7 +114,7 @@ public class Lista {
     public Lista clone() {
         Lista clon = new Lista();
         int longitud = 0;
-        
+
         if (this.cabecera != null) {
             Nodo aux = this.cabecera;
             clon.cabecera = new Nodo(aux.getElemento(), null);
@@ -141,5 +142,5 @@ public class Lista {
         cadena += "]";
         return cadena;
     }
-    
+
 }

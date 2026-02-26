@@ -1,17 +1,18 @@
-package TDAs.GrafoEtiquetado;
+package TDAs.grafo.etiquetado;
 
 public class NodoVert {
+
     private Object elem;
     private NodoVert sigVertice;
     private NodoAdy primerAdy;
-    
-    public NodoVert(Object elemento, NodoVert siguiente, NodoAdy primerAdyacente){
+
+    public NodoVert(Object elemento, NodoVert siguiente, NodoAdy primerAdyacente) {
         this.elem = elemento;
         this.sigVertice = siguiente;
         this.primerAdy = primerAdyacente;
     }
 
-    public Object getElem(){
+    public Object getElem() {
         return this.elem;
     }
 

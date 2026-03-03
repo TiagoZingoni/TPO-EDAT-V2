@@ -4,11 +4,10 @@ import mudanzas.ClaveCliente;
 import mudanzas.DatosCliente;
 import mudanzas.GestorCliente;
 
-public class testeoGestorMapeoYGestor {
+public class testeoGestorCliente {
 
     public static void main(String[] args) {
         GestorCliente gestorCliente = new GestorCliente(100);
-        int lim = 20;
 
         gestorCliente.altaCliente(new ClaveCliente("DNI", 43910234), new DatosCliente("Walter", "Mazzantti", 1141234567, "walterMazzantti@gmail.com"));
         gestorCliente.altaCliente(new ClaveCliente("DNI", 44778901), new DatosCliente("Santiago", "Montiel", 1142345678, "santiagoMontiel@gmail.com"));

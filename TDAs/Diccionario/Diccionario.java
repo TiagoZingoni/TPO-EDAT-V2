@@ -85,13 +85,13 @@ public class Diccionario {
         if (insertado) {
             nodo.recalcularAltura();//Ajusta la altura de cada nodo que pudo ser modificado.
             if (nodo.calcularBalance() > 1) {
-                if (nodo.getIzquierdo().calcularBalance() >= 0) {
+                if (nodo.getIzquierdo() != null && nodo.getIzquierdo().calcularBalance() >= 0) {
                     nodo = this.rotacionDerecha(nodo);
                 } else {
                     nodo = this.rotacionIzquierdaDerecha(nodo);
                 }
             } else if (nodo.calcularBalance() < (-1)) {
-                if (nodo.getDerecho().calcularBalance() >= 0) {
+                if (nodo.getDerecho() == null || nodo.getDerecho().calcularBalance() >= 0) {
                     nodo = this.rotacionIzquierda(nodo);
                 } else {
                     nodo = this.rotacionDerechaIzquierda(nodo);
@@ -309,10 +309,10 @@ public class Diccionario {
             //visita el nodo n
             s += n.getClave() + "->";
             if (izq != null) {
-                s += izq.getClave() + ", ";
+                s += "izq: " + izq.getClave() + ", ";
             }
             if (der != null) {
-                s += der.getClave();
+                s += "der: " + der.getClave();
             }
             s += "\n" + toStringAux(izq) + toStringAux(der);
         }
@@ -323,9 +323,13 @@ public class Diccionario {
     private NodoAVLDicc rotacionIzquierda(NodoAVLDicc r) {
         //el parámetro r representa al pivote. Una vez efectuada la rotación, el algoritmo devuelve la nueva raíz del subárbol.
         NodoAVLDicc h = r.getDerecho();
-        NodoAVLDicc temp = h.getIzquierdo();
-        h.setIzquierdo(r); //El hijo izquierdo del nodo h pasa a ser el valor original de r
-        r.setDerecho(temp); //El hijo derecho del nodo r pasa a ser el valor original de h
+        NodoAVLDicc temp = null;
+        if (h != null) {
+            h = r.getDerecho();
+            temp = h.getIzquierdo();
+            h.setIzquierdo(r); //El hijo izquierdo del nodo h pasa a ser el valor original de r
+            r.setDerecho(temp); //El hijo derecho del nodo r pasa a ser el valor original de h
+        }
         return h;
     }
 
@@ -340,19 +344,27 @@ public class Diccionario {
 
     private NodoAVLDicc rotacionIzquierdaDerecha(NodoAVLDicc r) {
         //Esta rotación se aplica cuando el nodo padre está caído hacia la izquierda (balance 2) y su hijo izquierdo está caído hacia el lado contrario (balance -1).
-        NodoAVLDicc hijoIzq = r.getIzquierdo();
-        NodoAVLDicc nodoRetorno = r.getIzquierdo().getDerecho();//Nodo que queda como raiz.
-        this.rotacionIzquierda(hijoIzq);
-        this.rotacionDerecha(r);
+        NodoAVLDicc hijoIzq = null;
+        NodoAVLDicc nodoRetorno = null;
+        if (r != null && r.getIzquierdo() != null) {
+            hijoIzq = r.getIzquierdo();
+            nodoRetorno = r.getIzquierdo().getDerecho();//Nodo que queda como raiz.
+            this.rotacionIzquierda(hijoIzq);
+            this.rotacionDerecha(r);
+        }
         return nodoRetorno;
     }
 
     private NodoAVLDicc rotacionDerechaIzquierda(NodoAVLDicc r) {
         //Esta rotación se aplica cuando el nodo padre está caído a la derecha (balance -2) y su hijo derecho está caído hacia el lado contrario (balance 1).
-        NodoAVLDicc hijoDer = r.getDerecho();
-        NodoAVLDicc nodoRetorno = r.getDerecho().getIzquierdo();//Nodo que queda como raiz.
-        this.rotacionDerecha(hijoDer);
-        this.rotacionIzquierda(r);
+        NodoAVLDicc hijoDer = null;
+        NodoAVLDicc nodoRetorno = null;
+        if (r != null && r.getDerecho() != null) {
+            hijoDer = r.getDerecho();
+            nodoRetorno = r.getDerecho().getIzquierdo();//Nodo que queda como raiz.
+            this.rotacionDerecha(hijoDer);
+            this.rotacionIzquierda(r);
+        }
         return nodoRetorno;
     }
 }

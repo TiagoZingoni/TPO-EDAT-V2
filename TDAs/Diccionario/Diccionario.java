@@ -93,9 +93,9 @@ public class Diccionario {
             } else if (nodo.calcularBalance() < (-1)) {//Es decir, árbol está caído hacia la derecha 2 niveles
                 //Si el nodo esta caido por derecha
                 if (nodo.getDerecho().calcularBalance() <= 0) {
-                    /*Nodo padre caído a la derecha (balance -2) y nodo hijo derecho balance -1 */
                     nodo = this.rotacionIzquierda(nodo);
                 } else {
+                    //Si el nodo esta caido por derecha y su hijo al lado contrario
                     nodo = this.rotacionDerechaIzquierda(nodo);
                 }
             }
@@ -325,13 +325,9 @@ public class Diccionario {
     private NodoAVLDicc rotacionIzquierda(NodoAVLDicc r) {
         //el parámetro r representa al pivote. Una vez efectuada la rotación, el algoritmo devuelve la nueva raíz del subárbol.
         NodoAVLDicc h = r.getDerecho();
-        NodoAVLDicc temp = null;
-        if (h != null) {
-            h = r.getDerecho();
-            temp = h.getIzquierdo();
-            h.setIzquierdo(r); //El hijo izquierdo del nodo h pasa a ser el valor original de r
-            r.setDerecho(temp); //El hijo derecho del nodo r pasa a ser el valor original de h
-        }
+        NodoAVLDicc temp = h.getIzquierdo();
+        h.setIzquierdo(r); //El hijo izquierdo del nodo h pasa a ser el valor original de r
+        r.setDerecho(temp); //El hijo derecho del nodo r pasa a ser el valor original de h
         return h;
     }
 
@@ -352,6 +348,7 @@ public class Diccionario {
             hijoIzq = r.getIzquierdo();
             nodoRetorno = r.getIzquierdo().getDerecho();//Nodo que queda como raiz.
             this.rotacionIzquierda(hijoIzq);
+            r.setIzquierdo(nodoRetorno);
             this.rotacionDerecha(r);
         }
         return nodoRetorno;
@@ -363,8 +360,9 @@ public class Diccionario {
         NodoAVLDicc nodoRetorno = null;
         if (r != null && r.getDerecho() != null) {
             hijoDer = r.getDerecho();
-            nodoRetorno = r.getDerecho().getIzquierdo();//Nodo que queda como raiz.
+            nodoRetorno = hijoDer.getIzquierdo();//Nodo que queda como raiz.
             this.rotacionDerecha(hijoDer);
+            r.setDerecho(nodoRetorno);
             this.rotacionIzquierda(r);
         }
         return nodoRetorno;

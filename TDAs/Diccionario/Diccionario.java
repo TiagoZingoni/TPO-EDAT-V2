@@ -81,17 +81,19 @@ public class Diccionario {
                 nodo.setDerecho(new NodoAVLDicc(clave, dato));
             }
         }
-        //Rotaciones para asegurar balance
+        //Rotaciones para asegurar balance si se insertó el elemento
         if (insertado) {
-            nodo.recalcularAltura();//Ajusta la altura de cada nodo que pudo ser modificado.
-            if (nodo.calcularBalance() > 1) {
-                if (nodo.getIzquierdo() != null && nodo.getIzquierdo().calcularBalance() >= 0) {
+            nodo.recalcularAltura(); //Ajusta la altura de cada nodo que pudo ser modificado.
+            if (nodo.calcularBalance() > 1) {//Es decir, árbol está caído hacia la izquierda 2 niveles
+                if (nodo.getIzquierdo().calcularBalance() >= 0) {
                     nodo = this.rotacionDerecha(nodo);
                 } else {
                     nodo = this.rotacionIzquierdaDerecha(nodo);
                 }
-            } else if (nodo.calcularBalance() < (-1)) {
-                if (nodo.getDerecho() == null || nodo.getDerecho().calcularBalance() >= 0) {
+            } else if (nodo.calcularBalance() < (-1)) {//Es decir, árbol está caído hacia la derecha 2 niveles
+                //Si el nodo esta caido por derecha
+                if (nodo.getDerecho().calcularBalance() <= 0) {
+                    /*Nodo padre caído a la derecha (balance -2) y nodo hijo derecho balance -1 */
                     nodo = this.rotacionIzquierda(nodo);
                 } else {
                     nodo = this.rotacionDerechaIzquierda(nodo);

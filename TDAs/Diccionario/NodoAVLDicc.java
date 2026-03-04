@@ -4,9 +4,9 @@ public class NodoAVLDicc {
 
     Comparable clave;
     Object dato;
-    int altura;
-    NodoAVLDicc izquierdo;
-    NodoAVLDicc derecho;
+    int altura;     //longitud del camino más largo desde el nodo a una hoja.
+    NodoAVLDicc izquierdo;  //hijo izquierdo
+    NodoAVLDicc derecho;    //hijo izquierdo
 
     public NodoAVLDicc(Comparable id, Object elemento) {
         clave = id;
@@ -41,9 +41,9 @@ public class NodoAVLDicc {
     public void recalcularAltura() {
         //recalcula altura
         if (izquierdo != null) {
-            this.altura = this.izquierdo.getAltura() - 1;
+            this.altura = this.izquierdo.getAltura() + 1;
         } else if (derecho != null) {
-            this.altura = this.derecho.getAltura() - 1;
+            this.altura = this.derecho.getAltura() + 1;
         }
     }
 
@@ -73,13 +73,14 @@ public class NodoAVLDicc {
         altura del subárbol izquierdo(el árbol cae apenas hacia la derecha)
         Balance de 2 0 -2 indica nodo desbalanceado
          */
+        //la altura de nulo es -1
         int balance = 0;
         if (this.getIzquierdo() != null && this.getDerecho() != null) {
             balance = (this.getIzquierdo().getAltura()) - (this.getDerecho().getAltura());
         } else if (this.getIzquierdo() == null && this.getDerecho() != null) {
-            balance = 0 - (this.getDerecho().getAltura());
+            balance = -1 - (this.getDerecho().getAltura());
         } else if (this.getIzquierdo() != null && this.getDerecho() == null) {
-            balance = (this.getIzquierdo().getAltura());
+            balance = (this.getIzquierdo().getAltura()) + 1; //altura hi - (-1), por nulo hd
         }
         return balance;
     }

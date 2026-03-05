@@ -40,11 +40,14 @@ public class NodoAVLDicc {
 
     public void recalcularAltura() {
         //recalcula altura
+        int alturaIzq = 0, alturaDer = 0;
         if (izquierdo != null) {
-            this.altura = this.izquierdo.getAltura() + 1;
-        } else if (derecho != null) {
-            this.altura = this.derecho.getAltura() + 1;
+            alturaIzq = this.izquierdo.getAltura() + 1;
         }
+        if (derecho != null) {
+            alturaDer = this.derecho.getAltura() + 1;
+        }
+        altura = Math.max(alturaIzq, alturaDer);
     }
 
     public NodoAVLDicc getIzquierdo() {

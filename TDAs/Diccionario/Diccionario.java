@@ -55,6 +55,10 @@ public class Diccionario {
         } else {
             insertado = insertarAux(this.raiz, clave, elemento);
         }
+        //Rotaciones para asegurar balance si se insertó el elemento
+        if (insertado) {
+            this.raiz = ajustaAVL(clave, this.raiz);
+        }
         return insertado;
     }
 
@@ -81,28 +85,42 @@ public class Diccionario {
                 nodo.setDerecho(new NodoAVLDicc(clave, dato));
             }
         }
-        //Rotaciones para asegurar balance si se insertó el elemento
-        if (insertado) {
-            nodo.recalcularAltura(); //Ajusta la altura de cada nodo que pudo ser modificado.
-            if (nodo.calcularBalance() > 1) {//Es decir, árbol está caído hacia la izquierda 2 niveles
+        return insertado;
+    }
+
+    private NodoAVLDicc ajustaAVL(Comparable clave, NodoAVLDicc nodo) {
+        /* 
+        Función auxiliar para implementar las funciones de inserción y de borrado. 
+        Consiste en ajustar los nodos que existen desde el nodo conteniendo la clave e hasta el nodo raiz del subarbol actual
+         */
+        if (nodo != null) {
+            //Se baja por el camino en el que estaría el nodo(clave)
+            //No hace falta comparar si la clave existe ya que solo retornaría null
+            if (clave.compareTo(nodo.getClave()) > 0) {
+                nodo.setDerecho(ajustaAVL(clave, nodo.getDerecho()));
+            } else if (clave.compareTo(nodo.getClave()) < 0) {
+                nodo.setIzquierdo(ajustaAVL(clave, nodo.getIzquierdo()));
+            }
+            nodo.recalcularAltura(); //si se rotó se debería recalcular la altura de los nodos recorridos
+            int balance = nodo.calcularBalance(); //Para determinar si se debe rotar
+
+            //Si el arbol cae por izquierda
+            if (balance == 2) {
                 if (nodo.getIzquierdo().calcularBalance() >= 0) {
-                    nodo = this.rotacionDerecha(nodo);
+                    nodo = rotacionDerecha(nodo);
                 } else {
-                    nodo = this.rotacionIzquierdaDerecha(nodo);
+                    nodo = rotacionIzquierdaDerecha(nodo);
                 }
-            } else if (nodo.calcularBalance() < (-1)) {//Es decir, árbol está caído hacia la derecha 2 niveles
-                //Si el nodo esta caido por derecha
+            }//Si el arbol cae por derecha
+            else if (balance == -2) {
                 if (nodo.getDerecho().calcularBalance() <= 0) {
-                    nodo = this.rotacionIzquierda(nodo);
+                    nodo = rotacionIzquierda(nodo);
                 } else {
-                    //Si el nodo esta caido por derecha y su hijo al lado contrario
-                    nodo = this.rotacionDerechaIzquierda(nodo);
+                    nodo = rotacionDerechaIzquierda(nodo);
                 }
             }
         }
-        this.raiz = nodo; //se actualiza el arbol en base al subarbo rotado
-        return insertado;
-
+        return nodo;
     }
 
     //Inicio ELIMINAR
@@ -113,6 +131,9 @@ public class Diccionario {
             eliminado = false;
         } else {
             eliminado = eliminarAux(this.raiz, this.raiz, clave);
+        }
+        if (eliminado) {
+            this.raiz = ajustaAVL(clave, this.raiz);
         }
         return eliminado;
     }
@@ -149,24 +170,6 @@ public class Diccionario {
                 eliminado = false;
             }
         }
-        //Rotaciones para asegurar balance
-        if (eliminado) {
-            n.recalcularAltura();//Ajusta la altura de cada nodo que pudo ser modificado.
-            if (n.calcularBalance() > 1) {
-                if (n.getIzquierdo().calcularBalance() >= 0) {
-                    n = this.rotacionDerecha(n);
-                } else {
-                    n = this.rotacionIzquierdaDerecha(n);
-                }
-            } else if (n.calcularBalance() < (-1)) {
-                if (n.getDerecho().calcularBalance() >= 0) {
-                    n = this.rotacionIzquierda(n);
-                } else {
-                    n = this.rotacionDerechaIzquierda(n);
-                }
-            }
-        }
-        this.raiz = n; //se actualiza el arbol en base al subarbo rotado
         return eliminado;
     }
 
@@ -328,6 +331,7 @@ public class Diccionario {
         NodoAVLDicc temp = h.getIzquierdo();
         h.setIzquierdo(r); //El hijo izquierdo del nodo h pasa a ser el valor original de r
         r.setDerecho(temp); //El hijo derecho del nodo r pasa a ser el valor original de h
+        r.recalcularAltura();//ajusta la altura de la raiz original
         return h;
     }
 
@@ -337,6 +341,7 @@ public class Diccionario {
         NodoAVLDicc temp = h.getDerecho();
         h.setDerecho(r); //El hijo derecho del nodo h pasa a ser el valor original de r
         r.setIzquierdo(temp); //El hijo izquierdo del nodo r pasa a ser el valor original de h
+        r.recalcularAltura();//ajusta la altura de la raiz original
         return h;
     }
 

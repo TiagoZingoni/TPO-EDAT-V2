@@ -14,14 +14,10 @@ public class TesteoDiccionario {
         //arbol.insertar(0, "n");
         System.out.println(arbol.toString());
         System.out.println(arbol.listarClaves());
-        arbol.insertar(0, "n");
+        
+        arbol.eliminar(3);
         System.out.println(arbol.toString());
         System.out.println(arbol.listarClaves());
-        arbol.eliminar(0);
-        System.out.println(arbol.toString());
-        System.out.println(arbol.listarClaves());
-        arbol.eliminar(2);
-        System.out.println(arbol.toString());
-        System.out.println(arbol.listarClaves());
+
     }
 }

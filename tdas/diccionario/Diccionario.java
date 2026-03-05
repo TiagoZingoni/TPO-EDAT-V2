@@ -332,6 +332,7 @@ public class Diccionario {
         h.setIzquierdo(r); //El hijo izquierdo del nodo h pasa a ser el valor original de r
         r.setDerecho(temp); //El hijo derecho del nodo r pasa a ser el valor original de h
         r.recalcularAltura();//ajusta la altura de la raiz original
+        h.recalcularAltura();
         return h;
     }
 
@@ -342,6 +343,7 @@ public class Diccionario {
         h.setDerecho(r); //El hijo derecho del nodo h pasa a ser el valor original de r
         r.setIzquierdo(temp); //El hijo izquierdo del nodo r pasa a ser el valor original de h
         r.recalcularAltura();//ajusta la altura de la raiz original
+        h.recalcularAltura();
         return h;
     }
 

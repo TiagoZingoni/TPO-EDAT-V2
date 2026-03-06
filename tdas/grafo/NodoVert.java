@@ -1,4 +1,4 @@
-package TDAs.grafo.etiquetado;
+package tdas.grafo;
 
 public class NodoVert {
 

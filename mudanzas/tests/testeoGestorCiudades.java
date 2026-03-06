@@ -7,8 +7,7 @@ public class testeoGestorCiudades {
 
     public static void main(String[] args) {
         GestorCiudades gestorCiudades = new GestorCiudades();
-        //cargamos 20 ciudades
-        /*         
+        //cargamos 20 ciudades      
         gestorCiudades.altaCiudad(new Ciudad(1000, "Buenos Aires", "Buenos Aires"));
         gestorCiudades.altaCiudad(new Ciudad(5000, "Córdoba", "Córdoba"));
         gestorCiudades.altaCiudad(new Ciudad(2000, "Rosario", "Santa Fe"));
@@ -29,7 +28,6 @@ public class testeoGestorCiudades {
         gestorCiudades.altaCiudad(new Ciudad(3100, "Paraná", "Entre Ríos"));
         gestorCiudades.altaCiudad(new Ciudad(4400, "Salta", "Salta"));
         gestorCiudades.altaCiudad(new Ciudad(8500, "Viedma", "Río Negro"));
-         */
         gestorCiudades.altaCiudad(new Ciudad(2100, "Paraná", "Entre Ríos"));
         gestorCiudades.altaCiudad(new Ciudad(3000, "Paraná", "Entre Ríos"));
         gestorCiudades.altaCiudad(new Ciudad(3100, "Paraná", "Entre Ríos"));

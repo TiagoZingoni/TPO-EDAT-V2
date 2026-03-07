@@ -126,7 +126,7 @@ public class GrafoEtiquetado {
         }
         return insertado;
     }
-    
+    //falta no permitir loops y repetidos
     public Comparable obtenerArco(Object vertice1, Object vertice2){
         //Retorna la etiqueta del arco entre dos vertices, si es que existe.
         Comparable etiquetaObtenida = null;
@@ -153,4 +153,26 @@ public class GrafoEtiquetado {
         }
         return aux;
     }    
+
+    public String toString(){
+        //String de la estructura en formato: "salida -> entrada1, entrada2, entrada..."
+        String cadena = "";
+        NodoVert nodoVertActual = this.inicio;
+        NodoAdy nodoAdyActual = null;
+        while(nodoVertActual != null){
+            cadena += nodoVertActual.getElem().toString()+" -> ";
+            nodoAdyActual = nodoVertActual.getPrimerAdy();
+            while(nodoAdyActual!=null){
+                cadena += (nodoAdyActual.getVertice()).getElem().toString();
+                nodoAdyActual = nodoAdyActual.getSigAdy();
+                if(nodoAdyActual!=null){
+                    //no es necesario, pero para mejorar la legibilidad de la cadena
+                    cadena+=", ";
+                }
+            }
+            cadena += "\n";
+            nodoVertActual = nodoVertActual.getSigVert();
+        }
+        return cadena;
+    }
 }

@@ -1,5 +1,6 @@
-package mudanzas;
+package mudanzas.gestores;
 
+import mudanzas.Ciudad;
 import tdas.Lista;
 import tdas.diccionario.Diccionario;
 

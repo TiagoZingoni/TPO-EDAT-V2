@@ -1,5 +1,7 @@
-package mudanzas;
+package mudanzas.gestores;
 
+import mudanzas.ClaveCliente;
+import mudanzas.DatosCliente;
 import tdas.Lista;
 import tdas.MapeoAUno;
 

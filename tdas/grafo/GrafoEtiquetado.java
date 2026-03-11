@@ -114,19 +114,31 @@ public class GrafoEtiquetado {
         /*Dados dos elementos agrega el arco en la estructura con su respectiva etiqueta, 
         sólo si ambos vértices ya existen en el grafo. Si puede realizar la inserción devuelve 
         verdadero, en caso contrario devuelve falso.*/
-        boolean insertado = false;
+        boolean insertado = false, insertadoAux = true;
         NodoVert nodoV1, nodoV2;
+        NodoAdy nodoAux;
         nodoV1 = ubicarVertice(vertice1);
         nodoV2 = ubicarVertice(vertice2);
-        //
-        if(nodoV1 != null && nodoV2 != null){
-            insertado = true;
-            nodoV1.setPrimerAdy(new NodoAdy(nodoV2, nodoV1.getPrimerAdy(), etiqueta)); //Se agrega el arco de v1 a v2, sin afectar los arcos existentes
-            nodoV2.setPrimerAdy(new NodoAdy(nodoV1, nodoV2.getPrimerAdy(), etiqueta)); //Se agrega el arco de v2 a v1, sin afectar los arcos existentes
+        if(nodoV1 != null && nodoV2 != null && !nodoV1.equals(nodoV2)){            
+            //Si ninguno de los nodos es vacío, y el arco no va a ser loop, es decir, si el nodo de salida no es el mismo que el de llegada.
+            nodoAux = nodoV1.getPrimerAdy();
+            while(nodoAux!=null&&insertadoAux){
+                //se busca que el arcoo no exista, solo chequeamos un lado, ya que el arco existiría desde los dos vertices
+                if(nodoAux.getVertice().equals(nodoV2)){
+                    //Si el vertice existe, entonces se corta la iteración y no se inserta el nuevo arco.
+                    insertadoAux = false;
+                }
+                nodoAux = nodoAux.getSigAdy();
+            }
+            if(insertadoAux){
+                insertado = true;
+                nodoV1.setPrimerAdy(new NodoAdy(nodoV2, nodoV1.getPrimerAdy(), etiqueta)); //Se agrega el arco de v1 a v2, sin afectar los arcos existentes
+                nodoV2.setPrimerAdy(new NodoAdy(nodoV1, nodoV2.getPrimerAdy(), etiqueta)); //Se agrega el arco de v2 a v1, sin afectar los arcos existentes
+            }
         }
         return insertado;
     }
-    //falta no permitir loops y repetidos
+
     public Comparable obtenerArco(Object vertice1, Object vertice2){
         //Retorna la etiqueta del arco entre dos vertices, si es que existe.
         Comparable etiquetaObtenida = null;

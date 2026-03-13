@@ -1,7 +1,7 @@
 package mudanzas.tests;
 
 import mudanzas.Ciudad;
-import mudanzas.GestorCiudades;
+import mudanzas.gestores.GestorCiudades;
 
 public class testeoGestorCiudades {
 

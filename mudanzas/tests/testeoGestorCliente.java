@@ -2,7 +2,7 @@ package mudanzas.tests;
 
 import mudanzas.ClaveCliente;
 import mudanzas.DatosCliente;
-import mudanzas.GestorCliente;
+import mudanzas.gestores.GestorCliente;
 
 public class testeoGestorCliente {
 

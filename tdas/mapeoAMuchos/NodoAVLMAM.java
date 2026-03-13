@@ -1,16 +1,24 @@
-package tdas.diccionario;
-
-public class NodoAVLDicc {
+package tdas.mapeoAMuchos;
+import tdas.Lista;
+public class NodoAVLMAM {
+    //Nodo del arbol avl de Mapeo a Muchos
 
     Comparable clave;
-    Object dato;
+    Lista listaDatos;
     int altura;     //longitud del camino más largo desde el nodo a una hoja.
-    NodoAVLDicc izquierdo;  //hijo izquierdo
-    NodoAVLDicc derecho;    //hijo derecho
+    NodoAVLMAM izquierdo;  //hijo izquierdo
+    NodoAVLMAM derecho;    //hijo derecho
 
-    public NodoAVLDicc(Comparable id, Object elemento) {
+    public NodoAVLMAM(Comparable id) {
         clave = id;
-        dato = elemento;
+        listaDatos = new Lista();
+        izquierdo = null;
+        derecho = null;
+        altura = 0;
+    }
+    public NodoAVLMAM(Comparable id, Lista listaElementos) {
+        clave = id;
+        listaDatos = listaElementos;
         izquierdo = null;
         derecho = null;
         altura = 0;
@@ -20,18 +28,22 @@ public class NodoAVLDicc {
         return clave;
     }
 
-    public void auxCabmio(Comparable id, Object dato) {
+    public void auxCabmio(Comparable id, Lista lista) {
         //Solo se utiliza para reemplazo al eliminar
         clave = id;
-        this.dato = dato;
+        this.listaDatos = lista;
     }
 
-    public Object getDato() {
-        return dato;
+    public Lista getLista() {
+        return this.listaDatos;
     }
 
-    public void setDato(Object dato) {
-        this.dato = dato;
+    public void setLista(Lista lista) {
+        this.listaDatos = lista;
+    }
+    
+    public void agregarDato(Object dato){
+        listaDatos.insertar(dato, listaDatos.longitud()+1);
     }
 
     public int getAltura() {
@@ -50,19 +62,19 @@ public class NodoAVLDicc {
         altura = Math.max(alturaIzq, alturaDer);
     }
 
-    public NodoAVLDicc getIzquierdo() {
+    public NodoAVLMAM getIzquierdo() {
         return izquierdo;
     }
 
-    public void setIzquierdo(NodoAVLDicc izquierdo) {
+    public void setIzquierdo(NodoAVLMAM izquierdo) {
         this.izquierdo = izquierdo;
     }
 
-    public NodoAVLDicc getDerecho() {
+    public NodoAVLMAM getDerecho() {
         return derecho;
     }
 
-    public void setDerecho(NodoAVLDicc derecho) {
+    public void setDerecho(NodoAVLMAM derecho) {
         this.derecho = derecho;
     }
 

@@ -374,5 +374,52 @@ public class MapeoAMuchos {
         }
         return nodoRetorno;
     }
+
+    //Trabajo sobre Lista
+    public boolean asociarALista(Comparable clave, Object elemento){
+        /*
+        Retorna true si encontró el Nodo que tenga dicha clave e inserta elemento en la Lista, retorna false si
+        no se pudo hayar el nodo buscado.
+        */
+        boolean encontrado = false;
+        Lista listaBuscada = null;
+        if (raiz != null) {
+            if (clave.compareTo(raiz.getClave()) == 0) {
+                listaBuscada = raiz.getLista();
+            } else {
+                if (clave.compareTo(raiz.getClave()) < 0) {
+                    listaBuscada = asociarAListaAux(raiz.getIzquierdo(), clave);
+                } else {
+                    listaBuscada = asociarAListaAux(raiz.getDerecho(), clave);
+                }
+            }
+        }
+        if(listaBuscada != null){
+            //if(listaBuscada.localizar(elemento)<1){
+                //No es relevante si el elemento ya existe o no en la lsita
+                listaBuscada.insertar(elemento, listaBuscada.longitud()+1);
+                encontrado = true;
+            //}
+        }
+        return encontrado;
+    }
+    private Lista asociarAListaAux(NodoAVLMAM nodo, Comparable claveBuscado){
+        //Recursiva hasta encontrar datos, o fin de recorrido
+        Lista listaBuscada = null;
+        boolean encontrado = false;
+        if(nodo != null){
+            encontrado = claveBuscado.compareTo(nodo.getClave())==0;
+            if(nodo != null && !encontrado){
+                if(claveBuscado.compareTo(nodo.getClave())<0){
+                    listaBuscada = asociarAListaAux(nodo.getIzquierdo(), claveBuscado);
+                }else{
+                    listaBuscada = asociarAListaAux(nodo.getDerecho(), claveBuscado);
+                }
+            }else {
+                listaBuscada = nodo.getLista();
+            }
+        }
+        return listaBuscada;
+    }
 }
 

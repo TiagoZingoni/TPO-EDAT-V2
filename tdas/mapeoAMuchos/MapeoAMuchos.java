@@ -227,36 +227,36 @@ public class MapeoAMuchos {
 
     //fin ELIMINAR.
 
-    public Object obtenerInformacion(Comparable buscado) {
+    public Lista obtenerLista(Comparable buscado) {
         /* si en la estructura se encuentra almacenado un elemento con la clave 
-        recibida por parámetro,devuelve la información asociada a ella. Si no 
+        recibida por parámetro,devuelve la lista asociada a ella. Si no 
         existe esa clave, no se puede asegurar que no exista mediante este metodo*/
-        Object contenidoBuscado = null;
+        Lista contenidoBuscado = null;
         if (raiz != null) {
             if (buscado.compareTo(raiz.getClave()) == 0) {
                 contenidoBuscado = raiz.getLista();
             } else {
                 if (buscado.compareTo(raiz.getClave()) < 0) {
-                    contenidoBuscado = obtenerInformacionAux(raiz.getIzquierdo(), buscado);
+                    contenidoBuscado = obtenerListanAux(raiz.getIzquierdo(), buscado);
                 } else {
-                    contenidoBuscado = obtenerInformacionAux(raiz.getDerecho(), buscado);
+                    contenidoBuscado = obtenerListanAux(raiz.getDerecho(), buscado);
                 }
             }
         }
         return contenidoBuscado;
     }
 
-    private Object obtenerInformacionAux(NodoAVLMAM nodo, Comparable idBuscado) {
+    private Lista obtenerListanAux(NodoAVLMAM nodo, Comparable idBuscado) {
         //Recursiva hasta encontrar datos, o fin de recorrido
-        Object contenidoBuscado = null;
+        Lista contenidoBuscado = null;
         boolean aparece = false;
         if (nodo != null) {
             aparece = idBuscado.compareTo(nodo.getClave()) == 0;
             if (nodo != null && !aparece) {
                 if (idBuscado.compareTo(nodo.getClave()) < 0) {
-                    contenidoBuscado = existeClaveAux(nodo.getIzquierdo(), idBuscado);
+                    contenidoBuscado = obtenerListanAux(nodo.getIzquierdo(), idBuscado);
                 } else {
-                    contenidoBuscado = existeClaveAux(nodo.getDerecho(), idBuscado);
+                    contenidoBuscado = obtenerListanAux(nodo.getDerecho(), idBuscado);
                 }
             } else {
                 contenidoBuscado = nodo.getLista();

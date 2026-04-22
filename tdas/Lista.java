@@ -143,4 +143,14 @@ public class Lista {
         return cadena;
     }
 
+    public String toStringElementos(){
+        //Da un String de los elemenos sin mostrar que es una cadena
+        Nodo aux = this.cabecera;
+        String cadena = "";
+        for (int i = 1; i <= longitud; i++) {
+            cadena += aux.getElemento().toString();
+            aux = aux.getEnlace();
+        }
+        return cadena;
+    }
 }

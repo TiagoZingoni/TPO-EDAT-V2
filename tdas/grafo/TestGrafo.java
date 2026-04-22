@@ -22,7 +22,7 @@ public class TestGrafo {
         g.insertarArco("A", "B", 1);
         g.insertarArco("B", "E", 1);
         g.insertarArco("B", "D", 1);
-        
+        System.out.println();
         System.out.println(g.listarCaminos("A", "E").toString());
     }
 }

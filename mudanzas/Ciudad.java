@@ -7,13 +7,13 @@ public class Ciudad {
     private final int codPostal;
     private String nombreCiudad;
     private String provincia;
-    private MapeoAMuchos solicitudesViajes;
+    private Pedidos solicitudesViajes;
 
     public Ciudad(int codigoPostal, String nombreCiudad, String nombreProvincia) {
         this.codPostal = codigoPostal;
         this.nombreCiudad = nombreCiudad;
         this.provincia = nombreProvincia;
-        this.solicitudesViajes = new pedidos();
+        this.solicitudesViajes = new Pedidos();
     }
 
     //setters
@@ -36,5 +36,10 @@ public class Ciudad {
 
     public String getNombreProvincia() {
         return this.provincia;
+    }
+
+    //String
+    public String toString(){
+        return "C;"+codPostal+";"+provincia+";"+nombreCiudad+"\n";
     }
 }

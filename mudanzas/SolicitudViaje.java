@@ -8,9 +8,10 @@ public class SolicitudViaje {
     private String domicilioRetiro;
     private String domicilioEntrega;
     private boolean pago;
+    private int idSolicitud;
 
     public SolicitudViaje(String unaFechaSolicitud, ClaveCliente unCliente, double unaCantidadMtsCb, 
-        int unaCantBultos, String unDomRetiro, String unDomEntrega, boolean estaPago){
+        int unaCantBultos, String unDomRetiro, String unDomEntrega, boolean estaPago, int idSolicitud){
             this.fechaSolicitud = unaFechaSolicitud;
             this.clienteSolicitud = unCliente;
             this.cantidadMetrosCubicos = unaCantidadMtsCb;
@@ -18,6 +19,42 @@ public class SolicitudViaje {
             this.domicilioEntrega = unDomEntrega;
             this.domicilioRetiro = unDomRetiro;
             this.pago = estaPago;
+            this.idSolicitud = idSolicitud; //será dada por una variable global
+    }
+    public String getFechaSolicitud() {
+        return fechaSolicitud;
+    }
+
+    public ClaveCliente getClienteSolicitud() {
+        return clienteSolicitud;
+    }
+
+    public double getCantidadMetrosCubicos() {
+        return cantidadMetrosCubicos;
+    }
+
+    public int getCantidadBultos() {
+        return cantidadBultos;
+    }
+
+    public String getDomicilioRetiro() {
+        return domicilioRetiro;
+    }
+
+    public String getDomicilioEntrega() {
+        return domicilioEntrega;
+    }
+
+    public boolean isPago() {
+        return pago;
+    }
+
+    public int getIdSolicitud() {
+        return idSolicitud;
+    }
+    public void setPago(){
+        //Un pago no puede ser cancelado
+        pago = true;
     }
 
 }

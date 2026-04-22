@@ -30,5 +30,13 @@ public class Pedidos {
         */
         return solicitudesViaje.asociarALista(codigoPostal, unSolicitudViaje);
     }
-
+    public boolean bajaPedido(int codigoPostal, int idSolicitud){
+        //si el codigo postal existe, y dentro de este se encuentra la idSolicitud, se elimina la solicitud y retorna true
+        Lista lista = solicitudesViaje.obtenerLista(codigoPostal);
+        boolean baja = false;
+        if(lista != null){
+            baja = lista.eliminar(lista.localizar(idSolicitud));
+        }
+        return baja;
+    }
 }

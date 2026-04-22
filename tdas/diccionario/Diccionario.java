@@ -227,6 +227,7 @@ public class Diccionario {
     }
 
     //fin ELIMINAR.
+
     public Object obtenerInformacion(Comparable buscado) {
         /* si en la estructura se encuentra almacenado un elemento con la clave 
         recibida por parámetro,devuelve la información asociada a ella. Si no 
@@ -254,9 +255,9 @@ public class Diccionario {
             aparece = idBuscado.compareTo(nodo.getClave()) == 0;
             if (nodo != null && !aparece) {
                 if (idBuscado.compareTo(nodo.getClave()) < 0) {
-                    contenidoBuscado = existeClaveAux(nodo.getIzquierdo(), idBuscado);
+                    contenidoBuscado = obtenerInformacionAux(nodo.getIzquierdo(), idBuscado);
                 } else {
-                    contenidoBuscado = existeClaveAux(nodo.getDerecho(), idBuscado);
+                    contenidoBuscado = obtenerInformacionAux(nodo.getDerecho(), idBuscado);
                 }
             } else {
                 contenidoBuscado = nodo.getDato();
@@ -301,7 +302,33 @@ public class Diccionario {
             listarDatosAux(n.getDerecho(), listado);
         }
     }
+    public Lista listarDatosRango(Comparable limInferior, Comparable limiteSuperior){
+        //Lista todos los datos dentro del rango dado
+        Lista listado = new Lista();
+        listarDatosRangoAux(this.raiz, listado, limInferior, limiteSuperior);
+        return listado;
+    }
+    private void listarDatosRangoAux(NodoAVLDicc n, Lista listado, Comparable limInf, Comparable limSup) {
+        //Carga la lista con los datos que esten dentro del rango.
+        if (n != null) {
+            Comparable valorClaveActual = n.getClave();
 
+            if(valorClaveActual.compareTo(limInf)>=0){
+                //Recorre para la izquierda solo si puede haber valores mayores al limInferior
+                listarDatosRangoAux(n.getIzquierdo(), listado, limInf, limSup);
+            }
+            
+            if(valorClaveActual.compareTo(limInf)>=0 && valorClaveActual.compareTo(limSup)<=0){
+                //Si el valo actual está dentro del rango inserta
+                listado.insertar(n.getDato(), listado.longitud() + 1);
+            }
+            if(valorClaveActual.compareTo(limSup)<=0){
+                //REcorre para la derecha solo si puede haber valores menores al limSuperior
+                listarDatosRangoAux(n.getDerecho(), listado, limInf, limSup);
+            }
+            
+        }
+    }
     //Metodo de testeo:
     public String toString() {
         return toStringAux(this.raiz);

@@ -157,12 +157,12 @@ public class GrafoEtiquetado {
         }//Si la etiqueta no existe retorna null, se considera que no tiene por que haber una etiqueta null
         return etiquetaObtenida;
     }
-    
+    /*INOMPLETOS  
     public Lista caminoMasCorto(Object origen, Object destino){
         /* Dados dos elementos de TipoVertice (origen y destino), devuelve un camino (lista de vértices)
         que indique el camino que pasa por menos vértices que permite llegar del vértice origen al vértice
         destino. Si hay más de un camino con igual cantidad de vértices, devuelve cualquiera de ellos. Si
-        alguno de los vértices no existe o no hay camino posible entre ellos devuelve la lista vacía. */
+        alguno de los vértices no existe o no hay camino posible entre ellos devuelve la lista vacía. /
         Lista camino = new Lista(), caminoAux = new Lista();
         NodoVert nodoOrigen = ubicarVertice(origen);
         NodoAdy nodoAux = null;
@@ -220,7 +220,9 @@ public class GrafoEtiquetado {
             }
         }
     }
-    //Lista de caminos desde un nodo A a un nodo B
+    */
+    
+    //Lista de todos los caminos desde un nodo A a un nodo B
     public Lista listarCaminos(Object origen, Object destino){
         //Retorna todos los caminos que unen origen con destino, si no existe ningun camino o alguno de los nodos, retorna una lista vacía
         Lista caminos = new Lista(); //Lista de Todos los caminos de Origen a Destino
@@ -233,7 +235,6 @@ public class GrafoEtiquetado {
         }
         return caminos;
     }
-
 
     private void listarCaminosAux(NodoVert nodo, Object destino, Lista caminoActual, Lista caminos){
         //Carga la lista de caminos con todos los caminos que cumplan la condición de, iniciados en Origen, terminar en Destino
@@ -259,7 +260,6 @@ public class GrafoEtiquetado {
         }
         caminoActual.eliminar(caminoActual.longitud());//Se elimina el ultimo elemento puesto antes de volver a la it anterior
     }
-
 
    
     private NodoVert ubicarVertice(Object buscado){

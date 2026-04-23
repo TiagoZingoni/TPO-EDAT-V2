@@ -166,6 +166,7 @@ public class GrafoEtiquetado {
         return etiquetaObtenida;
     }
 
+    //===========================CAMINOS===========================//
     public Lista caminoMasCorto(Object vertice1, Object vertice2) {
         //Retorna el camino más corto del vertice1 al vertice2. Entre dos caminos de igual longitud devuelve cualquiera. Si no existe un camino,
         //o alguno de los vertices, se retorna una lista vacía.
@@ -173,8 +174,10 @@ public class GrafoEtiquetado {
         NodoVert aux = this.inicio;
         NodoVert nodoOrigen = ubicarVertice(vertice1);
         NodoVert nodoDestino = ubicarVertice(vertice2);
-        if (nodoOrigen != null && nodoDestino != null) {
+        if ((nodoOrigen != null && nodoDestino != null) && !(vertice1.equals(vertice2))) {
             camino = caminoAnchura(nodoOrigen, nodoDestino);
+        } else if ((nodoOrigen != null && nodoDestino != null) && vertice1.equals(vertice2)) {
+            camino.insertar(vertice1, 1);
         }
         return camino;
     }
@@ -190,14 +193,14 @@ public class GrafoEtiquetado {
         caminoInicial.insertar(origen.getElem(), 1);
 
         cola.poner(caminoInicial);
-        visitados.insertar(origen, 1);
+        visitados.insertar(origen.getElem(), 1);
 
         while (!cola.esVacia() && !encontrado) {
             //Se saca el camino de la lista
             Lista caminoActual = (Lista) cola.obtenerFrente();
             cola.sacar();
 
-            NodoVert nodoActual = (NodoVert) caminoActual.recuperar(caminoActual.longitud()); //del camino actual nos quedamos con el utlimo ingresado
+            NodoVert nodoActual = ubicarVertice(caminoActual.recuperar(caminoActual.longitud())); //del camino actual nos quedamos con el utlimo ingresado
 
             if (nodoActual.equals(destino)) {
                 encontrado = true;
@@ -209,7 +212,7 @@ public class GrafoEtiquetado {
                     NodoVert nodoVertAux = nodoAux.getVertice();
 
                     if (visitados.localizar(nodoVertAux) <= 0) {
-                        visitados.insertar(nodoVertAux, visitados.longitud() + 1);
+                        visitados.insertar(nodoVertAux.getElem(), visitados.longitud() + 1);
                         //Por cada vecino encontrado se clona el camino actual y se agrega el vecino
                         Lista nuevoCamino = caminoActual.clone();
                         nuevoCamino.insertar(nodoVertAux.getElem(), nuevoCamino.longitud() + 1);
@@ -261,6 +264,55 @@ public class GrafoEtiquetado {
         }
         caminoActual.eliminar(caminoActual.longitud());//Se elimina el ultimo elemento puesto antes de volver a la it anterior
     }
+
+    public Lista caminoMenorRecorrido(Object origen, Object destino) {
+        //Retorna el camino entre origen y destino que menor recorrido tenga, la ultima posicion del arreglo es la distancia
+        Lista camino = new Lista(); //Lista a retornar con el camino hallado
+        NodoVert nodoOrigen = ubicarVertice(origen);
+        NodoVert nodoDestino = ubicarVertice(destino);
+        if ((nodoOrigen != null && nodoDestino != null) && !origen.equals(destino)) {
+            caminoMenorRecorridoAux(nodoOrigen, nodoDestino, new Lista(), camino, 0, 0);
+        } else if (origen.equals(destino)) {
+            camino.insertar(destino, 1);
+            camino.insertar(0, 2);
+        }
+        return camino;
+    }
+
+    private double caminoMenorRecorridoAux(NodoVert nodoActual, NodoVert destino, Lista caminoActual, Lista mejorCamino, double mejorDistancia, double distanciaAcumulada) {
+        NodoAdy nodoAdyAux = nodoActual.getPrimerAdy();
+        NodoVert nodoVertAux;
+        double distanciaAux;
+        if (mejorDistancia == 0 || distanciaAcumulada < mejorDistancia) {
+            //Si la distancia acumulada no es mayor a la mejor distancia o si es 0
+            caminoActual.insertar(nodoActual.getElem(), caminoActual.longitud() + 1);
+
+            if (nodoActual.equals(destino)) {
+                //Si llegamos al objetivo reemplazamos y modificamos la distancia
+                mejorDistancia = distanciaAcumulada;
+                mejorCamino.vaciar();
+                for (int i = 1; i <= caminoActual.longitud(); i++) {
+                    //se reemplaza el anterior mejor camino
+                    mejorCamino.insertar(((NodoVert) caminoActual.recuperar(i)).getElem(), i);
+                }
+                mejorCamino.insertar(mejorDistancia, mejorCamino.longitud() + 1);//se inserta al final la distancia
+            } else {
+                while (nodoAdyAux != null) {
+                    //para cada nodo adyacente
+                    nodoVertAux = nodoAdyAux.getVertice();
+                    if (caminoActual.localizar(nodoVertAux.getElem()) < 0) {
+                        //Si el nodo actual no está ya en el camino
+                        distanciaAux = (double) nodoAdyAux.getEtiqueta();//se obtiene la distancia a este vertice
+                        mejorDistancia = caminoMenorRecorridoAux(nodoVertAux, destino, caminoActual, mejorCamino, mejorDistancia, (distanciaAcumulada + distanciaAux));
+                    }
+                    nodoAdyAux = nodoAdyAux.getSigAdy();
+                }
+            }
+            caminoActual.eliminar(caminoActual.longitud());
+        }
+        return mejorDistancia;
+    }
+    //=========================FIN CAMINOS=========================//
 
     private NodoVert ubicarVertice(Object buscado) {
         //Recorre la lista de vértices buscando un elemento, y si lo encuentra devuelve el enlace al nodo que lo contiene.

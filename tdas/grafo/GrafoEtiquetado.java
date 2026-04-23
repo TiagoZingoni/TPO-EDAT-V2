@@ -1,5 +1,8 @@
 package tdas.grafo;
 import tdas.Lista;
+
+import javax.print.attribute.standard.OrientationRequested;
+
 import tdas.Cola;
 
 public class GrafoEtiquetado {
@@ -157,71 +160,54 @@ public class GrafoEtiquetado {
         }//Si la etiqueta no existe retorna null, se considera que no tiene por que haber una etiqueta null
         return etiquetaObtenida;
     }
-    /*INOMPLETOS  
-    public Lista caminoMasCorto(Object origen, Object destino){
-        /* Dados dos elementos de TipoVertice (origen y destino), devuelve un camino (lista de vértices)
-        que indique el camino que pasa por menos vértices que permite llegar del vértice origen al vértice
-        destino. Si hay más de un camino con igual cantidad de vértices, devuelve cualquiera de ellos. Si
-        alguno de los vértices no existe o no hay camino posible entre ellos devuelve la lista vacía. /
-        Lista camino = new Lista(), caminoAux = new Lista();
-        NodoVert nodoOrigen = ubicarVertice(origen);
-        NodoAdy nodoAux = null;
-        if(nodoOrigen != null){ //si el nodo origen existe
-            nodoAux = nodoOrigen.getPrimerAdy();
-            camino.insertar(nodoAux, 1);
-            caminoAux = caminoMasCorto(nodoAux, destino);
-            while(nodoAux!=null){
-                caminoAux = caminoMasCorto(nodoAux.getVertice(), destino);
-                if(caminoAux!=null && caminoAux.longitud()>camino.longitud()){
-
-                }
-            }
-            if(camino.longitud()>0){
-                //Si se pudo insertar
-                camino.insertar(nodoOrigen, 1);
-            }else{
-                camino.vaciar();
-            }
+    
+    public Lista caminoMasCorto(Object vertice1, Object vetice2){
+        //Retorna el camino más corto del vertice1 al vertice2. Entre dos caminos de igual longitud devuelve cualquiera. Si no existe un camino,
+        //o alguno de los vertices, se retorna una lista vacía.
+        Lista camino = new Lista(); //Lista a retornar con el camino hallado
+        NodoVert aux = this.inicio;
+        NodoVert nodoOrigen = ubicarVertice(vertice1);
+        NodoVert nodoDestino = ubicarVertice(vertice2);
+        if(nodoOrigen!=null && nodoDestino!=null){
+            camino = caminoAnchura(nodoOrigen, nodoDestino);
         }
         return camino;
     }
 
+    private Lista caminoAnchura(NodoVert origen, NodoVert destino){
+        //Siguiendo la logica del BFS se obtiene el camino más corto de origne a destino
+        Cola cola = new Cola(); //Guarda copias de los caminos
+        Lista visitados = new Lista(); //Para los ya visitados, para no entrar en bucles
+        Lista caminoInicial = new Lista(); //Lista actual a guardar en cola o llegado el caso para retornar
 
-    //listar en anchura
-    public Lista listarEnAnchura(Object origen){
-        Lista visitados = new Lista();
-        NodoVert nodoOrigen = ubicarVertice(origen);
-         NodoAdy nodoAdy;
-        if(nodoOrigen!=null){
-            nodoAdy = nodoOrigen.getPrimerAdy();
-            while(nodoAdy != null){
-                anchuraDesde(nodoAdy.getVertice(), visitados);
-                nodoAdy = nodoAdy.getSigAdy();
-            }
-        }
-        return visitados;
-    }
-    private void anchuraDesde(NodoVert inicial, Lista visitados){
-        Cola cola = new Cola();
-        NodoVert nodoVertAux;
-        NodoAdy nodoAdy = inicial.getPrimerAdy();
-        cola.poner(inicial);
-        while(!cola.esVacia()){
-            //mientras cola no sea vacia
-            nodoVertAux = (NodoVert) cola.obtenerFrente();
+        NodoAdy nodoAux = origen.getPrimerAdy();
+        NodoVert nodoVertAux = null;
+        boolean encontrado = false;
+
+        caminoInicial.insertar(origen, visitados.longitud())
+        visitados.insertar(origen, visitados.longitud());
+        cola.poner(caminoActual);
+        
+        while(!cola.esVacia() && !encontrado){
+            //Mientras la cola no sea vacía
+            Lista caminoActual = cola.obtenerFrente();
             cola.sacar();
-            while(nodoAdy != null){
-                if(visitados.localizar(nodoAdy.getVertice())<1){
-                    //Si el nodo actual ya se visitó se pasa al siguiente hasta que no hayan más, si no se visito se aplica anchuraDesde
-                    visitados.insertar(nodoAdy.getVertice(), visitados.longitud()+1);
-                    cola.poner(nodoAdy.getVertice());
+            if(nodoActual==destino){
+                encontrado = true; //Se corta la busqueda si el nodo se encontro
+            }
+            while(nodoAux!=null && !encontrado){
+                nodoVertAux = nodoAux.getVertice();
+                if(visitados.localizar(nodoVertAux)<=0){
+                    //Si el nodo no está en visitados
+                    visitados.insertar(nodoVertAux, visitados.longitud());
+                    cola.poner(nodoVertAux);
                 }
-                nodoAdy = nodoAdy.getSigAdy();
+                nodoAux.getSigAdy();
             }
         }
     }
-    */
-    
+
+
     //Lista de todos los caminos desde un nodo A a un nodo B
     public Lista listarCaminos(Object origen, Object destino){
         //Retorna todos los caminos que unen origen con destino, si no existe ningun camino o alguno de los nodos, retorna una lista vacía

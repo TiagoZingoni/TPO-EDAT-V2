@@ -9,6 +9,7 @@ public class GestorRutas {
     GrafoEtiquetado almacenRutas;
 
     public GestorRutas() {
+        //Crea el grafo etiquetado sobre el que se trabaja 
         almacenRutas = new GrafoEtiquetado(null);
     }
 
@@ -32,7 +33,7 @@ public class GestorRutas {
         return almacenRutas.eliminarVertice(unaCiudad);
     }
 
-    //MODIFICACIÓN ARREGLAR
+    //MODIFICACIÓN
     public boolean modificarRuta(Object ciudad1, Object ciudad2, double kms) {
         //Modifica la distancia de la ruta entre ciudad1 y ciudad2
         boolean modificado = almacenRutas.eliminarArco(ciudad2, ciudad2);

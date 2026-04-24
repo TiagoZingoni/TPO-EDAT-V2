@@ -14,7 +14,7 @@ public class Pedidos {
     public Pedidos(){
         this.solicitudesViaje = new MapeoAMuchos();
     }
-
+    //alta
     public boolean altaCiudadLlegada(int codigoPostal){
         //agrega una ciudad (solo su id) a la que van a haber pedidos desde la ciudad que tenga esta instacia Pedidos
         return solicitudesViaje.insertar(codigoPostal, new Lista());
@@ -23,6 +23,7 @@ public class Pedidos {
         //permite eliminar una ciudad y todos sus pedidos del arbol de Pedidos
         return solicitudesViaje.eliminar(codigoPostal);
     }
+    //baja
     public boolean altaPedido(int codigoPostal, SolicitudViaje unSolicitudViaje){
         /*
         Intenta agregar una solicitud de viaje a un destino particular
@@ -39,4 +40,5 @@ public class Pedidos {
         }
         return baja;
     }
+
 }

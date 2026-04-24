@@ -75,42 +75,43 @@ public class GestorCiudades {
         }
         return modificado;
     }
-    
+
     //Consulta
-    public String obtenerCiudad(int codigoPostal){
+    public String obtenerCiudad(int codigoPostal) {
         //Dado un código postal de una ciudad, mostrar toda su información
         String unaCiudadString = "Ciudad no encontrada.";
         Object posibleCiudad = almacenCiudades.obtenerInformacion(codigoPostal);
-        if(posibleCiudad!=null){
+        if (posibleCiudad != null) {
             unaCiudadString = posibleCiudad.toString();
         }
         return unaCiudadString;
     }
 
-    public Lista obtenerCiudadPorPrefijo(int prefijo){
+    public String obtenerCiudadPorPrefijo(int prefijo) {
         /*Dado un prefijo, devolver todas las ciudades cuyo código postal comienza con dicho
         prefijo. Por ejemplo si el prefijo es “83” debería considerar listar todas las ciudades
         cuyo código postal esté en el rango 8300 hasta 8399.*/
         Lista listaCiudades = new Lista();
         //El prefijo debe ser menor a 3 y mayor a 1 digito inclusive. Sino se debería usar obtenerCiudad
-        if(prefijo>=100){
+        if (prefijo >= 100) {
             //Si el prefijo es de 3 digitos
-            listaCiudades = almacenCiudades.listarDatosRango(prefijo*10, (prefijo*10)+9);
-        }else if(prefijo>=10){
+            listaCiudades = almacenCiudades.listarDatosRango(prefijo * 10, (prefijo * 10) + 9);
+        } else if (prefijo >= 10) {
             //Si el prefijo es de 2 digitos
-            listaCiudades = almacenCiudades.listarDatosRango(prefijo*100, (prefijo*100)+99);
-        }else if(prefijo>=1){
+            listaCiudades = almacenCiudades.listarDatosRango(prefijo * 100, (prefijo * 100) + 99);
+        } else if (prefijo >= 1) {
             //Si el prefijo es de 1 digitos
-            listaCiudades = almacenCiudades.listarDatosRango(prefijo*1000, (prefijo*1000)+999);
+            listaCiudades = almacenCiudades.listarDatosRango(prefijo * 1000, (prefijo * 1000) + 999);
         }
-        return listaCiudades;
+        return listaCiudades.toStringElementos();
     }
+
     //Estructura
     public String toStringEstructura() {
         return almacenCiudades.toString();
     }
 
-    public Lista listarClaves() {
-        return almacenCiudades.listarClaves();
+    public String listarClaves() {
+        return almacenCiudades.listarClaves().toStringElementos();
     }
 }

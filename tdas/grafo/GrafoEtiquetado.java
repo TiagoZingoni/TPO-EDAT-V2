@@ -211,7 +211,7 @@ public class GrafoEtiquetado {
                 while (nodoAux != null) {
                     NodoVert nodoVertAux = nodoAux.getVertice();
 
-                    if (visitados.localizar(nodoVertAux) <= 0) {
+                    if (visitados.localizar(nodoVertAux.getElem()) <= 0) {
                         visitados.insertar(nodoVertAux.getElem(), visitados.longitud() + 1);
                         //Por cada vecino encontrado se clona el camino actual y se agrega el vecino
                         Lista nuevoCamino = caminoActual.clone();
@@ -272,7 +272,7 @@ public class GrafoEtiquetado {
         NodoVert nodoDestino = ubicarVertice(destino);
         if ((nodoOrigen != null && nodoDestino != null) && !origen.equals(destino)) {
             caminoMenorRecorridoAux(nodoOrigen, nodoDestino, new Lista(), camino, 0, 0);
-        } else if (origen.equals(destino)) {
+        } else if ((nodoOrigen != null && nodoDestino != null) && origen.equals(destino)) {
             camino.insertar(destino, 1);
             camino.insertar(0, 2);
         }
@@ -293,7 +293,7 @@ public class GrafoEtiquetado {
                 mejorCamino.vaciar();
                 for (int i = 1; i <= caminoActual.longitud(); i++) {
                     //se reemplaza el anterior mejor camino
-                    mejorCamino.insertar(((NodoVert) caminoActual.recuperar(i)).getElem(), i);
+                    mejorCamino.insertar((caminoActual.recuperar(i)), i);
                 }
                 mejorCamino.insertar(mejorDistancia, mejorCamino.longitud() + 1);//se inserta al final la distancia
             } else {

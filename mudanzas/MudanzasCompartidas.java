@@ -83,6 +83,7 @@ public class MudanzasCompartidas {
         opcion = sc.nextLine();
         switch (opcion) {
             case "1":
+                //===============ALTA CIUDAD===============\\
                 System.out.println("ALTA CIUDAD:");
                 System.out.println("Ingrese un código postal (número):");
                 codPostal = sc.nextLine();

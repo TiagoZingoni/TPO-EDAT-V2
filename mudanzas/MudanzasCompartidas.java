@@ -1,13 +1,14 @@
 package mudanzas;
 
 import java.util.Scanner;
-import mudanzas.gestores.GestorCiudades;
-import mudanzas.gestores.GestorRutas;
+import mudanzas.gestores.*;
 
 public class MudanzasCompartidas {
 
+    //Todos los gestores 
     GestorCiudades gestorCiudades = new GestorCiudades();
     GestorRutas gestorRutas = new GestorRutas();
+    GestorCliente gestorClientes = new GestorCliente(100);//Tamaño de la lista hash
 
     public void menu() {
         Scanner sc = new Scanner(System.in);
@@ -15,64 +16,56 @@ public class MudanzasCompartidas {
 
         while (true) {
             //Menú
-            System.out.println("Menu:");
-            System.out.println(imprimirMenu());
-            System.out.print("Ingrese una opción: ");
+            //String menu
+            System.out.println("MENÚ:");
+            System.out.println("1. Carga inicial del sistema.\n"
+                    + "2. ABM de Ciudades\n"
+                    + "3. ABM de la red de rutas\n"
+                    + "4. ABM de clientes\n"
+                    + "5. ABM de pedidos\n"
+                    + "6. Consulta sobre clientes\n"
+                    + "7. Consultas sobre ciudades\n"
+                    + "8. Consultas sobre viajes\n"//debería ser rutas?
+                    + "9. Verificar viaje\n"
+                    + "10. Mostrar Sistema");
+            System.out.println("Ingrese una opción: ");
             opcion = sc.nextLine();
-            switchMenu(opcion);
+            //Opciones del menu
+            switch (opcion) {
+                case "1":
+
+                    break;
+                case "2":
+                    abmCiudades();
+                    break;
+                case "3":
+                    abmRedRutas();
+                    break;
+                case "4":
+                    abmClientes();
+                    break;
+                case "5":
+                    break;
+                case "6":
+                    break;
+                case "7":
+                    consultasCiudades();
+                    break;
+                case "8":
+                    consultaViaje();
+                    break;
+                case "9":
+                    break;
+                case "10":
+                    break;
+                default:
+                    break;
+            }
 
         }
     }
 
-    public static String imprimirMenu() {
-        //Retorna el string del menú
-        String menu;
-        menu = ("1. Carga inicial del sistema.\n"
-                + "2. ABM de Ciudades\n"
-                + "3. ABM de la red de rutas\n"
-                + "4. ABM de clientes\n"
-                + "5. ABM de pedidos\n"
-                + "6. Consulta sobre clientes\n"
-                + "7. Consultas sobre ciudades\n"
-                + "8. Consultas sobre viajes\n"
-                + "9. Verificar viaje\n"
-                + "10. Mostrar Sistema");
-        return menu;
-    }
-
-    public void switchMenu(String opcion) {
-        //Opcion seleccionada del menú:
-        switch (opcion) {
-            case "1":
-
-                break;
-            case "2":
-                abmCiudades();
-                break;
-            case "3":
-                abmRedRutas();
-                break;
-            case "4":
-                break;
-            case "5":
-                break;
-            case "6":
-                break;
-            case "7":
-                consultasCiudades();
-                break;
-            case "8":
-                break;
-            case "9":
-                break;
-            case "10":
-                break;
-            default:
-                break;
-        }
-    }
 //==========================CIUDADES==========================\\
-
     private void abmCiudades() {
         Scanner sc = new Scanner(System.in);
         String opcion;
@@ -332,4 +325,224 @@ public class MudanzasCompartidas {
                 break;
         }
     }
+
+    private void consultaViaje() {
+        Scanner sc = new Scanner(System.in);
+        String opcion;
+        int ciudadA, ciudadB, ciudadC;
+        double kms;
+        System.out.println("Menú Constula Viaje: \n"
+                + "1. Obtener camino que llegue de A a B, que pasa por menos ciudades\n"
+                + "2. Obtener camino que llegue de A a B, recorriendo menos kms\n"
+                + "3. Obtener todos los caminos que lleguen de A a B, pasando por C\n"
+                + "4. Verificar si es posible llegar de A a B recorriendo como maximo n kms\n"
+                + "0. Retroceder");
+        System.out.print("Ingrese una opción: ");
+        opcion = sc.nextLine();
+        switch (opcion) {
+            case "1":
+                System.out.println("MENOS CIUDADES:");
+                try {
+                    System.out.println("Ingrese el codigo postal de la primer ciudad:");
+                    ciudadA = sc.nextInt();
+                    System.out.println("Ingrese el codigo postal de la segunda ciudad:");
+                    ciudadB = sc.nextInt();
+                    System.out.println(gestorRutas.caminoPorMenosCiudades(ciudadA, ciudadB));
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                consultaViaje();
+                break;
+            case "2":
+                System.out.println("MENOS Kms:");
+                try {
+                    System.out.println("Ingrese el codigo postal de la primer ciudad:");
+                    ciudadA = sc.nextInt();
+                    System.out.println("Ingrese el codigo postal de la segunda ciudad:");
+                    ciudadB = sc.nextInt();
+                    System.out.println(gestorRutas.caminoConMenorDistancia(ciudadA, ciudadB));
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                consultaViaje();
+                break;
+            case "3":
+                System.out.println("PASAN POR C:");
+                try {
+                    System.out.println("Ingrese el codigo postal de la primer ciudad:");
+                    ciudadA = sc.nextInt();
+                    System.out.println("Ingrese el codigo postal de la segunda ciudad:");
+                    ciudadB = sc.nextInt();
+                    System.out.println("Ingrese el codigo postal de la tercer ciudad:");
+                    ciudadC = sc.nextInt();
+                    System.out.println(gestorRutas.caminosPasanPorCiudad(ciudadA, ciudadB, ciudadC));
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                consultaViaje();
+                break;
+            case "4":
+                System.out.println("ES POSIBLE:");
+                try {
+                    System.out.println("Ingrese el codigo postal de la primer ciudad:");
+                    ciudadA = sc.nextInt();
+                    System.out.println("Ingrese el codigo postal de la segunda ciudad:");
+                    ciudadB = sc.nextInt();
+                    System.out.println("Ingrese la cantidad de kms que no debe superar:");
+                    kms = sc.nextDouble();
+                    if (gestorRutas.recorridoMenorA(ciudadA, ciudadB, kms)) {
+                        System.out.println("Si, existe por lo menos un camino de " + ciudadA + " a " + ciudadB
+                                + " que requiere menos de " + kms + "kms ");
+                    } else {
+                        System.out.println("No existe ningun camino de " + ciudadA + " a " + ciudadB
+                                + " que requiera menos de " + kms + "kms ");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                consultaViaje();
+                break;
+            default:
+                break;
+        }
+    }
+
+//==========================CLIENTES==========================\\
+    private void abmClientes() {
+        Scanner sc = new Scanner(System.in);
+        String opcion;
+        String tipoDoc, nombre, apellido, mail;
+        int nroDoc, telefono;
+        System.out.println("Menú Clientes: \n"
+                + "1. Alta Cliente\n"
+                + "2. Baja Cliente\n"
+                + "3. Modificación Cliente\n"
+                + "0. Retroceder");
+        System.out.print("Ingrese una opción: ");
+        opcion = sc.nextLine();
+        switch (opcion) {
+            case "1":
+                System.out.println("ALTA CLIENTE:");
+                try {
+                    //Pedimos clave
+                    System.out.println("Ingrese el tipo de documento:");
+                    tipoDoc = sc.nextLine();
+                    System.out.println("Ingrese el numero de documento:");
+                    nroDoc = sc.nextInt();
+                    //Pedimos datos
+                    System.out.println("Ingrese el nombre de la persona:");
+                    nombre = sc.nextLine();
+                    System.out.println("Ingrese el apellido:");
+                    apellido = sc.nextLine();
+                    System.out.println("Ingrese el numero de telefono:");
+                    telefono = sc.nextInt();
+                    System.out.println("Ingrese el mail:");
+                    mail = sc.nextLine();
+                    //intentamos insertar
+                    if (gestorClientes.altaCliente(new ClaveCliente(tipoDoc, nroDoc), new DatosCliente(nombre, apellido, telefono, mail))) {
+                        System.out.println("Persona agregada correctamente");
+                    } else {
+                        System.out.println("Error: persona ya existente");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                abmClientes();
+                break;
+            case "2":
+                System.out.println("BAJA CLIENTE:");
+                try {
+                    //Pedimos clave
+                    System.out.println("Ingrese el tipo de documento:");
+                    tipoDoc = sc.nextLine();
+                    System.out.println("Ingrese el numero de documento:");
+                    nroDoc = sc.nextInt();
+                    //intentamos desasociar
+                    if (gestorClientes.bajaCliente(new ClaveCliente(tipoDoc, nroDoc))) {
+                        System.out.println("Cliente eliminado exitosamente");
+                    } else {
+                        System.out.println("Error: Cliente inexistente");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                abmClientes();
+                break;
+            case "3":
+                modificacionCliente();
+                abmClientes();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void modificacionCliente() {
+        Scanner sc = new Scanner(System.in);
+        String opcion;
+        String tipoDoc, nombre, apellido, mail;
+        int nroDoc, telefono;
+        System.out.println("MODIFICACIÓN CLIENTE:");
+        System.out.println("Ingrese el tipo de documento de la persona a modificar:");
+        tipoDoc = sc.nextLine();
+        try {
+            System.out.println("Ingrese el numero de documento:");
+            nroDoc = sc.nextInt();
+            System.out.println("1. Modificar Nombre\n"
+                    + "2. Modificar Apellido\n"
+                    + "3. Modificar Telefono\n"
+                    + "4. Modificar mail\n"
+                    + "0. Retroceder");
+            System.out.print("Ingrese una opción: ");
+            opcion = sc.nextLine();
+            switch (opcion) {
+                case "1":
+                    System.out.println("MODIFICACIÓN NOMBRE:");
+                    System.out.println("Ingrese el nuevo nombre");
+                    nombre = sc.nextLine();
+                    if (gestorClientes.modificarNombre(new ClaveCliente(tipoDoc, nroDoc), nombre)) {
+                        System.out.println("Nombre modificado con exito");
+                    } else {
+                        System.out.println("Error: Cliente inexistente");
+                    }
+                    break;
+                case "2":
+                    System.out.println("MODIFICACIÓN APELLIDO:");
+                    System.out.println("Ingrese el nuevo apellido");
+                    apellido = sc.nextLine();
+                    if (gestorClientes.modificarApellido(new ClaveCliente(tipoDoc, nroDoc), apellido)) {
+                        System.out.println("Apellido modificado con exito");
+                    } else {
+                        System.out.println("Error: Cliente inexistente");
+                    }
+                    break;
+                case "3":
+                    System.out.println("MODIFICACIÓN TELEFONO:");
+                    System.out.println("Ingrese el nuevo telefono");
+                    telefono = sc.nextInt();
+                    if (gestorClientes.modificarTelefono(new ClaveCliente(tipoDoc, nroDoc), telefono)) {
+                        System.out.println("Telefono modificado con exito");
+                    } else {
+                        System.out.println("Error: Cliente inexistente");
+                    }
+                    break;
+                case "4":
+                    System.out.println("MODIFICACIÓN MAIL:");
+                    System.out.println("Ingrese el nuevo mail");
+                    mail = sc.nextLine();
+                    if (gestorClientes.modificarEmail(new ClaveCliente(tipoDoc, nroDoc), mail)) {
+                        System.out.println("Mail modificado con exito");
+                    } else {
+                        System.out.println("Error: Cliente inexistente");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println("Numero invalido");
+        }
+
+    }
+
 }

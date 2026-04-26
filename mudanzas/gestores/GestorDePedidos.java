@@ -1,5 +1,7 @@
 package mudanzas.gestores;
 
+import tdas.diccionario.Diccionario;
+
 public class GestorDePedidos {
 
     //Gestiona los pedidos de cada ciudad y entre ciudades.

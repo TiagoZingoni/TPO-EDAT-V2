@@ -28,7 +28,7 @@ public class MudanzasCompartidas {
                     + "7. Consultas sobre ciudades\n"
                     + "8. Consultas sobre viajes\n"//debería ser rutas?
                     + "9. Verificar viaje\n"
-                    + "10. Mostrar Sistema");
+                    + "10. Mostrar Sistema\n");
             System.out.println("Ingrese una opción: ");
             opcion = sc.nextLine();
             //Opciones del menu
@@ -46,6 +46,7 @@ public class MudanzasCompartidas {
                     abmClientes();
                     break;
                 case "5":
+                    abmPedidos();
                     break;
                 case "6":
                     break;
@@ -585,4 +586,37 @@ public class MudanzasCompartidas {
 
     }
 
+//===========================PEDIDOS===========================\\
+    private void abmPedidos() {
+        Scanner sc = new Scanner(System.in);
+        String opcion;
+        System.out.println("Menú Pedidos: \n"
+                + "1. Alta Pedido\n"
+                + "2. Baja Pedido\n"
+                + "3. Modificación Pedido\n"
+                + "0. Retroceder");
+        System.out.print("Ingrese una opción: ");
+        opcion = sc.nextLine();
+        switch (opcion) {
+            case "1":
+                int codPostalSalida,
+                 codPostalLlegada;
+                System.out.println("ALTA PEDIDO:");
+                try {
+                    System.out.println("Ingrese el codigo postal de la ciudad de salida:");
+                    codPostalSalida = sc.nextInt();
+                    System.out.println("Ingrese el codigo postal de la ciudad de llegada:");
+                    codPostalLlegada = sc.nextInt();
+                    if (gestorRutas.existeCamino(codPostalSalida, codPostalLlegada)) {
+                        //Si existe un camino entre dichos codigos postales, agregamos el pedido
+
+                    } else {
+                        System.out.println("Ruta inexistente o ciudad no econtrada");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                break;
+        }
+    }
 }

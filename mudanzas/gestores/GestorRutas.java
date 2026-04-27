@@ -77,4 +77,9 @@ public class GestorRutas {
         boolean posible = (listaAux != null && (double) listaAux.recuperar(listaAux.longitud()) <= km);
         return posible;
     }
+
+    public boolean existeCamino(Object ciudad1, Object ciudad2) {
+        //Retorna si eixste o no un camino entre dos ciudades si recorrer de más innecesariamente
+        return almacenRutas.existeCamino(ciudad1, ciudad2);
+    }
 }

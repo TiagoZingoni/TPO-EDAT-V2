@@ -4,17 +4,24 @@ import mudanzas.Ciudad;
 import mudanzas.Pedidos;
 import mudanzas.SolicitudViaje;
 import tdas.Lista;
-import tdas.diccionario.Diccionario;
 
 public class GestorDePedidos {
+
     //Gestiona los pedidos de cada ciudad y entre ciudades.
+    //ALTA
+    public boolean altaPedido(int codigoPostal, Pedidos pedidosDeCiudad, SolicitudViaje unaSolicitud) {
+        //inserta una solicitud de la ciudad actual a la ciudad daada por parametro. Se debe chequear que el camino exista previamente
+        //Si no existe lo agrego, es más optimo esto que buscarlo y después probar
+        pedidosDeCiudad.altaCiudadLlegada(codigoPostal);//Si ya existe acá no pasa nada. 
+        pedidosDeCiudad.altaPedido(codigoPostal, unaSolicitud);//Podría optimizarse? crear un metodo en mapeoAMuchos sería romper la logica creo.
+        return true;
+    }
 
-    GestorCiudades almacenCiudades;
-    GestorRutas almacenRutas;
-
-    public GestorDePedidos(GestorCiudades ciudades, GestorRutas rutas) {
-        almacenCiudades = ciudades;
-        almacenRutas = rutas;
+    //BAJA
+    public boolean bajaPedido(int codigoPostal, Pedidos pedidosDeCiudad, int idSolicitud) {
+        /*Dada un id ciudad e id solicitud, intenta eliminar la solicituda de dicha ciudad,
+        retorna verdadero si pudo, falso si la solicitud o ciudad de entrega no existe*/
+        return pedidosDeCiudad.bajaPedido(codigoPostal, idSolicitud);
     }
 
     //Consultas Pedidos

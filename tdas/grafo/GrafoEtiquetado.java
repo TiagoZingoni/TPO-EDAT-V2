@@ -312,6 +312,43 @@ public class GrafoEtiquetado {
         }
         return mejorDistancia;
     }
+
+    public boolean existeCamino(Object origen, Object destino) {
+        boolean existe = false;
+        NodoVert nodoOrigen = ubicarVertice(origen);
+        NodoVert nodoDestino = ubicarVertice(destino);
+        if ((nodoOrigen != null && nodoDestino != null) && !origen.equals(destino)) {
+            existe = existeCaminoAux(nodoOrigen, destino, new Lista());
+        } else if ((nodoOrigen != null && nodoDestino != null) && origen.equals(destino)) {
+            existe = true;
+        }
+        return existe;
+    }
+
+    private boolean existeCaminoAux(NodoVert origen, Object buscado, Lista nodosVisitados) {
+        //Recorre el grafo desde todos los alcanzables desde origen hasta hallar buscado o terminar, retorna true si encontró, false si no
+        boolean existe = false;
+        NodoAdy nodoAdyAux = origen.getPrimerAdy();
+        NodoVert nodoVertAux;
+        if (nodosVisitados.localizar(origen.getElem()) < 0) {
+            //Si el nodo actual no existe en la lista de visitados lo agrego, y sigo, si ya existe retorno falso
+            nodosVisitados.insertar(origen.getElem(), nodosVisitados.longitud() + 1);
+            //Guardo por los que ya pase para no entrar en bucle
+            while (nodoAdyAux != null && !existe) {
+                //Mientras hayan caminos y no sepamos que llega o no llega a buscado
+                nodoVertAux = nodoAdyAux.getVertice();
+                if ((nodoVertAux.getElem()).equals(buscado)) {
+                    //Si el nodo buscado es el actual
+                    existe = true;
+                } else {
+                    //Sino seguimos
+                    existe = existeCaminoAux(nodoVertAux, buscado, nodosVisitados);
+                }
+                nodoAdyAux = nodoAdyAux.getSigAdy();
+            }
+        }
+        return existe;
+    }
     //=========================FIN CAMINOS=========================//
 
     private NodoVert ubicarVertice(Object buscado) {

@@ -22,12 +22,13 @@ public class Pedidos {
         return solicitudesViaje.insertar(codigoPostal, new Lista());
     }
 
+    //baja
     public boolean bajaCiudadLlegada(int codigoPostal) {
         //permite eliminar una ciudad y todos sus pedidos del arbol de Pedidos
         return solicitudesViaje.eliminar(codigoPostal);
     }
 
-    //baja
+    //alta
     public boolean altaPedido(int codigoPostal, SolicitudViaje unSolicitudViaje) {
         /*
         Intenta agregar una solicitud de viaje a un destino particular
@@ -36,6 +37,7 @@ public class Pedidos {
         return solicitudesViaje.asociarALista(codigoPostal, unSolicitudViaje);
     }
 
+    //baja
     public boolean bajaPedido(int codigoPostal, int idSolicitud) {
         //si el codigo postal existe, y dentro de este se encuentra la idSolicitud, se elimina la solicitud y retorna true
         Lista lista = solicitudesViaje.obtenerLista(codigoPostal);

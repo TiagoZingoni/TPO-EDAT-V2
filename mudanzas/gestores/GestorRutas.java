@@ -45,47 +45,30 @@ public class GestorRutas {
     }
 
     //CONSULTAS
-    public String caminoPorMenosCiudades(Object ciudad1, Object ciudad2) {
+    public Lista caminoPorMenosCiudades(Object ciudad1, Object ciudad2) {
         //Obtiene el camino que llegue de la ciudad 1 a la ciudad 2 pasando por la menor cantidad de ciudades
         Lista listaAux = almacenRutas.caminoMasCorto(ciudad1, ciudad2);
-        String retorno = "";
-        if (listaAux.esVacia()) {
-            retorno = "No existe un camino entre " + ciudad1.toString() + " y " + ciudad2.toString();
-        } else {
-            retorno = listaAux.toStringElementos();
-        }
-        return retorno;
+        return listaAux;
     }
 
-    public String caminoConMenorDistancia(Object ciudad1, Object ciudad2) {
+    public Lista caminoConMenorDistancia(Object ciudad1, Object ciudad2) {
         //Obtiene el camino que va de la ciudad1 a la ciudad2 recorriendo la menor cantidad de km,
         //retorna un string de ciudades, y el ultimo elemento es la cantidad de km.
-        Lista listaAux = almacenRutas.caminoMenorRecorrido(ciudad1, ciudad2);
-        String retorno = "";
-        if (listaAux.esVacia()) {
-            retorno = "No existe un camino entre " + ciudad1.toString() + " y " + ciudad2.toString();
-        } else {
-            retorno = listaAux.toStringElementos() + "kms.";
-        }
-        return retorno;
+        return almacenRutas.caminoMenorRecorrido(ciudad1, ciudad2);
     }
 
-    public String caminosPasanPorCiudad(Object ciudad1, Object ciudad2, Object ciudad3) {
-        //Obtener todos los caminos posibles para llegar de A a B que pasen por una ciudad C dada sin pasar dos veces por la misma ciudad
-        Lista caminosDe1A2 = almacenRutas.listarCaminos(ciudad1, ciudad2);
-        Lista listaAux;
-        String caminos = "";
+    public Lista caminosPasanPorCiudad(Object ciudad1, Object ciudad2, Object ciudad3) {
+        //Obtener todos los caminos posibles para llegar de 1 a 2 que pasen por una ciudad 3 dada sin pasar dos veces por la misma ciudad
+        Lista caminosDe1A2 = almacenRutas.listarCaminos(ciudad1, ciudad2);//Tomamos todos los caminos de 1 a 2
+        Lista listaAux = new Lista();
         for (int i = 1; i <= caminosDe1A2.longitud(); i++) {
-            //Para cada camino de la lista obtenida, si pasa por C lo agrego al String
+            //Para cada camino de la lista obtenida, si pasa por 3 lo agrego al String
             listaAux = (Lista) caminosDe1A2.recuperar(i);
             if (listaAux.localizar(ciudad3) > 0) {
-                caminos += i + ". " + listaAux.toStringElementos() + "\n";
+                listaAux.insertar(ciudad3, listaAux.longitud());//si pasa por 3 agregamos el camino a la lista
             }
         }
-        if (caminos.equals("")) {
-            caminos = "No existe un camino entre " + ciudad1.toString() + " y " + ciudad2.toString();
-        }
-        return caminos;
+        return listaAux;
     }
 
     public boolean recorridoMenorA(Object ciudad1, Object ciudad2, double km) {
@@ -94,5 +77,4 @@ public class GestorRutas {
         boolean posible = (listaAux != null && (double) listaAux.recuperar(listaAux.longitud()) <= km);
         return posible;
     }
-
 }

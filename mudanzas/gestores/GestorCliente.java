@@ -26,16 +26,16 @@ public class GestorCliente {
     }
 
     //CONSULTAS
-    public String listarClientes() {
+    public Lista listarClientes() {
         //lista todos los clientes almacenados
-        String lista = "";
         Lista listaClaves = almacenClientes.obtenerConjuntoDominio(), listaDatos = almacenClientes.obtenerConjuntoRango();
+        Lista listaClientes = new Lista();
         int limite = listaClaves.longitud(); // sirve cualquiera de las 2 longitudes
         for (int i = 1; i <= limite; i++) {
-            //Generamos la listas
-            lista = lista + "P;" + listaClaves.recuperar(i).toString() + listaDatos.recuperar(i).toString() + "\n";
+            //Generamos la lista de String de cliente
+            listaClientes.insertar("P;" + listaClaves.recuperar(i).toString() + listaDatos.recuperar(i).toString(), i);
         }
-        return lista;
+        return listaClientes;
     }
 
     //MODIFICACIONES

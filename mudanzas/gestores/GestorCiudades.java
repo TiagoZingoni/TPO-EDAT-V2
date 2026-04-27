@@ -1,6 +1,8 @@
 package mudanzas.gestores;
 
 import mudanzas.Ciudad;
+import mudanzas.Pedidos;
+import mudanzas.SolicitudViaje;
 import tdas.Lista;
 import tdas.diccionario.Diccionario;
 
@@ -76,18 +78,13 @@ public class GestorCiudades {
         return modificado;
     }
 
-    //Consulta
-    public String obtenerCiudad(int codigoPostal) {
-        //Dado un código postal de una ciudad, mostrar toda su información
-        String unaCiudadString = "Ciudad no encontrada.";
-        Object posibleCiudad = almacenCiudades.obtenerInformacion(codigoPostal);
-        if (posibleCiudad != null) {
-            unaCiudadString = posibleCiudad.toString();
-        }
-        return unaCiudadString;
+    //Consultas
+    public Ciudad obtenerCiudad(int codigoPostal) {
+        //Dado un código postal de una ciudad, retorna la ciudad si existe, sino null
+        return (Ciudad) almacenCiudades.obtenerInformacion(codigoPostal);
     }
 
-    public String obtenerCiudadPorPrefijo(int prefijo) {
+    public Lista obtenerCiudadPorPrefijo(int prefijo) {
         /*Dado un prefijo, devolver todas las ciudades cuyo código postal comienza con dicho
         prefijo. Por ejemplo si el prefijo es “83” debería considerar listar todas las ciudades
         cuyo código postal esté en el rango 8300 hasta 8399.*/
@@ -103,7 +100,7 @@ public class GestorCiudades {
             //Si el prefijo es de 1 digitos
             listaCiudades = almacenCiudades.listarDatosRango(prefijo * 1000, (prefijo * 1000) + 999);
         }
-        return listaCiudades.toStringElementos();
+        return listaCiudades;
     }
 
     //Estructura
@@ -113,5 +110,45 @@ public class GestorCiudades {
 
     public String listarClaves() {
         return almacenCiudades.listarClaves().toStringElementos();
+    }
+
+    //Consultas Pedidos
+    public String espacioNecesario(int ciudadA, int ciudadB) {
+        /*Dada una ciudad A y una ciudad B mostrar todos los pedidos y calcular cuánto
+        espacio total hace falta en el camión. */
+        Lista listaPedidos = new Lista();
+        int espacioAcumulado = 0;
+        String txtRespuesta = "";
+        Ciudad posibleCiudad = (Ciudad) almacenCiudades.obtenerInformacion(ciudadA);
+        Pedidos pedidosCiudad;
+        SolicitudViaje solAux;
+        if (posibleCiudad != null) {
+            //Recorremos todas las ciudades a la que tenga pedidos ciudad A hasta obtener ciudad B
+            pedidosCiudad = posibleCiudad.getSolicitudesViajes();//Obtenemos el arbol de pedidos de A
+            listaPedidos = pedidosCiudad.obtenerPedidos(ciudadB);//Obtenemos la lista de pedidos de A a B
+            if (!listaPedidos.esVacia()) {
+                //Si existen pedidos entre A y B los agregamos al string y cargamos el acumulado
+                for (int i = 1; i <= listaPedidos.longitud(); i++) {
+                    //Para cada pedido entre A y B
+                    solAux = (SolicitudViaje) listaPedidos.recuperar(i);
+                    txtRespuesta += solAux.toString(ciudadA, ciudadB);
+                    espacioAcumulado += solAux.getCantidadMetrosCubicos();
+                }
+            }
+            txtRespuesta = txtRespuesta + "\nEspacio necesario:" + espacioAcumulado + "mts cúbicos";
+        } else {
+            txtRespuesta = "Error Ciudad no encontrada o pedidos inexistentes";
+        }
+        return txtRespuesta;
+    }
+
+    public int posiblesAgregables(int ciudadA, int ciudadB, int cantMtsCubicos) {
+        /*Dada una ciudad A y una ciudad B y una cantidad en metros cúbicos (espacio en
+        un camión), verificar si sobra espacio en el camión y devuelve cuanto*/
+        Ciudad posibleCiudad = (Ciudad) almacenCiudades.obtenerInformacion(ciudadA);
+    }
+
+    public String pedidoMenorA() {
+        //Dado una ciudadA y una ciudadB, retorna todos los pedidos que no superan cierto limite de mts cubicos
     }
 }

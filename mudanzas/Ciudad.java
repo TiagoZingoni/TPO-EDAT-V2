@@ -1,7 +1,5 @@
 package mudanzas;
 
-import tdas.mapeoAMuchos.MapeoAMuchos;
-
 public class Ciudad {
 
     private final int codPostal;
@@ -38,8 +36,12 @@ public class Ciudad {
         return this.provincia;
     }
 
+    public Pedidos getSolicitudesViajes() {
+        return solicitudesViajes;
+    }
+
     //String
-    public String toString(){
-        return "C;"+codPostal+";"+provincia+";"+nombreCiudad+"\n";
+    public String toString() {
+        return "C;" + codPostal + ";" + provincia + ";" + nombreCiudad + "\n";
     }
 }

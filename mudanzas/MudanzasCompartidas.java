@@ -2,6 +2,7 @@ package mudanzas;
 
 import java.util.Scanner;
 import mudanzas.gestores.*;
+import tdas.Lista;
 
 public class MudanzasCompartidas {
 
@@ -227,7 +228,13 @@ public class MudanzasCompartidas {
                 codPostal = sc.nextLine();
                 try {
                     intCodPostal = Integer.parseInt(codPostal);
-                    System.out.println(gestorCiudades.obtenerCiudad(intCodPostal));
+                    Ciudad ciudadAux = gestorCiudades.obtenerCiudad(intCodPostal); //Buscamos la ciudad
+                    if (ciudadAux != null) {
+                        System.out.println(ciudadAux.toString());
+                    } else {
+                        System.out.println("Ciudad no encontrada");
+                    }
+
                 } catch (NumberFormatException e) {
                     System.out.println("Numero invalido");
                 }
@@ -238,8 +245,16 @@ public class MudanzasCompartidas {
                 codPostal = sc.nextLine();
                 try {
                     intCodPostal = Integer.parseInt(codPostal);
-                    System.out.println("Ciudades encontradas:");
-                    System.out.println(gestorCiudades.obtenerCiudadPorPrefijo(intCodPostal));
+                    Lista listaAux = gestorCiudades.obtenerCiudadPorPrefijo(intCodPostal);
+                    if (!listaAux.esVacia()) {
+                        //Si la lista no es vacía, se imprimen sus elementos
+                        System.out.println("Ciudades encontradas:");
+                        System.out.println(listaAux.toStringElementos());
+                    } else {
+                        System.out.println("No se encontraron ciudades con el prefijo: " + intCodPostal);
+                    }
+
+                    System.out.println();
                 } catch (NumberFormatException e) {
                     System.out.println("Numero invalido");
                 }
@@ -331,6 +346,7 @@ public class MudanzasCompartidas {
         String opcion;
         int ciudadA, ciudadB, ciudadC;
         double kms;
+        Lista listaAux;
         System.out.println("Menú Constula Viaje: \n"
                 + "1. Obtener camino que llegue de A a B, que pasa por menos ciudades\n"
                 + "2. Obtener camino que llegue de A a B, recorriendo menos kms\n"
@@ -347,7 +363,13 @@ public class MudanzasCompartidas {
                     ciudadA = sc.nextInt();
                     System.out.println("Ingrese el codigo postal de la segunda ciudad:");
                     ciudadB = sc.nextInt();
-                    System.out.println(gestorRutas.caminoPorMenosCiudades(ciudadA, ciudadB));
+                    listaAux = gestorRutas.caminoPorMenosCiudades(ciudadA, ciudadB);//Cargamos la lista con el camino
+                    if (!listaAux.esVacia()) {
+                        //Si la lista no está vacía, entonces existe un camino:
+                        System.out.println("Camino que pasa por menos ciudades:\n" + listaAux.toStringElementos());
+                    } else {
+                        System.out.println("No se encontró ningun camino entre " + ciudadA + " y " + ciudadB);
+                    }
                 } catch (Exception e) {
                     System.out.println("Numero invalido");
                 }
@@ -360,13 +382,20 @@ public class MudanzasCompartidas {
                     ciudadA = sc.nextInt();
                     System.out.println("Ingrese el codigo postal de la segunda ciudad:");
                     ciudadB = sc.nextInt();
-                    System.out.println(gestorRutas.caminoConMenorDistancia(ciudadA, ciudadB));
+                    listaAux = gestorRutas.caminoConMenorDistancia(ciudadA, ciudadB);//Cargamos la lista, el ultimo elemento es la cantidad de kms
+                    if (!listaAux.esVacia()) {
+                        //Si la lista no es vacía
+                        System.out.println("Camino que recorre menos kilometros:\n" + listaAux.toStringElementos() + "kms");
+                    } else {
+                        System.out.println("No se encontró ningun camino entre " + ciudadA + " y " + ciudadB);
+                    }
                 } catch (Exception e) {
                     System.out.println("Numero invalido");
                 }
                 consultaViaje();
                 break;
             case "3":
+                Lista caminoAux;
                 System.out.println("PASAN POR C:");
                 try {
                     System.out.println("Ingrese el codigo postal de la primer ciudad:");
@@ -375,7 +404,18 @@ public class MudanzasCompartidas {
                     ciudadB = sc.nextInt();
                     System.out.println("Ingrese el codigo postal de la tercer ciudad:");
                     ciudadC = sc.nextInt();
-                    System.out.println(gestorRutas.caminosPasanPorCiudad(ciudadA, ciudadB, ciudadC));
+                    listaAux = gestorRutas.caminosPasanPorCiudad(ciudadA, ciudadB, ciudadC);//Cargamos la lista con la lista de caminos
+                    if (!listaAux.esVacia()) {
+                        //Si la lista no es vacía
+                        System.out.println("Camino pasa por " + ciudadC + ":\n");
+                        for (int i = 1; i < listaAux.longitud(); i++) {
+                            //Para cada camino de la lista caminos
+                            caminoAux = (Lista) listaAux.recuperar(i);
+                            System.out.println(caminoAux.toStringElementos());
+                        }
+                    } else {
+                        System.out.println("No se encontró ningun camino entre " + ciudadA + " y " + ciudadB);
+                    }
                 } catch (Exception e) {
                     System.out.println("Numero invalido");
                 }

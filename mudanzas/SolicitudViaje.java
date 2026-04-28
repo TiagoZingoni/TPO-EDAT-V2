@@ -60,6 +60,30 @@ public class SolicitudViaje {
         pago = true;
     }
 
+    public void setFecha(String unaFecha) {
+        fechaSolicitud = unaFecha;
+    }
+
+    public void setCantidadMetros(double unaCantidadMetrosCubicos) {
+        this.cantidadMetrosCubicos = unaCantidadMetrosCubicos;
+    }
+
+    public void setCantidadBultos(int unaCantBultos) {
+        this.cantidadBultos = unaCantBultos;
+    }
+
+    public void setDomicilioRetiro(String unDomicilio) {
+        this.domicilioRetiro = unDomicilio;
+    }
+
+    public void setDomicilioEntrega(String unDomicilio) {
+        this.domicilioEntrega = unDomicilio;
+    }
+
+    public void setCliente(ClaveCliente unaClave) {
+        this.clienteSolicitud = unaClave;
+    }
+
     public String toString(int ciudadA, int ciudadB) {
         /*ciudad origen, ciudad destino, fecha de solicitud, identificador del
         cliente, cantidad de metros cúbicos, cantidad de bultos, domicilio de retiro y domicilio de

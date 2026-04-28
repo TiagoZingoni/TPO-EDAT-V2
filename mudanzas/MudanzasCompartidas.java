@@ -636,7 +636,7 @@ public class MudanzasCompartidas {
                         System.out.println("Si esta pago ingrese '1', sino '2' (Solo el numero):");
                         opcionAux = sc.nextInt();
                         estaPago = (opcionAux == 1);
-                        if (gestorPedidos.altaPedido(codPostalLlegada, codPostalSalida, new SolicitudViaje((LocalDate.now()).toString(), unaClaveCliente, cantMtsCubicos, unaCantBultos, domRetiro, domEntrega, estaPago, idSolicitud++))) {
+                        if (gestorPedidos.altaPedido(codPostalLlegada, codPostalSalida, new SolicitudViaje((LocalDate.now()).toString(), unaClaveCliente, Math.abs(cantMtsCubicos), Math.abs(unaCantBultos), domRetiro, domEntrega, estaPago, idSolicitud++))) {
                             //Si se pudo insertar:
                             System.out.println("Pedido insertado con exito: ");
                         } else {
@@ -671,25 +671,152 @@ public class MudanzasCompartidas {
                 abmPedidos();
                 break;
             case "3":
-                modificacionPedido();
+                SolicitudViaje solicitudAModificar;
+                //Se piden los datos de la soliciutd a modificar antes de permitir modificar, ya que puede no existir
+                try {
+                    System.out.println("Modifcación Pedidos:");
+                    System.out.println("Ingrese el codigo postal de la ciudad de salida:");
+                    codPostalSalida = sc.nextInt();
+                    System.out.println("Ingrese el codigo postal de la ciudad de llegada:");
+                    codPostalLlegada = sc.nextInt();
+                    System.out.println("Ingrese el identificador de la solicitud a modificar:");
+                    idSolicitud = sc.nextInt();
+                    solicitudAModificar = gestorPedidos.obtenerSolicitud(codPostalSalida, codPostalLlegada, idSolicitud);
+                    if (solicitudAModificar != null) {
+                        modificacionPedido(solicitudAModificar, codPostalSalida, codPostalLlegada);
+                    } else {
+                        System.out.println("Solicitud: " + idSolicitud + " de " + codPostalSalida + " a " + codPostalLlegada + " no encontrada");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
                 abmPedidos();
                 break;
+
             default:
                 break;
         }
     }
 
-    public void modificacionPedido() {
+    public void modificacionPedido(SolicitudViaje solicitudAModificar, int ciudadSalida, int ciudadLlegada) {
         Scanner sc = new Scanner(System.in);
         String opcion;
         System.out.println("Menú Modifcación Pedidos: \n"
-                + "1. Alta Pedido\n"
-                + "2. Baja Pedido\n"
-                + "3. Modificación Pedido\n"
+                + "Para el pedido: " + solicitudAModificar.toString(ciudadSalida, ciudadLlegada) + "\n"
+                + "1. Modificar Fecha de Solicitud\n"
+                + "2. Modificar Cliente\n"
+                + "3. Modificar Cantidad de Metros Cúbicos\n"
+                + "4. Modificar Cantidad de Bultos"
+                + "5. Modificar Domicilio Entrega"
+                + "6. Modificar Domicilio Retiro"
+                + "7. Modificar Estado del Pago"
                 + "0. Retroceder");
         System.out.print("Ingrese una opción: ");
         opcion = sc.nextLine();
         switch (opcion) {
+            case "1":
+                int año,
+                 mes,
+                 dia;
+                String fechaNueva;
+                System.out.println("MODIFICACIÓN FECHA:");
+                try {
+                    System.out.println("La fecha debe ser del tipo dd/mm/yyyy, solo ingresar numeros");
+                    System.out.println("Ingrese el nuevo día:");
+                    dia = sc.nextInt();
+                    System.out.println("Ingrese el nuevo mes:");
+                    mes = sc.nextInt();
+                    System.out.println("Ingrese el nuevo año:");
+                    año = sc.nextInt();
+                    fechaNueva = LocalDate.of(año, mes, dia).toString();
+                    gestorPedidos.modificarFecha(solicitudAModificar, fechaNueva);
+                    System.out.println("Fecha modificada con exito");
+                } catch (Exception e) {
+                    System.out.println("Tipo de fecha invalida");
+                }
+                modificacionPedido(solicitudAModificar, ciudadSalida, ciudadLlegada);
+                break;
+            case "2":
+                String tipoDoc;
+                int nroDoc;
+                ClaveCliente unaClaveCliente;
+                System.out.println("MODIFICACIÓN CLIENTE:");
+                try {
+                    System.out.println("Ingrese el tipo de documento del cliente:");
+                    tipoDoc = sc.nextLine();
+                    System.out.println("Ingrese el numero de documento del cliente:");
+                    nroDoc = sc.nextInt();
+                    unaClaveCliente = new ClaveCliente(tipoDoc, nroDoc);
+                    if (gestorClientes.existeCliente(unaClaveCliente)) {
+                        //Si el cliente existe
+                        gestorPedidos.modificarCliente(solicitudAModificar, unaClaveCliente);
+                        System.out.println("Cliente modificado con exito");
+                    } else {
+                        System.out.println("Cliente " + unaClaveCliente.toString() + " no encontrado");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                modificacionPedido(solicitudAModificar, ciudadSalida, ciudadLlegada);
+                break;
+            case "3":
+                double cantMts;
+                System.out.println("MODFICACIÓN MTS CÚBICOS:");
+                try {
+                    System.out.println("Ingrese la nueva cantidad de metros cúbicos:");
+                    cantMts = sc.nextDouble();
+                    gestorPedidos.modificarMtsCubicos(solicitudAModificar, Math.abs(cantMts));
+                    System.out.println("Pedido modificado con exito");
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                modificacionPedido(solicitudAModificar, ciudadSalida, ciudadLlegada);
+                break;
+            case "4":
+                int nuevaCantBultos;
+                System.out.println("MODFICACIÓN CANTIDAD BULTOS:");
+                try {
+                    System.out.println("Ingrese la nueva cantidad de bultos:");
+                    nuevaCantBultos = sc.nextInt();
+                    gestorPedidos.modificarCantidadBultos(solicitudAModificar, Math.abs(nuevaCantBultos));
+                    System.out.println("Pedido modificado con exito");
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                modificacionPedido(solicitudAModificar, ciudadSalida, ciudadLlegada);
+                break;
+            case "5":
+                String nuevoDom;
+                System.out.println("MODIFICACIÓN DOMICILIO ENTREGA:");
+                try {
+                    System.out.println("Ingrese el nuevo domicilio:");
+                    nuevoDom = sc.nextLine();
+                    gestorPedidos.modificarDomEntrega(solicitudAModificar, nuevoDom);
+                    System.out.println("Pedido modificado con exito");
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                modificacionPedido(solicitudAModificar, ciudadSalida, ciudadLlegada);
+                break;
+            case "6":
+                System.out.println("MODIFICACIÓN DOMICILIO RETIRO:");
+                try {
+                    System.out.println("Ingrese el nuevo domicilio:");
+                    nuevoDom = sc.nextLine();
+                    gestorPedidos.modificarDomRetiro(solicitudAModificar, nuevoDom);
+                    System.out.println("Pedido modificado con exito");
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                modificacionPedido(solicitudAModificar, ciudadSalida, ciudadLlegada);
+                break;
+            case "7":
+                gestorPedidos.modificarPago(solicitudAModificar);
+                System.out.println("Pago modificado con exito");
+                modificacionPedido(solicitudAModificar, ciudadSalida, ciudadLlegada);
+                break;
+            default:
+                break;
         }
     }
 }

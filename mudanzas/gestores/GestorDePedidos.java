@@ -1,6 +1,7 @@
 package mudanzas.gestores;
 
 import mudanzas.Ciudad;
+import mudanzas.ClaveCliente;
 import mudanzas.Pedidos;
 import mudanzas.SolicitudViaje;
 import tdas.Lista;
@@ -51,7 +52,68 @@ public class GestorDePedidos {
         return exito;
     }
 
+    //Modificación
+    public void modificarFecha(SolicitudViaje unaSolicitudViaje, String unaFecha) {
+        unaSolicitudViaje.setFecha(unaFecha);
+    }
+
+    public void modificarCliente(SolicitudViaje unaSolicitudViaje, ClaveCliente unaClave) {
+        unaSolicitudViaje.setCliente(unaClave);
+    }
+
+    public void modificarMtsCubicos(SolicitudViaje unaSolicitudViaje, double mts) {
+        unaSolicitudViaje.setCantidadMetros(mts);
+    }
+
+    public void modificarCantidadBultos(SolicitudViaje unaSolicitudViaje, int cantidad) {
+        unaSolicitudViaje.setCantidadBultos(cantidad);
+    }
+
+    public void modificarDomRetiro(SolicitudViaje unaSolicitudViaje, String nuevoDom) {
+        unaSolicitudViaje.setDomicilioRetiro(nuevoDom);
+    }
+
+    public void modificarDomEntrega(SolicitudViaje unaSolicitudViaje, String nuevoDom) {
+        unaSolicitudViaje.setDomicilioEntrega(nuevoDom);
+    }
+
+    public void modificarPago(SolicitudViaje unaSolicitudViaje) {
+        unaSolicitudViaje.setPago();//Solo puede cambiar de falso a verdadero
+    }
+
     //Consultas Pedidos
+    public SolicitudViaje obtenerSolicitud(int codPostalSalida, int codPostalLlegada, int idSolicitud) {
+        //Dadas dos ciudades busca la solicitud por su id y la devuelve
+        SolicitudViaje solicitudBuscada = null;
+        Ciudad ciudadSalida = gestorCiudad.obtenerCiudad(codPostalSalida);
+        Pedidos pedidosAux;
+        Lista listaAux;
+        int longAux, i = 1;
+        boolean encontrado = false;
+        if (ciudadSalida != null) {
+            //Si la ciudad existe, buscamos la solicitud
+            pedidosAux = ciudadSalida.getSolicitudesViajes();
+            if (pedidosAux != null) {
+                //Si la lista de pedidos no es nula, buscamos el idSolicitud y la asignamos al retorno si la encontramos
+                listaAux = pedidosAux.obtenerPedidos(codPostalLlegada);
+                if (listaAux != null && !listaAux.esVacia()) {//Si la lista no es vacía
+                    longAux = listaAux.longitud();
+                    while (!encontrado && i <= longAux) {
+                        solicitudBuscada = (SolicitudViaje) listaAux.recuperar(i);
+                        if (solicitudBuscada.getIdSolicitud() == idSolicitud) {
+                            //Si la solicitud de la lista es la buscada, salimos del while, sino seguimos buscando
+                            encontrado = true;
+                        } else {
+                            solicitudBuscada = null;
+                        }
+                        i++;
+                    }
+                }
+            }
+        }
+        return solicitudBuscada;
+    }
+
     public String espacioNecesario(int ciudadA, int ciudadB) {
         /*Dada una ciudad A y una ciudad B mostrar todos los pedidos y calcular cuánto
         espacio total hace falta en el camión. */

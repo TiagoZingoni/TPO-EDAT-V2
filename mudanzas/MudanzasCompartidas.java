@@ -1,5 +1,6 @@
 package mudanzas;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 import mudanzas.gestores.*;
 import tdas.Lista;
@@ -10,6 +11,8 @@ public class MudanzasCompartidas {
     GestorCiudades gestorCiudades = new GestorCiudades();
     GestorRutas gestorRutas = new GestorRutas();
     GestorCliente gestorClientes = new GestorCliente(100);//Tamaño de la lista hash
+    GestorDePedidos gestorPedidos = new GestorDePedidos(gestorRutas, gestorCiudades);
+    int idSolicitud = 0;
 
     public void menu() {
         Scanner sc = new Scanner(System.in);
@@ -142,7 +145,7 @@ public class MudanzasCompartidas {
         String opcion;
         int intCodPostal;
         String codPostal, nombreCiudad, nombreProvincia;
-        System.out.println("MODIFICAR CIUDAD\n"
+        System.out.println("Menu Modificación Ciudad:\n"
                 + "1. Modificar Nombre Ciudad\n"
                 + "2. Modificar Nombre Provincia\n"
                 + "3. Modificar Nombre Ciudad y Provincia\n"
@@ -600,23 +603,93 @@ public class MudanzasCompartidas {
         switch (opcion) {
             case "1":
                 int codPostalSalida,
-                 codPostalLlegada;
+                 codPostalLlegada,
+                 nroDoc,
+                 unaCantBultos,
+                 opcionAux;
+                String tipoDoc,
+                 domRetiro,
+                 domEntrega;
+                ClaveCliente unaClaveCliente;
+                double cantMtsCubicos;
+                boolean estaPago;
                 System.out.println("ALTA PEDIDO:");
                 try {
                     System.out.println("Ingrese el codigo postal de la ciudad de salida:");
                     codPostalSalida = sc.nextInt();
                     System.out.println("Ingrese el codigo postal de la ciudad de llegada:");
                     codPostalLlegada = sc.nextInt();
-                    if (gestorRutas.existeCamino(codPostalSalida, codPostalLlegada)) {
-                        //Si existe un camino entre dichos codigos postales, agregamos el pedido
-
+                    System.out.println("Ingrese el tipo de documento del cliente:");
+                    tipoDoc = sc.nextLine();
+                    System.out.println("Ingrese el numero de documento del cliente:");
+                    nroDoc = sc.nextInt();
+                    unaClaveCliente = new ClaveCliente(tipoDoc, nroDoc);
+                    if (gestorClientes.existeCliente(unaClaveCliente)) {
+                        System.out.println("Ingrese la cantidad de metros cubicos:");
+                        cantMtsCubicos = sc.nextDouble();
+                        System.out.println("Ingrese la cantidad de bultos:");
+                        unaCantBultos = sc.nextInt();
+                        System.out.println("Ingrese el domicilio de retiro:");
+                        domRetiro = sc.nextLine();
+                        System.out.println("Ingrese el domicilio de entrega:");
+                        domEntrega = sc.nextLine();
+                        System.out.println("Si esta pago ingrese '1', sino '2' (Solo el numero):");
+                        opcionAux = sc.nextInt();
+                        estaPago = (opcionAux == 1);
+                        if (gestorPedidos.altaPedido(codPostalLlegada, codPostalSalida, new SolicitudViaje((LocalDate.now()).toString(), unaClaveCliente, cantMtsCubicos, unaCantBultos, domRetiro, domEntrega, estaPago, idSolicitud++))) {
+                            //Si se pudo insertar:
+                            System.out.println("Pedido insertado con exito: ");
+                        } else {
+                            System.out.println("Ruta inexistente o ciudad no econtrada");
+                        }
                     } else {
-                        System.out.println("Ruta inexistente o ciudad no econtrada");
+                        System.out.println("Cliente inexistente");
                     }
                 } catch (Exception e) {
                     System.out.println("Numero invalido");
                 }
+                abmPedidos();
                 break;
+            case "2":
+                int idSolicitud;
+                System.out.println("BAJA PEDIDO:");
+                try {
+                    System.out.println("Ingrese el codigo postal de la ciudad de salida:");
+                    codPostalSalida = sc.nextInt();
+                    System.out.println("Ingrese el codigo postal de la ciudad de llegada:");
+                    codPostalLlegada = sc.nextInt();
+                    System.out.println("Ingrese el identificador de la solicitud a eliminar:");
+                    idSolicitud = sc.nextInt();
+                    if (gestorPedidos.bajaPedido(codPostalSalida, codPostalLlegada, idSolicitud)) {
+                        System.out.println("Pedido eliminado con exito");
+                    } else {
+                        System.out.println("Pedido no econtrado");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                abmPedidos();
+                break;
+            case "3":
+                modificacionPedido();
+                abmPedidos();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void modificacionPedido() {
+        Scanner sc = new Scanner(System.in);
+        String opcion;
+        System.out.println("Menú Modifcación Pedidos: \n"
+                + "1. Alta Pedido\n"
+                + "2. Baja Pedido\n"
+                + "3. Modificación Pedido\n"
+                + "0. Retroceder");
+        System.out.print("Ingrese una opción: ");
+        opcion = sc.nextLine();
+        switch (opcion) {
         }
     }
 }

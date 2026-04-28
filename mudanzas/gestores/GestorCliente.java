@@ -26,6 +26,11 @@ public class GestorCliente {
     }
 
     //CONSULTAS
+    public boolean existeCliente(ClaveCliente unaClave) {
+        //Retorna true si el cliente existe en la estructura, false si no.
+        return almacenClientes.existeDominio(unaClave);
+    }
+
     public Lista listarClientes() {
         //lista todos los clientes almacenados
         Lista listaClaves = almacenClientes.obtenerConjuntoDominio(), listaDatos = almacenClientes.obtenerConjuntoRango();

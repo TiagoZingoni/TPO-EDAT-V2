@@ -7,21 +7,48 @@ import tdas.Lista;
 
 public class GestorDePedidos {
 
+    GestorRutas gestorRutas;
+    GestorCiudades gestorCiudad;
+
+    public GestorDePedidos(GestorRutas unGestorRutas, GestorCiudades unGestorCiudades) {
+        //Usa referencias a los gestores de ciudades y rutas generados en el menú
+        this.gestorCiudad = unGestorCiudades;
+        this.gestorRutas = unGestorRutas;
+    }
+
     //Gestiona los pedidos de cada ciudad y entre ciudades.
     //ALTA
-    public boolean altaPedido(int codigoPostal, Pedidos pedidosDeCiudad, SolicitudViaje unaSolicitud) {
-        //inserta una solicitud de la ciudad actual a la ciudad daada por parametro. Se debe chequear que el camino exista previamente
-        //Si no existe lo agrego, es más optimo esto que buscarlo y después probar
-        pedidosDeCiudad.altaCiudadLlegada(codigoPostal);//Si ya existe acá no pasa nada. 
-        pedidosDeCiudad.altaPedido(codigoPostal, unaSolicitud);//Podría optimizarse? crear un metodo en mapeoAMuchos sería romper la logica creo.
-        return true;
+    public boolean altaPedido(int codPostalSalida, int codPostalLlegada, SolicitudViaje unaSolicitud) {
+        //inserta una solicitud de la desde codPostalSalida a codPostalLlegada, retorna true si pudo, false si no
+        boolean exito = false;
+        Pedidos pedidosActual;
+        Ciudad ciudadSalida = gestorCiudad.obtenerCiudad(codPostalSalida);
+        if (gestorRutas.existeCamino(codPostalSalida, codPostalLlegada)) {
+            //Si existe un camino entre dichos codigos postales, agregamos el pedido
+            pedidosActual = ciudadSalida.getSolicitudesViajes();//Obtenemos la colección de pedidos de ciudad
+            pedidosActual.altaCiudadLlegada(codPostalLlegada);
+            pedidosActual.altaPedido(codPostalLlegada, unaSolicitud);
+        }
+        return exito;
     }
 
     //BAJA
-    public boolean bajaPedido(int codigoPostal, Pedidos pedidosDeCiudad, int idSolicitud) {
-        /*Dada un id ciudad e id solicitud, intenta eliminar la solicituda de dicha ciudad,
-        retorna verdadero si pudo, falso si la solicitud o ciudad de entrega no existe*/
-        return pedidosDeCiudad.bajaPedido(codigoPostal, idSolicitud);
+    public boolean bajaPedido(int codPostalSalida, int codPostalLlegada, int idSolicitud) {
+        /*Dada un id ciudadA, un id ciudadB e id solicitud, intenta eliminar la solicituda 
+        que va de la ciudad A a la B, retorna verdadero si pudo, falso si la solicitud o 
+        ciudad de entrega no existe*/
+        boolean exito = false;
+        Ciudad ciudadSalida = gestorCiudad.obtenerCiudad(codPostalSalida);
+        Pedidos pedidosAux;
+        if (ciudadSalida != null) {
+            //Si la ciudad existe, probamos eliminar la solicitud
+            pedidosAux = ciudadSalida.getSolicitudesViajes();
+            if (pedidosAux != null) {
+                //Si la lista de pedidos no es nula, buscamos el idSolicitud para eliminarla. Retorna true si se pudo eliminar, false si no existía
+                exito = pedidosAux.bajaPedido(codPostalLlegada, idSolicitud);
+            }
+        }
+        return exito;
     }
 
     //Consultas Pedidos

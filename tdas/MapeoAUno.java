@@ -80,6 +80,23 @@ public class MapeoAUno {
         return rango;
     }
 
+    public boolean existeDominio(Object dominio) {
+        //Dado un dominio retorna si existe o no en la estructura
+        boolean existe = false;
+        int posicion = funcionHash(dominio);//ubicación del nodo buscado
+        NodoHashMapeo actual = tabla[posicion]; //Nodo que estamos evaluando actualmente
+
+        while (actual != null) {
+            if (actual.getDominio().equals(dominio)) {
+                existe = true; //Encontramos el dominio
+                actual = null; //finalizo el while
+            } else {
+                actual = actual.getEnlace();
+            }
+        }
+        return existe;
+    }
+
     public Lista obtenerConjuntoDominio() {
         // devuelve una lista con todos los valores de tipo dominio almacenados en el mapeo.
         int cantAgregados = 0, posicion = 0;//posicion = pos actual en la tabla

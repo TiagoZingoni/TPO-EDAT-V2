@@ -3,6 +3,7 @@ package mudanzas;
 import java.time.LocalDate;
 import java.util.Scanner;
 import mudanzas.gestores.*;
+import tdas.Cola;
 import tdas.Lista;
 
 public class MudanzasCompartidas {
@@ -887,7 +888,81 @@ public class MudanzasCompartidas {
                 verificarViaje();
                 break;
             case "2":
-                
+                /*Dada una ciudad A y una ciudad B y una cantidad en metros cúbicos (espacio en
+                un camión), verificar si sobra espacio en el camión y hacer un listado de posibles
+                solicitudes a ciudades intermedias que se podrían aprovechar a cubrir,
+                considerando el camino más corto en kilómetros. */
+                Lista listaCiudades;
+                mtsNecesarios = 0;
+                double mtsDisponibles;
+                Cola colaRutaAux = new Cola();
+                int ciudadSalidaAux,
+                 ciudadLlegadaAux;
+                SolicitudViaje solicitudAux;
+                System.out.println("Espacio sobrante para pedidos entre ciudades y posibles soliciutdes a sumar");
+                try {
+                    System.out.println("Ingrese el codigo postal de la ciudad de salida:");
+                    codPostalSalida = sc.nextInt();
+                    System.out.println("Ingrese el codigo postal de la ciudad de llegada:");
+                    codPostalLlegada = sc.nextInt();
+                    System.out.println("Ingrese la cantidad de metros cubicos disponibles en el camión:");
+                    mtsDisponibles = sc.nextDouble();
+                    listaCiudades = gestorRutas.caminoConMenorDistancia(codPostalSalida, codPostalLlegada);
+
+                    if (listaCiudades != null && !listaCiudades.esVacia()) {
+                        //Obtenemos cuanto sobra de espacio, si es que sobra
+                        listaAux = gestorPedidos.listaDePedidos(codPostalSalida, codPostalLlegada);
+                        if (listaAux != null && !listaAux.esVacia()) {//Si hay pedidos:
+                            System.out.println("Para los Pedidos entre: " + codPostalSalida + " y " + codPostalLlegada + " sobran: ");
+                            for (int i = 1; i <= listaAux.longitud(); i++) {
+                                //Para cada solicitud viaje de la lista:
+                                solActual = (SolicitudViaje) listaAux.recuperar(i);
+                                mtsNecesarios += solActual.getCantidadMetrosCubicos();
+                            }
+                        } else {
+                            System.out.println("No hay pedidos entre" + codPostalSalida + " y " + codPostalLlegada + " sobran:");
+                        }
+                        mtsDisponibles = mtsDisponibles - mtsNecesarios; //Metros cubicos que nos quedan disponible post proceso
+                        System.out.println(mtsDisponibles + "mts cubicos");
+                        if (mtsDisponibles > 0) {
+                            System.out.println("Pedidos que ocupan menos que eso y quedan de pasada:");
+                            for (int i = 1; i <= listaCiudades.longitud(); i++) {
+                                //agrego cada ciudad a una cola, para poder después obtener los pedidos
+                                colaRutaAux.poner(listaCiudades.recuperar(i));
+                            }
+                            int nAux = 1;
+                            while (!colaRutaAux.esVacia()) {
+                                //Buscamos todas las solicitudes de viaje dentro de la ruta obtenida
+                                ciudadSalidaAux = (int) colaRutaAux.obtenerFrente();//Para la ciudad actual chequeamos las que faltan de la ruta
+                                nAux++;//Se empieza desde 2
+                                for (int a = nAux; a <= listaCiudades.longitud(); a++) {
+                                    //Para cada elemento de la lista chequeamos sus siguientes solicitudes
+                                    ciudadLlegadaAux = (int) listaCiudades.recuperar(a);
+                                    if (!(ciudadSalidaAux == codPostalSalida && ciudadLlegadaAux == codPostalLlegada)) {
+                                        //Para no volver a chequear todos los pedidos de la ciudadA y B original entre si
+                                        listaAux = gestorPedidos.listaDePedidos(ciudadSalidaAux, ciudadLlegadaAux);
+                                        if (listaAux != null) {
+                                            for (int i = 1; i <= listaAux.longitud(); i++) {
+                                                //Para cada pedido nuevo, chequeamos si cuple con el requisito, si si la imprimimos
+                                                solicitudAux = (SolicitudViaje) listaAux.recuperar(i);
+                                                if (solicitudAux.getCantidadMetrosCubicos() <= mtsDisponibles) {
+                                                    System.out.println(solicitudAux.toString(ciudadSalidaAux, ciudadLlegadaAux));
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                colaRutaAux.sacar();//Ya usado
+                            }
+                        }
+
+                    } else {
+                        System.out.println("No existen pedidos o camino entre " + codPostalSalida + " y " + codPostalLlegada);
+                    }
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                verificarViaje();
                 break;
             default:
                 break;

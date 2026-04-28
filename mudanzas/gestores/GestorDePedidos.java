@@ -132,6 +132,7 @@ public class GestorDePedidos {
         return listaDePedidos;
     }
 
+
     /* ======================BORRAR SI NO VA===========================*/
     public String espacioNecesarioIntento1(int ciudadA, int ciudadB) {
         /*Dada una ciudad A y una ciudad B mostrar todos los pedidos y calcular cuánto

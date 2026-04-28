@@ -43,6 +43,11 @@ public class GestorCliente {
         return listaClientes;
     }
 
+    public Object obtenerCliente(ClaveCliente unaClave) {
+        //Retorna la información del cliente dado
+        return almacenClientes.obtenerValor(unaClave);
+    }
+
     //MODIFICACIONES
     public boolean modificarNombre(Object claveCliente, String nombre) {
         //Si el cliente existe modifica y retorna verdadero, sino falso

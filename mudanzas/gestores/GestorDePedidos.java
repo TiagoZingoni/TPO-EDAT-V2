@@ -114,7 +114,26 @@ public class GestorDePedidos {
         return solicitudBuscada;
     }
 
-    public String espacioNecesario(int ciudadA, int ciudadB) {
+    public Lista listaDePedidos(int ciudadA, int ciudadB) {
+        /* Dada una ciudad A y una ciudad B retorna todos los pedidos entre estas. */
+        Ciudad ciudadSalida = gestorCiudad.obtenerCiudad(ciudadA);
+        Pedidos pedidosAux;
+        Lista listaDePedidos = new Lista(), listaAux;
+        if (ciudadSalida != null) {
+            //Si la ciudad existe, buscamos la lista
+            pedidosAux = ciudadSalida.getSolicitudesViajes();
+            if (pedidosAux != null) {
+                listaAux = pedidosAux.obtenerPedidos(ciudadB);//Obtengo la lista de pedidos a la ciudadB
+                if (listaAux != null && !listaAux.esVacia()) {
+                    listaDePedidos = listaAux.clone();//Retornamos un clon de la lista
+                }
+            }
+        }
+        return listaDePedidos;
+    }
+
+    /* ======================BORRAR SI NO VA===========================*/
+    public String espacioNecesarioIntento1(int ciudadA, int ciudadB) {
         /*Dada una ciudad A y una ciudad B mostrar todos los pedidos y calcular cuánto
         espacio total hace falta en el camión. */
         Lista listaPedidos = new Lista(), listaSolicitudes = new Lista();

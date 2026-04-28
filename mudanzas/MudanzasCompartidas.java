@@ -52,6 +52,7 @@ public class MudanzasCompartidas {
                     abmPedidos();
                     break;
                 case "6":
+                    consultasClientes();
                     break;
                 case "7":
                     consultasCiudades();
@@ -60,6 +61,7 @@ public class MudanzasCompartidas {
                     consultaViaje();
                     break;
                 case "9":
+                    verificarViaje();
                     break;
                 case "10":
                     break;
@@ -586,10 +588,35 @@ public class MudanzasCompartidas {
         } catch (Exception e) {
             System.out.println("Numero invalido");
         }
-
     }
 
+    private void consultasClientes() {
+        Scanner sc = new Scanner(System.in);
+        String opcion, tipoDoc;
+        int nroDoc;
+        ClaveCliente unaClaveCliente;
+        DatosCliente unosDatos;
+        System.out.println("Consulta Cliente:");
+        try {
+
+            System.out.println("Ingrese el tipo de documento del cliente:");
+            tipoDoc = sc.nextLine();
+            System.out.println("Ingrese el numero de documento del cliente:");
+            nroDoc = sc.nextInt();
+            unaClaveCliente = new ClaveCliente(tipoDoc, nroDoc);
+            unosDatos = (DatosCliente) gestorClientes.obtenerCliente(unaClaveCliente);
+            if (unosDatos != null) {
+                //Si se obtuvieron los datos
+                System.out.println("P;" + unaClaveCliente.toString() + unosDatos.toString());
+            } else {
+                System.out.println("Cliente: " + unaClaveCliente.toString() + " no encontrado");
+            }
+        } catch (Exception e) {
+            System.out.println("Numero invalido");
+        }
+    }
 //===========================PEDIDOS===========================\\
+
     private void abmPedidos() {
         Scanner sc = new Scanner(System.in);
         String opcion;
@@ -814,6 +841,53 @@ public class MudanzasCompartidas {
                 gestorPedidos.modificarPago(solicitudAModificar);
                 System.out.println("Pago modificado con exito");
                 modificacionPedido(solicitudAModificar, ciudadSalida, ciudadLlegada);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void verificarViaje() {
+        Scanner sc = new Scanner(System.in);
+        String opcion;
+        int codPostalSalida, codPostalLlegada;
+        System.out.println("Menú Verificar Viaje: \n"
+                + "1. Pedidos entre dos ciudades y espacio necesario\n"
+                + "2. Espacio sobrante para pedidos entre ciudades y posibles soliciutdes a sumar\n"
+                + "3. Camino perfecto entre dos ciudades y una capacidad\n"
+                + "0. Retroceder");
+        System.out.print("Ingrese una opción: ");
+        opcion = sc.nextLine();
+        switch (opcion) {
+            case "1":
+                Lista listaAux;
+                double mtsNecesarios = 0;
+                SolicitudViaje solActual;
+                try {
+                    System.out.println("Pedidos entre dos ciudades y espacio necesario:");
+                    System.out.println("Ingrese el codigo postal de la ciudad de salida:");
+                    codPostalSalida = sc.nextInt();
+                    System.out.println("Ingrese el codigo postal de la ciudad de llegada:");
+                    codPostalLlegada = sc.nextInt();
+                    listaAux = gestorPedidos.listaDePedidos(codPostalSalida, codPostalLlegada);
+                    if (listaAux != null) {
+                        System.out.println("Lista de Pedidos entre: " + codPostalSalida + " y " + codPostalLlegada);
+                        for (int i = 1; i <= listaAux.longitud(); i++) {
+                            solActual = (SolicitudViaje) listaAux.recuperar(i);
+                            mtsNecesarios += solActual.getCantidadMetrosCubicos();
+                            System.out.println(solActual.toString(codPostalSalida, codPostalLlegada));
+                        }
+                        System.out.println("Se necesita un espacio minimo de " + mtsNecesarios + " mts cubicos");
+                    } else {
+                        System.out.println("No se encontraron pedidos entre: " + codPostalSalida + " y " + codPostalLlegada);
+                    }
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                verificarViaje();
+                break;
+            case "2":
+                
                 break;
             default:
                 break;

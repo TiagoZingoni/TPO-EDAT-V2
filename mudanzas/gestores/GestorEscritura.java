@@ -10,13 +10,10 @@ public class GestorEscritura {
     escritura y lectura*/
     File archivoLog;
 
-    public GestorEscritura() {
+    public GestorEscritura(File archivoLog) {
         //Requiere de los otros gestores para carga directa al sistema
         //Acá se crea el archivo de texto de log, después hay metodos que serviran para agregar lo realizado
-        try {
-            archivoLog = new File("arhivo.log");
-        } catch (Exception e) {
-        }
+        this.archivoLog = archivoLog;
     }
 
     public Boolean objetoAgregado(String tipoObjeto, String objeto, boolean logrado) {

@@ -1,5 +1,6 @@
 package mudanzas;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Scanner;
 import mudanzas.gestores.*;
@@ -9,18 +10,28 @@ import tdas.Lista;
 public class MudanzasCompartidas {
 
     //Todos los gestores 
-    GestorEscritura gestorEscritura = new GestorEscritura();
-    GestorCiudades gestorCiudades = new GestorCiudades(gestorEscritura);
-    GestorRutas gestorRutas = new GestorRutas();
-    GestorCliente gestorClientes = new GestorCliente(100);//Tamaño de la lista hash
-    GestorDePedidos gestorPedidos = new GestorDePedidos(gestorRutas, gestorCiudades, gestorEscritura);
+    GestorEscritura gestorEscritura;
+    GestorCiudades gestorCiudades;
+    GestorRutas gestorRutas;
+    GestorCliente gestorClientes;//Tamaño de la lista hash
+    GestorDePedidos gestorPedidos;
     int idSolicitud = 0;
+    GestorLectura gestorLectura;
+    boolean cargaInicial;
 
-    public void menu() {
+    public void menu(File archivoLectura, File archivoEscritura) {
+        gestorLectura = new GestorLectura(gestorEscritura, gestorCiudades, gestorRutas, gestorClientes, gestorPedidos, archivoLectura, idSolicitud);
+        gestorEscritura = new GestorEscritura(archivoEscritura);
+        gestorCiudades = new GestorCiudades(gestorEscritura);
+        gestorRutas = new GestorRutas();
+        gestorClientes = new GestorCliente(100);//Tamaño de la lista hash
+        gestorPedidos = new GestorDePedidos(gestorRutas, gestorCiudades, gestorEscritura);
+        cargaInicial = false;//Cambia a true cuando se hizo la carga inicial
         Scanner sc = new Scanner(System.in);
         String opcion;
+        boolean seguir = true;
 
-        while (true) {
+        while (seguir == true) {
             //Menú
             //String menu
             System.out.println("MENÚ:");
@@ -33,13 +44,14 @@ public class MudanzasCompartidas {
                     + "7. Consultas sobre ciudades\n"
                     + "8. Consultas sobre viajes\n"//debería ser rutas?
                     + "9. Verificar viaje\n"
-                    + "10. Mostrar Sistema\n");
+                    + "10. Mostrar Sistema\n"
+                    + "11. Salir");
             System.out.println("Ingrese una opción: ");
             opcion = sc.nextLine();
             //Opciones del menu
             switch (opcion) {
                 case "1":
-
+                    cargaInicialDelSistema();
                     break;
                 case "2":
                     abmCiudades();
@@ -69,6 +81,8 @@ public class MudanzasCompartidas {
                     mostrarSistema();
                     break;
                 default:
+                    cargaFinDelSistema();
+                    seguir = false;
                     break;
             }
 
@@ -1066,12 +1080,18 @@ public class MudanzasCompartidas {
     }
 
     private void cargaInicialDelSistema() {
-
-        gestorEscritura.escrbirTexto("Estado del sistema al final de la ejecución:");
-        gestorEscritura.escrbirTexto("ESTRUCTURA CIUDADES:\n" + gestorCiudades.toStringEstructura());
-        gestorEscritura.escrbirTexto("ESTRUCTURA CLIENTES:\n" + gestorClientes.toStringEstructura());
-        gestorEscritura.escrbirTexto("ESTRUCTURA RUTAS:\n" + gestorRutas.toStringEstructura());
-        gestorEscritura.escrbirTexto("ESTRUCTURA PEDIDOS:\n" + gestorPedidos.toStringEstructura());
+        if (!cargaInicial) {//Si la carga inicial todavía no se hizo
+            idSolicitud = gestorLectura.leer();//Se hace la carga inicial
+            //Se guarda en el log la estado del sistema luego de la carga incial
+            gestorEscritura.escrbirTexto("Estado del sistema al final de la ejecución:");
+            gestorEscritura.escrbirTexto("ESTRUCTURA CIUDADES:\n" + gestorCiudades.toStringEstructura());
+            gestorEscritura.escrbirTexto("ESTRUCTURA CLIENTES:\n" + gestorClientes.toStringEstructura());
+            gestorEscritura.escrbirTexto("ESTRUCTURA RUTAS:\n" + gestorRutas.toStringEstructura());
+            gestorEscritura.escrbirTexto("ESTRUCTURA PEDIDOS:\n" + gestorPedidos.toStringEstructura());
+            System.out.println("Sistema cargado con exito");
+        } else {
+            System.out.println("Carga inicial realizada previamente");
+        }
     }
 
     private void cargaFinDelSistema() {

@@ -653,7 +653,7 @@ public class MudanzasCompartidas {
                     nroDoc = sc.nextInt();
                     unaClaveCliente = new ClaveCliente(tipoDoc, nroDoc);
                     if (gestorClientes.existeCliente(unaClaveCliente)) {
-                        System.out.println("Ingrese la cantidad de metros cubicos:");
+                        System.out.println("Ingrese la cantidad de metros cubicos: (de la forma: numero.numero o numero)");
                         cantMtsCubicos = sc.nextDouble();
                         System.out.println("Ingrese la cantidad de bultos:");
                         unaCantBultos = sc.nextInt();
@@ -978,7 +978,9 @@ public class MudanzasCompartidas {
                 int bucle = 0,
                  ciudadActual,
                  iCiudad = 0;
+                double metrosRestantes;
                 Cola colaCiudadesEntrada = new Cola();
+                boolean caminoPerfecto = true;
                 System.out.println("Camino perfecto entre dos ciudades y una capacidad:");
                 try {
                     while (bucle == 0) {
@@ -991,9 +993,25 @@ public class MudanzasCompartidas {
                         System.out.println("Si quiere agregar otra ciudad ingrese 0 (Numero):");
                         bucle = sc.nextInt();
                     }
-                    if (gestorRutas.caminoPosible(colaCiudadesEntrada)) {
+                    if (gestorRutas.caminoPosible(colaCiudadesEntrada.clone())) {
+                        System.out.println("Ingrese la capacidad del camion: (de la forma: numero.numero o numero)");
+                        metrosRestantes = sc.nextDouble();
                         //Si el camino ingresado por parametro existe
-
+                        while (caminoPerfecto && !colaCiudadesEntrada.esVacia()) {
+                            //Para cada ciudad de colaCiudadesEntrada, menos la ultima, y mientras siga siendo un camino perfecto verificamos que:
+                            ciudadActual = (int) colaCiudadesEntrada.obtenerFrente();
+                            colaCiudadesEntrada.sacar();
+                            if (!colaCiudadesEntrada.esVacia()) {
+                                //Si el sacado no es el ultimo de la lista, se revisa camino perfecto
+                                metrosRestantes = gestorPedidos.tramoPerfecto(ciudadActual, colaCiudadesEntrada, metrosRestantes);
+                            }
+                            caminoPerfecto = metrosRestantes >= 0;
+                        }
+                        if (caminoPerfecto) {
+                            System.out.println("El camino dado SI es un camino perfecto");
+                        } else {
+                            System.out.println("El camino dado NO es un camino perfecto");
+                        }
                     } else {
                         System.out.println("Ruta no encontrada");
                     }

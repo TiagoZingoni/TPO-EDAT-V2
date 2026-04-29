@@ -141,14 +141,4 @@ public class GestorCiudades {
         }
         return txtRespuesta;
     }
-
-    public int posiblesAgregables(int ciudadA, int ciudadB, int cantMtsCubicos) {
-        /*Dada una ciudad A y una ciudad B y una cantidad en metros cúbicos (espacio en
-        un camión), verificar si sobra espacio en el camión y devuelve cuanto*/
-        Ciudad posibleCiudad = (Ciudad) almacenCiudades.obtenerInformacion(ciudadA);
-    }
-
-    public String pedidoMenorA() {
-        //Dado una ciudadA y una ciudadB, retorna todos los pedidos que no superan cierto limite de mts cubicos
-    }
 }

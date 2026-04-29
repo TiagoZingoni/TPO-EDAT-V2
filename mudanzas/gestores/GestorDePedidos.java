@@ -4,6 +4,7 @@ import mudanzas.Ciudad;
 import mudanzas.ClaveCliente;
 import mudanzas.Pedidos;
 import mudanzas.SolicitudViaje;
+import tdas.Cola;
 import tdas.Lista;
 
 public class GestorDePedidos {
@@ -132,34 +133,46 @@ public class GestorDePedidos {
         return listaDePedidos;
     }
 
-
-    /* ======================BORRAR SI NO VA===========================*/
-    public String espacioNecesarioIntento1(int ciudadA, int ciudadB) {
-        /*Dada una ciudad A y una ciudad B mostrar todos los pedidos y calcular cuánto
-        espacio total hace falta en el camión. */
-        Lista listaPedidos = new Lista(), listaSolicitudes = new Lista();
-        int espacioAcumulado = 0;
-        String txtRespuesta = "";
-        Ciudad posibleCiudad = (Ciudad) almacenCiudades.obtenerInformacion(ciudadA);
-        Pedidos pedidosCiudad;
-        SolicitudViaje solAux;
-        if (posibleCiudad != null) {
-            //Recorremos todas las ciudades a la que tenga pedidos ciudad A hasta obtener ciudad B
-            pedidosCiudad = posibleCiudad.getSolicitudesViajes();//Obtenemos el arbol de pedidos de A
-            listaPedidos = pedidosCiudad.obtenerPedidos(ciudadB);//Obtenemos la lista de pedidos de A a B
-            if (!listaPedidos.esVacia()) {
-                //Si existen pedidos entre A y B los agregamos al string y cargamos el acumulado
-                for (int i = 1; i <= listaPedidos.longitud(); i++) {
-                    //Para cada pedido entre A y B
-                    solAux = (SolicitudViaje) listaPedidos.recuperar(i);
-                    txtRespuesta += solAux.toString(ciudadA, ciudadB);
-                    espacioAcumulado += solAux.getCantidadMetrosCubicos();
+    public double tramoPerfecto(int ciudadA, Cola colaCiudades, double mtsRestantes) {
+        /*Dados un codigo postal, y una coleccion de codigos postales, retorna si existe alguna 
+        solicitud viaje que vaya de la ciudadA a cualquier ciudad de colaCiudades. Ademas de existir una solicitud
+        se debe retornar cuantos mts cubicos requiere, si el valor es negativo es porque no existe o se excede
+        de la capacidad. Si es positivo o 0, quiere decir que ese tramo es perfecto*/
+        Ciudad ciudadSalida = gestorCiudad.obtenerCiudad(ciudadA);
+        Pedidos pedidosAux;
+        double menoresMtsSolicitados = 0, mtsActual; //Se deben revisar todas las solicitudes, si es que existen, y restar a mtsRestantes, solo la menor de todas. Busco el mejor caso posible
+        Lista listaAux;
+        Cola colaCiudadesAux = colaCiudades.clone();//Para no alterar la cola dada por parametro
+        int codPostalAux;
+        SolicitudViaje solicitudActual;
+        if (ciudadSalida != null) {
+            pedidosAux = ciudadSalida.getSolicitudesViajes();
+            if (pedidosAux != null) {
+                while (!colaCiudadesAux.esVacia()) {
+                    //Se chequea hasta que se termine la colección, ya que se debe verificar cada solicitud posible
+                    codPostalAux = (int) colaCiudadesAux.obtenerFrente();//Nos quedamos con la ciudadActual de colaCiudades
+                    colaCiudadesAux.sacar();//retiramos de la cola  
+                    listaAux = pedidosAux.obtenerPedidos(codPostalAux);
+                    if (listaAux != null && !listaAux.esVacia()) {
+                        //Con que la lista de pedidos existea y NO sea nulo, buscamos los menos mts cubicos requeridos de la lista
+                        for (int i = 1; i <= listaAux.longitud(); i++) {
+                            //Para cada SolicitudViaje
+                            solicitudActual = (SolicitudViaje) listaAux.recuperar(i);
+                            mtsActual = solicitudActual.getCantidadMetrosCubicos();
+                            if (menoresMtsSolicitados > mtsActual || menoresMtsSolicitados == 0) {
+                                menoresMtsSolicitados = mtsActual;
+                            }
+                        }
+                    }
                 }
             }
-            txtRespuesta = txtRespuesta + "\nEspacio necesario:" + espacioAcumulado;
-        } else {
-            txtRespuesta = "Error Ciudad no encontrada o pedidos inexistentes";
         }
-        return txtRespuesta;
+        if (menoresMtsSolicitados == 0) {
+            //Si menoresMtsSolicitados es 0 quiere decir que no habían pedidos directametne, retorna 0
+            mtsRestantes = -1;
+        } else {
+            mtsRestantes = mtsRestantes - menoresMtsSolicitados;//Si el menor caso ocupa más de los disponibles retorna negativo
+        }
+        return mtsRestantes;
     }
 }

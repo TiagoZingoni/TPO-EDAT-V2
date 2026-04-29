@@ -349,6 +349,39 @@ public class GrafoEtiquetado {
         }
         return existe;
     }
+
+    public boolean existeCaminoLista(Cola caminoParametro) {
+        //Dado un camino (Cola) retorna true si existe en el grafo, false si no.
+        Cola camino = caminoParametro.clone();//Para no vaciar la cola se trabaja sobre un clone
+        boolean exito = true;
+        NodoVert nodoActual, nodoAux;
+        NodoAdy nodoAdyActual = null;
+        if (camino != null && !camino.esVacia()) {
+            nodoActual = ubicarVertice(camino.obtenerFrente());
+            camino.sacar();
+            if (nodoActual != null) {
+                nodoAdyActual = nodoActual.getPrimerAdy();
+            }
+            while (exito && !camino.esVacia()) {
+                //Mientras no se compruebe que el camino existe o no exsite
+                if (nodoAdyActual == null) {
+                    exito = false; //Si recorrimos todos los posibles y el camino no siguio, se retorna falso
+                } else {
+                    nodoAux = nodoAdyActual.getVertice();
+                    if (nodoAux.getElem().equals(camino.obtenerFrente())) {
+                        //Si el tramo de la ruta se encontro, se pasa con la siguiente
+                        camino.sacar();
+                        nodoActual = nodoAux;
+                        nodoAdyActual = nodoActual.getPrimerAdy();//Nos paramos sobre los nuevos posibles caminos
+                    } else {
+                        nodoAdyActual = nodoAdyActual.getSigAdy();
+                    }
+                }
+            }
+
+        }
+        return exito;
+    }
     //=========================FIN CAMINOS=========================//
 
     private NodoVert ubicarVertice(Object buscado) {

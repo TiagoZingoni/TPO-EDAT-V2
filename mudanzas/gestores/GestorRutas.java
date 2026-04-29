@@ -1,5 +1,6 @@
 package mudanzas.gestores;
 
+import tdas.Cola;
 import tdas.Lista;
 import tdas.grafo.GrafoEtiquetado;
 
@@ -81,5 +82,10 @@ public class GestorRutas {
     public boolean existeCamino(Object ciudad1, Object ciudad2) {
         //Retorna si eixste o no un camino entre dos ciudades si recorrer de más innecesariamente
         return almacenRutas.existeCamino(ciudad1, ciudad2);
+    }
+
+    public boolean caminoPosible(Cola ruta) {
+        //Retorna si la ruta ingresada por parametro existe en el almacenRutas
+        return almacenRutas.existeCaminoLista(ruta);
     }
 }

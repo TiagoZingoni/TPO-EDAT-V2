@@ -964,6 +964,43 @@ public class MudanzasCompartidas {
                 }
                 verificarViaje();
                 break;
+            case "3":
+                /*Dada una lista de ciudades y una cantidad de metros cúbicos que corresponden a
+                la capacidad del camión, verificar si es un “camino perfecto”. Un camino perfecto es
+                un camino que existe en el grafo y que hay por lo menos una solicitud que se pueda
+                transportar entre las ciudades por las cuales pasará el camión. Por ejemplo, si la
+                lista de ciudades es [A, B, C, D], siendo este un camino posible, el camino será
+                perfecto si además de existir el camino indicado, hay por lo menos un pedido que
+                vaya de la ciudad A a cualquiera de las ciudades B, C o D; por lo menos un pedido
+                desde la ciudad B hacia C o D y por lo menos un pedido desde C a D. Tener en
+                cuenta que la capacidad del camión debe ser suficiente para cubrir los traslados a
+                lo largo de todo el camino. */
+                int bucle = 0,
+                 ciudadActual,
+                 iCiudad = 0;
+                Cola colaCiudadesEntrada = new Cola();
+                System.out.println("Camino perfecto entre dos ciudades y una capacidad:");
+                try {
+                    while (bucle == 0) {
+                        //Se carga la ruta a evaluar
+                        iCiudad++;//nro de ciudad a agregar
+                        System.out.println("Ingrese la ciudad " + iCiudad + ":");
+                        ciudadActual = sc.nextInt();
+                        colaCiudadesEntrada.poner(ciudadActual);//Agregamos la ciudad a la lista
+                        System.out.println("Ruta actual: " + colaCiudadesEntrada.toString());//Para que lo vea el usuario
+                        System.out.println("Si quiere agregar otra ciudad ingrese 0 (Numero):");
+                        bucle = sc.nextInt();
+                    }
+                    if (gestorRutas.caminoPosible(colaCiudadesEntrada)) {
+                        //Si el camino ingresado por parametro existe
+
+                    } else {
+                        System.out.println("Ruta no encontrada");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Numero invalido");
+                }
+                break;
             default:
                 break;
         }

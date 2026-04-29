@@ -9,10 +9,11 @@ import tdas.Lista;
 public class MudanzasCompartidas {
 
     //Todos los gestores 
-    GestorCiudades gestorCiudades = new GestorCiudades();
+    GestorEscritura gestorEscritura = new GestorEscritura();
+    GestorCiudades gestorCiudades = new GestorCiudades(gestorEscritura);
     GestorRutas gestorRutas = new GestorRutas();
     GestorCliente gestorClientes = new GestorCliente(100);//Tamaño de la lista hash
-    GestorDePedidos gestorPedidos = new GestorDePedidos(gestorRutas, gestorCiudades);
+    GestorDePedidos gestorPedidos = new GestorDePedidos(gestorRutas, gestorCiudades, gestorEscritura);
     int idSolicitud = 0;
 
     public void menu() {
@@ -65,6 +66,7 @@ public class MudanzasCompartidas {
                     verificarViaje();
                     break;
                 case "10":
+                    mostrarSistema();
                     break;
                 default:
                     break;
@@ -726,7 +728,7 @@ public class MudanzasCompartidas {
         }
     }
 
-    public void modificacionPedido(SolicitudViaje solicitudAModificar, int ciudadSalida, int ciudadLlegada) {
+    private void modificacionPedido(SolicitudViaje solicitudAModificar, int ciudadSalida, int ciudadLlegada) {
         Scanner sc = new Scanner(System.in);
         String opcion;
         System.out.println("Menú Modifcación Pedidos: \n"
@@ -848,7 +850,7 @@ public class MudanzasCompartidas {
         }
     }
 
-    public void verificarViaje() {
+    private void verificarViaje() {
         Scanner sc = new Scanner(System.in);
         String opcion;
         int codPostalSalida, codPostalLlegada;
@@ -1018,9 +1020,65 @@ public class MudanzasCompartidas {
                 } catch (Exception e) {
                     System.out.println("Numero invalido");
                 }
+                verificarViaje();
                 break;
             default:
                 break;
         }
+    }
+
+//===========================SISTEMA===========================\\
+    private void mostrarSistema() {
+        Scanner sc = new Scanner(System.in);
+        String opcion;
+        System.out.println("Menú Mostrar Sistema: \n"
+                + "1. Mostrar Ciudades (Diccionario)\n"
+                + "2. Mostrar Clientes (MapeoAUno)\n"
+                + "3. Mostrar Rutas (Grafo Etiquetado no dirigido)\n"
+                + "4. Mostrar Pedidos(Ciudades con MapeoAMuchos)\n"
+                + "0. Retroceder");
+        System.out.print("Ingrese una opción: ");
+        opcion = sc.nextLine();
+        switch (opcion) {
+            case "1":
+                System.out.println("ESTRUCTURA CIUDADES:");
+                System.out.println(gestorCiudades.toStringEstructura());
+                mostrarSistema();
+                break;
+            case "2":
+                System.out.println("ESTRUCTURA CLIENTES:");
+                System.out.println(gestorClientes.toStringEstructura());
+                mostrarSistema();
+                break;
+            case "3":
+                System.out.println("ESTRUCTURA RUTAS:");
+                System.out.println(gestorRutas.toStringEstructura());
+                mostrarSistema();
+                break;
+            case "4":
+                System.out.println("ESTRUCTURA PEDIDOS:");
+                System.out.println(gestorPedidos.toStringEstructura());
+                mostrarSistema();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void cargaInicialDelSistema() {
+
+        gestorEscritura.escrbirTexto("Estado del sistema al final de la ejecución:");
+        gestorEscritura.escrbirTexto("ESTRUCTURA CIUDADES:\n" + gestorCiudades.toStringEstructura());
+        gestorEscritura.escrbirTexto("ESTRUCTURA CLIENTES:\n" + gestorClientes.toStringEstructura());
+        gestorEscritura.escrbirTexto("ESTRUCTURA RUTAS:\n" + gestorRutas.toStringEstructura());
+        gestorEscritura.escrbirTexto("ESTRUCTURA PEDIDOS:\n" + gestorPedidos.toStringEstructura());
+    }
+
+    private void cargaFinDelSistema() {
+        gestorEscritura.escrbirTexto("Estado del sistema al final de la ejecución:");
+        gestorEscritura.escrbirTexto("ESTRUCTURA CIUDADES:\n" + gestorCiudades.toStringEstructura());
+        gestorEscritura.escrbirTexto("ESTRUCTURA CLIENTES:\n" + gestorClientes.toStringEstructura());
+        gestorEscritura.escrbirTexto("ESTRUCTURA RUTAS:\n" + gestorRutas.toStringEstructura());
+        gestorEscritura.escrbirTexto("ESTRUCTURA PEDIDOS:\n" + gestorPedidos.toStringEstructura());
     }
 }

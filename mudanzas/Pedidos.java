@@ -53,4 +53,9 @@ public class Pedidos {
         return solicitudesViaje.obtenerLista(codigoPostal);
     }
 
+    public String toStringEstructura() {
+        //Retorna la estructura de los pedidos de la ciudad sobre la que se aplique
+        return solicitudesViaje.toStringEstructura();
+    }
+
 }

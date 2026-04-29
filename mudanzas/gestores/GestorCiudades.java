@@ -10,9 +10,11 @@ public class GestorCiudades {
 
     //Las ciudades son almacenadas en un TDA Diccionario que implementa un Árbol AVL.
     private Diccionario almacenCiudades;
+    private GestorEscritura gestorEscritura;
 
-    public GestorCiudades() {
+    public GestorCiudades(GestorEscritura unGestorE) {
         almacenCiudades = new Diccionario();
+        gestorEscritura = unGestorE;
     }
 
     //ABM Ciudades
@@ -24,6 +26,8 @@ public class GestorCiudades {
          */
         boolean agregada = false;
         agregada = almacenCiudades.insertar(unaCiudad.getCodigoPostal(), unaCiudad);
+        //.log alta:
+        gestorEscritura.objetoAgregado("Ciudad", unaCiudad.toString(), agregada);
         return agregada;
     }
 
@@ -31,6 +35,8 @@ public class GestorCiudades {
         boolean eliminada = false;
         //Si existe una ciudad con el codigo postal dado se eliminará del almacen y retornara true, sino false.
         eliminada = almacenCiudades.eliminar(codigoPostal);
+        //.log baja
+        gestorEscritura.objetoEliminado("Ciudad", codigoPostal + "", eliminada);
         return eliminada;
     }
 
@@ -40,20 +46,26 @@ public class GestorCiudades {
      */
     public boolean modificarNombreCiudad(int codigoPostal, String nombreCiudad) {
         boolean modificado = false;
-        Ciudad ciudadAModificar;
+        Ciudad ciudadAModificar = null;
         Object ciudadAModificarAux = almacenCiudades.obtenerInformacion(codigoPostal);
         if (ciudadAModificarAux != null) {
             //Si la ciudad existe
             modificado = true;
             ciudadAModificar = (Ciudad) ciudadAModificarAux;
             ciudadAModificar.setNombreCiudad(nombreCiudad);
+        }
+        //.log modificación
+        if (ciudadAModificar != null) {
+            gestorEscritura.objetoModificado("Ciudad", ciudadAModificarAux.toString(), ciudadAModificar.toString(), modificado);
+        } else {
+            gestorEscritura.objetoModificado("Ciudad", ciudadAModificarAux.toString(), null, modificado);
         }
         return modificado;
     }
 
     public boolean modificarNombreProvincia(int codigoPostal, String nombreProvincia) {
         boolean modificado = false;
-        Ciudad ciudadAModificar;
+        Ciudad ciudadAModificar = null;
         Object ciudadAModificarAux = almacenCiudades.obtenerInformacion(codigoPostal);
         if (ciudadAModificarAux != null) {
             //Si la ciudad existe
@@ -61,12 +73,17 @@ public class GestorCiudades {
             ciudadAModificar = (Ciudad) ciudadAModificarAux;
             ciudadAModificar.setNombreProvincia(nombreProvincia);
         }
+        if (ciudadAModificar != null) {
+            gestorEscritura.objetoModificado("Ciudad", ciudadAModificarAux.toString(), ciudadAModificar.toString(), modificado);
+        } else {
+            gestorEscritura.objetoModificado("Ciudad", ciudadAModificarAux.toString(), null, modificado);
+        }
         return modificado;
     }
 
     public boolean modificarNombreCiudadYNombreProvincia(int codigoPostal, String nombreCiudad, String nombreProvincia) {
         boolean modificado = false;
-        Ciudad ciudadAModificar;
+        Ciudad ciudadAModificar = null;
         Object ciudadAModificarAux = almacenCiudades.obtenerInformacion(codigoPostal);
         if (ciudadAModificarAux != null) {
             //Si la ciudad existe
@@ -74,6 +91,11 @@ public class GestorCiudades {
             ciudadAModificar = (Ciudad) ciudadAModificarAux;
             ciudadAModificar.setNombreProvincia(nombreProvincia);
             ciudadAModificar.setNombreCiudad(nombreCiudad);
+        }
+        if (ciudadAModificar != null) {
+            gestorEscritura.objetoModificado("Ciudad", ciudadAModificarAux.toString(), ciudadAModificar.toString(), modificado);
+        } else {
+            gestorEscritura.objetoModificado("Ciudad", ciudadAModificarAux.toString(), null, modificado);
         }
         return modificado;
     }
@@ -100,6 +122,13 @@ public class GestorCiudades {
             //Si el prefijo es de 1 digitos
             listaCiudades = almacenCiudades.listarDatosRango(prefijo * 1000, (prefijo * 1000) + 999);
         }
+        return listaCiudades;
+    }
+
+    public Lista obtenerCiudades() {
+        //Obtenemos todas las ciudades del sistema
+        Lista listaCiudades = new Lista();
+        listaCiudades = almacenCiudades.listarDatos();
         return listaCiudades;
     }
 

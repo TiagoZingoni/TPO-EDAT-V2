@@ -415,4 +415,26 @@ public class GrafoEtiquetado {
         return cadena;
     }
 
+    public String toStringEstructura() {
+        //String de la estructura en formato: "salida ->  (etiqueta) entrada1, (etiqueta) entrada2, (etiqueta) entrada..."
+        String cadena = "";
+        NodoVert nodoVertActual = this.inicio;
+        NodoAdy nodoAdyActual = null;
+        Comparable etiqueta;
+        while (nodoVertActual != null) {
+            cadena += nodoVertActual.getElem().toString() + " -> ";
+            nodoAdyActual = nodoVertActual.getPrimerAdy();
+            while (nodoAdyActual != null) {
+                cadena += "(" + nodoAdyActual.getEtiqueta().toString() + ") " + (nodoAdyActual.getVertice()).getElem().toString();
+                nodoAdyActual = nodoAdyActual.getSigAdy();
+                if (nodoAdyActual != null) {
+                    //no es necesario, pero para mejorar la legibilidad de la cadena
+                    cadena += ", ";
+                }
+            }
+            cadena += "\n";
+            nodoVertActual = nodoVertActual.getSigVert();
+        }
+        return cadena;
+    }
 }

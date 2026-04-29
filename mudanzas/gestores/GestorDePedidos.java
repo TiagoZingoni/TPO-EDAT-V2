@@ -11,11 +11,13 @@ public class GestorDePedidos {
 
     GestorRutas gestorRutas;
     GestorCiudades gestorCiudad;
+    GestorEscritura gestorEscritura;
 
-    public GestorDePedidos(GestorRutas unGestorRutas, GestorCiudades unGestorCiudades) {
+    public GestorDePedidos(GestorRutas unGestorRutas, GestorCiudades unGestorCiudades, GestorEscritura gestorEscritura) {
         //Usa referencias a los gestores de ciudades y rutas generados en el menú
         this.gestorCiudad = unGestorCiudades;
         this.gestorRutas = unGestorRutas;
+        this.gestorEscritura = gestorEscritura;
     }
 
     //Gestiona los pedidos de cada ciudad y entre ciudades.
@@ -31,6 +33,7 @@ public class GestorDePedidos {
             pedidosActual.altaCiudadLlegada(codPostalLlegada);
             pedidosActual.altaPedido(codPostalLlegada, unaSolicitud);
         }
+        gestorEscritura.objetoAgregado("Solicitud", unaSolicitud.toString(codPostalSalida, codPostalSalida), exito);
         return exito;
     }
 
@@ -50,36 +53,57 @@ public class GestorDePedidos {
                 exito = pedidosAux.bajaPedido(codPostalLlegada, idSolicitud);
             }
         }
+        gestorEscritura.objetoEliminado("Solicitud", idSolicitud + "", exito);
         return exito;
     }
 
     //Modificación
     public void modificarFecha(SolicitudViaje unaSolicitudViaje, String unaFecha) {
+        SolicitudViaje solAux = unaSolicitudViaje;
         unaSolicitudViaje.setFecha(unaFecha);
+        gestorEscritura.objetoModificado("Solicitud", solAux.toString(), unaSolicitudViaje.toString(), true);
     }
 
     public void modificarCliente(SolicitudViaje unaSolicitudViaje, ClaveCliente unaClave) {
+        SolicitudViaje solAux = unaSolicitudViaje;
         unaSolicitudViaje.setCliente(unaClave);
+        gestorEscritura.objetoModificado("Solicitud", solAux.toString(), unaSolicitudViaje.toString(), true);
+
     }
 
     public void modificarMtsCubicos(SolicitudViaje unaSolicitudViaje, double mts) {
+        SolicitudViaje solAux = unaSolicitudViaje;
         unaSolicitudViaje.setCantidadMetros(mts);
+        gestorEscritura.objetoModificado("Solicitud", solAux.toString(), unaSolicitudViaje.toString(), true);
+
     }
 
     public void modificarCantidadBultos(SolicitudViaje unaSolicitudViaje, int cantidad) {
+        SolicitudViaje solAux = unaSolicitudViaje;
         unaSolicitudViaje.setCantidadBultos(cantidad);
+        gestorEscritura.objetoModificado("Solicitud", solAux.toString(), unaSolicitudViaje.toString(), true);
+
     }
 
     public void modificarDomRetiro(SolicitudViaje unaSolicitudViaje, String nuevoDom) {
+        SolicitudViaje solAux = unaSolicitudViaje;
         unaSolicitudViaje.setDomicilioRetiro(nuevoDom);
+        gestorEscritura.objetoModificado("Solicitud", solAux.toString(), unaSolicitudViaje.toString(), true);
+
     }
 
     public void modificarDomEntrega(SolicitudViaje unaSolicitudViaje, String nuevoDom) {
+        SolicitudViaje solAux = unaSolicitudViaje;
         unaSolicitudViaje.setDomicilioEntrega(nuevoDom);
+        gestorEscritura.objetoModificado("Solicitud", solAux.toString(), unaSolicitudViaje.toString(), true);
+
     }
 
     public void modificarPago(SolicitudViaje unaSolicitudViaje) {
-        unaSolicitudViaje.setPago();//Solo puede cambiar de falso a verdadero
+        SolicitudViaje solAux = unaSolicitudViaje;
+        unaSolicitudViaje.setPago();//Solo puede cambiar de falso a verdadero        
+        gestorEscritura.objetoModificado("Solicitud", solAux.toString(), unaSolicitudViaje.toString(), true);
+
     }
 
     //Consultas Pedidos
@@ -174,5 +198,33 @@ public class GestorDePedidos {
             mtsRestantes = mtsRestantes - menoresMtsSolicitados;//Si el menor caso ocupa más de los disponibles retorna negativo
         }
         return mtsRestantes;
+    }
+
+    public String toStringEstructura() {
+        /*Por cada ciudad imprime el mapeo a muchos y sus solicitudes, solo los id de las 3 "tablas": 
+        *salida: 
+        *   C1 -> pedido1, pedido2, pedido3
+        *   izq: C2, der: C3
+        *   C2 -> p1,p2,p3
+        *   izq: C4, der: C5
+         */
+        String estructura = "";
+        Lista listaCiudades = gestorCiudad.obtenerCiudades();
+        Ciudad ciudadActual;
+        Pedidos pedidosActual;
+        for (int i = 1; i <= listaCiudades.longitud(); i++) {
+            //Para cada ciudad
+            ciudadActual = (Ciudad) listaCiudades.recuperar(i);//Ciudad actual
+            estructura += "Ciudad: " + ciudadActual.getCodigoPostal() + "\n\t"; //Agregamos para que ciudad es la estructura
+            pedidosActual = ciudadActual.getSolicitudesViajes();
+            if (pedidosActual != null) {//Si hay pedidos:
+                estructura += pedidosActual.toStringEstructura();//Agregamos toda la estructura del pedido actual
+                //Para cada cada lista de pedidos
+            } else {
+                estructura += "Sin estructuras cargadas.\n";
+            }
+            estructura += "\n";//Separa de la ciudad anterior
+        }
+        return estructura;
     }
 }

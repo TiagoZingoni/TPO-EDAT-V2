@@ -88,4 +88,8 @@ public class GestorRutas {
         //Retorna si la ruta ingresada por parametro existe en el almacenRutas
         return almacenRutas.existeCaminoLista(ruta);
     }
+
+    public String toStringEstructura() {
+        return almacenRutas.toStringEstructura();
+    }
 }

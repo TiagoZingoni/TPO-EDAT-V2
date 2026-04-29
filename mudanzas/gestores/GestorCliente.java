@@ -99,7 +99,7 @@ public class GestorCliente {
         return almacenClientes.vaciar();
     }
 
-    public String estructuraToString() {
+    public String toStringEstructura() {
         return almacenClientes.toStringEstructura();
     }
 }

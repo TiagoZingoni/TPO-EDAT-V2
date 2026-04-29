@@ -1,4 +1,5 @@
 package tdas.mapeoAMuchos;
+
 import tdas.Lista;
 
 public class MapeoAMuchos {
@@ -226,7 +227,6 @@ public class MapeoAMuchos {
     }
 
     //fin ELIMINAR.
-
     public Lista obtenerLista(Comparable buscado) {
         /* si en la estructura se encuentra almacenado un elemento con la clave 
         recibida por parámetro,devuelve la lista asociada a ella. Si no 
@@ -376,11 +376,11 @@ public class MapeoAMuchos {
     }
 
     //Trabajo sobre Lista
-    public boolean asociarALista(Comparable clave, Object elemento){
+    public boolean asociarALista(Comparable clave, Object elemento) {
         /*
         Retorna true si encontró el Nodo que tenga dicha clave e inserta elemento en la Lista, retorna false si
         no se pudo hayar el nodo buscado.
-        */
+         */
         boolean encontrado = false;
         Lista listaBuscada = null;
         if (raiz != null) {
@@ -394,32 +394,72 @@ public class MapeoAMuchos {
                 }
             }
         }
-        if(listaBuscada != null){
+        if (listaBuscada != null) {
             //if(listaBuscada.localizar(elemento)<1){
-                //No es relevante si el elemento ya existe o no en la lsita
-                listaBuscada.insertar(elemento, listaBuscada.longitud()+1);
-                encontrado = true;
+            //No es relevante si el elemento ya existe o no en la lsita
+            listaBuscada.insertar(elemento, listaBuscada.longitud() + 1);
+            encontrado = true;
             //}
         }
         return encontrado;
     }
-    private Lista asociarAListaAux(NodoAVLMAM nodo, Comparable claveBuscado){
+
+    private Lista asociarAListaAux(NodoAVLMAM nodo, Comparable claveBuscado) {
         //Recursiva hasta encontrar datos, o fin de recorrido
         Lista listaBuscada = null;
         boolean encontrado = false;
-        if(nodo != null){
-            encontrado = claveBuscado.compareTo(nodo.getClave())==0;
-            if(nodo != null && !encontrado){
-                if(claveBuscado.compareTo(nodo.getClave())<0){
+        if (nodo != null) {
+            encontrado = claveBuscado.compareTo(nodo.getClave()) == 0;
+            if (nodo != null && !encontrado) {
+                if (claveBuscado.compareTo(nodo.getClave()) < 0) {
                     listaBuscada = asociarAListaAux(nodo.getIzquierdo(), claveBuscado);
-                }else{
+                } else {
                     listaBuscada = asociarAListaAux(nodo.getDerecho(), claveBuscado);
                 }
-            }else {
+            } else {
                 listaBuscada = nodo.getLista();
             }
         }
         return listaBuscada;
     }
-}
 
+    public String toStringEstructura() {
+        //Devolución estilo: Nodo -> (elem1, elem2, elemn)
+        //                   izq:NodoHIzquierdo, der: NodoHDerecho
+        return toStringEstructuraAux(this.raiz);
+    }
+
+    private String toStringEstructuraAux(NodoAVLMAM n) {
+        String s = "";
+        Lista listaAux;
+        if (n != null) {
+            NodoAVLMAM der = n.getDerecho(), izq = n.getIzquierdo();
+            //visita el nodo n
+            s += n.getClave() + "->";
+            listaAux = n.getLista();
+            if (listaAux != null) {
+                //Si tiene elementos asociados:
+                s += "(";
+                for (int i = 1; i <= listaAux.longitud(); i++) {
+                    //Para cada elemento de la lista, lo agregamos al strigng
+                    s += " " + listaAux.recuperar(i).toString();
+                    if (i < listaAux.longitud()) {
+                        //Si no es el ultimo elemento cargamos una ,
+                        s += ", ";
+                    }
+                }
+                s += ")";
+            }
+            s += "\n\t";//Salto de linea y tabulación, para que quede identado sobre el nodo padre
+            if (izq != null) {
+                s += "izq: " + izq.getClave() + ", ";
+            }
+
+            if (der != null) {
+                s += "der: " + der.getClave();
+            }
+            s += "\n" + toStringEstructuraAux(izq) + toStringEstructuraAux(der);
+        }
+        return s;
+    }
+}

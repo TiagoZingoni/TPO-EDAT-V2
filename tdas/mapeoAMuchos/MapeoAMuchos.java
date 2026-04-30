@@ -458,7 +458,7 @@ public class MapeoAMuchos {
             if (der != null) {
                 s += "der: " + der.getClave();
             }
-            s += "\n" + toStringEstructuraAux(izq) + toStringEstructuraAux(der);
+            s += "\n\t" + toStringEstructuraAux(izq) + toStringEstructuraAux(der);
         }
         return s;
     }

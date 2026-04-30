@@ -1,13 +1,13 @@
 package mudanzas.gestores;
 
-import mudanzas.Ciudad;
-import mudanzas.ClaveCliente;
-import mudanzas.DatosCliente;
-import mudanzas.SolicitudViaje;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.StringTokenizer;
+import mudanzas.Ciudad;
+import mudanzas.ClaveCliente;
+import mudanzas.DatosCliente;
+import mudanzas.SolicitudViaje;
 
 public class GestorLectura {
 
@@ -134,7 +134,8 @@ public class GestorLectura {
             }
             br.close();
         } catch (Exception exception) {
-
+            System.out.println("Error en GestorLectura: " + exception.getMessage());
+            exception.printStackTrace();
         }
         return idSol;
     }

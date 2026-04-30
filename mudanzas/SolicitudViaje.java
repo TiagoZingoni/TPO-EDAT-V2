@@ -96,6 +96,18 @@ public class SolicitudViaje {
         }
         return "S;" + ciudadA + ";" + ciudadB + ";" + fechaSolicitud + ";" + clienteSolicitud.toString()
                 + ";" + cantidadMetrosCubicos + ";" + cantidadBultos + ";" + domicilioRetiro + ";"
+                + domicilioEntrega + ";" + estado + ";" + idSolicitud;
+    }
+
+    public String toString() {
+        String estado, respuesta;
+        if (pago) {
+            estado = "T";
+        } else {
+            estado = "F";
+        }
+        return "S;" + idSolicitud + ";" + fechaSolicitud + ";" + clienteSolicitud.toString()
+                + ";" + cantidadMetrosCubicos + ";" + cantidadBultos + ";" + domicilioRetiro + ";"
                 + domicilioEntrega + ";" + estado;
     }
 

@@ -20,12 +20,14 @@ public class MudanzasCompartidas {
     boolean cargaInicial;
 
     public void menu(File archivoLectura, File archivoEscritura) {
-        gestorLectura = new GestorLectura(gestorEscritura, gestorCiudades, gestorRutas, gestorClientes, gestorPedidos, archivoLectura, idSolicitud);
+
         gestorEscritura = new GestorEscritura(archivoEscritura);
         gestorCiudades = new GestorCiudades(gestorEscritura);
         gestorRutas = new GestorRutas();
         gestorClientes = new GestorCliente(100);//Tamaño de la lista hash
         gestorPedidos = new GestorDePedidos(gestorRutas, gestorCiudades, gestorEscritura);
+        //Luego de crear lo anterior:
+        gestorLectura = new GestorLectura(gestorEscritura, gestorCiudades, gestorRutas, gestorClientes, gestorPedidos, archivoLectura, idSolicitud);
         cargaInicial = false;//Cambia a true cuando se hizo la carga inicial
         Scanner sc = new Scanner(System.in);
         String opcion;
@@ -1089,6 +1091,7 @@ public class MudanzasCompartidas {
             gestorEscritura.escrbirTexto("ESTRUCTURA RUTAS:\n" + gestorRutas.toStringEstructura());
             gestorEscritura.escrbirTexto("ESTRUCTURA PEDIDOS:\n" + gestorPedidos.toStringEstructura());
             System.out.println("Sistema cargado con exito");
+            cargaInicial = true;
         } else {
             System.out.println("Carga inicial realizada previamente");
         }

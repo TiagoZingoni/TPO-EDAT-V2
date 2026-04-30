@@ -21,9 +21,9 @@ public class GestorEscritura {
         boolean exito = true;
         if (logrado) {
             //Si se logró se pone que el tipo objeto se pudo agregar, la hora añade detalle 
-            escrituraLog(tipoObjeto + " agregado/a con exito: " + objeto + "\n");
+            escrituraLog(tipoObjeto + " agregado/a con exito: " + objeto);
         } else {
-            escrituraLog("Fallo al agregar el/la" + tipoObjeto + ": " + objeto + "\n");
+            escrituraLog("Fallo al agregar el/la" + tipoObjeto + ": " + objeto);
         }
         return exito;
     }
@@ -33,9 +33,9 @@ public class GestorEscritura {
         boolean exito = true;
         if (logrado) {
             //Si se logró se pone que el tipo objeto se pudo agregar, la hora añade detalle 
-            escrituraLog(tipoObjeto + " eliminado/a con exito: " + objeto + "\n");
+            escrituraLog(tipoObjeto + " eliminado/a con exito: " + objeto);
         } else {
-            escrituraLog("Fallo al eliminar el/la" + tipoObjeto + ": " + objeto + "\n");
+            escrituraLog("Fallo al eliminar el/la" + tipoObjeto + ": " + objeto);
         }
         return exito;
     }
@@ -45,9 +45,9 @@ public class GestorEscritura {
         boolean exito = true;
         if (logrado) {
             //Si se logró se pone que el tipo objeto se pudo agregar, la hora añade detalle
-            escrituraLog(tipoObjeto + " modificado/a con exito de " + objetoViejo + " a " + objetoNuevo + "\n");
+            escrituraLog(tipoObjeto + " modificado/a con exito de " + objetoViejo + " a " + objetoNuevo);
         } else {
-            escrituraLog("Fallo al modificar el/la" + tipoObjeto + ": " + objetoViejo + "\n");//Si se intenta modificar algo que no existe
+            escrituraLog("Fallo al modificar el/la" + tipoObjeto + ": " + objetoViejo);//Si se intenta modificar algo que no existe
         }
         return exito;
     }

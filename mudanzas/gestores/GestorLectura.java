@@ -17,19 +17,17 @@ public class GestorLectura {
     GestorCliente gestorClientes;
     GestorDePedidos gestorPedidos;
     File archivoLectura;
-    int idSol = 0;
 
-    public GestorLectura(GestorEscritura unGestorEscritura, GestorCiudades unGestorCiudades, GestorRutas unGestorRutas, GestorCliente unGestorCliente, GestorDePedidos unGestorDePedidos, File archivo, int idSolicitud) {
+    public GestorLectura(GestorEscritura unGestorEscritura, GestorCiudades unGestorCiudades, GestorRutas unGestorRutas, GestorCliente unGestorCliente, GestorDePedidos unGestorDePedidos, File archivo) {
         gestorEscritura = unGestorEscritura;
         gestorCiudades = unGestorCiudades;
         gestorRutas = unGestorRutas;
         gestorClientes = unGestorCliente;
         gestorPedidos = unGestorDePedidos;
         archivoLectura = archivo;
-        idSol = idSolicitud;
     }
 
-    public int leer() {
+    public int leer(int idSol) {
         //Retorna la el id nuevo de solicitud
         try {
             //Para leer el archivo y no hacerlo de caracter a caracter se suma buffered

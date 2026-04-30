@@ -714,8 +714,9 @@ public class MudanzasCompartidas {
                             fecha = (LocalDate.now()).format(formatter);//Lo pasamos a formato
                             if (gestorPedidos.altaPedido(codPostalSalida, codPostalLlegada, new SolicitudViaje(fecha, unaClaveCliente, Math.abs(cantMtsCubicos), Math.abs(unaCantBultos), domRetiro, domEntrega, estaPago, idSolicitud++))) {
                                 //Si se pudo insertar:
-                                System.out.println("Pedido insertado con exito: ");
+                                System.out.println("Pedido insertado con exito ");
                             } else {
+                                idSolicitud--;//Se elimina el intento de suma
                                 System.out.println("Ruta inexistente o ciudad no econtrada");
                             }
                         } else {
@@ -1047,6 +1048,7 @@ public class MudanzasCompartidas {
                     try {
                         while (bucle == 0) {
                             //Se carga la ruta a evaluar
+                            /*DATO: Hay un camino perfecto entre 6300->8300->8500->2000, luego de la carga inicial */
                             iCiudad++;//nro de ciudad a agregar
                             System.out.println("Ingrese la ciudad " + iCiudad + ":");
                             auxSt = sc.nextLine();
@@ -1128,7 +1130,7 @@ public class MudanzasCompartidas {
 
     private void cargaInicialDelSistema() {
         if (!cargaInicial) {//Si la carga inicial todavía no se hizo
-            idSolicitud = gestorLectura.leer(idSolicitud);//Se hace la carga inicial
+            idSolicitud = gestorLectura.leer(idSolicitud) + 1;//Se hace la carga inicial
             //Se guarda en el log la estado del sistema luego de la carga incial
             gestorEscritura.escrbirTexto("Estado del sistema luego de la carga inicial:");
             gestorEscritura.escrbirTexto("ESTRUCTURA CIUDADES:\n" + gestorCiudades.toStringEstructura());

@@ -34,7 +34,7 @@ public class GestorDePedidos {
             pedidosActual.altaPedido(codPostalLlegada, unaSolicitud);
             exito = true;
         }
-        gestorEscritura.objetoAgregado("Solicitud", unaSolicitud.toString(codPostalSalida, codPostalSalida), exito);
+        gestorEscritura.objetoAgregado("Solicitud", unaSolicitud.toString(codPostalSalida, codPostalLlegada), exito);
         return exito;
     }
 

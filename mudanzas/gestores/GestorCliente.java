@@ -70,7 +70,7 @@ public class GestorCliente {
         return datosClienteAux != null;
     }
 
-    public boolean modificarTelefono(Object claveCliente, int telefono) {
+    public boolean modificarTelefono(Object claveCliente, String telefono) {
         //Si el cliente existe modifica y retorna verdadero, sino falso
         Object datosClienteAux = almacenClientes.obtenerValor(claveCliente);
         if (datosClienteAux != null) {

@@ -11,7 +11,6 @@ import java.util.StringTokenizer;
 
 public class GestorLectura {
 
-    //
     GestorEscritura gestorEscritura;
     GestorCiudades gestorCiudades;
     GestorRutas gestorRutas;
@@ -26,7 +25,7 @@ public class GestorLectura {
         gestorRutas = unGestorRutas;
         gestorClientes = unGestorCliente;
         gestorPedidos = unGestorDePedidos;
-        archivoLectura = new File("archivoLectura");
+        archivoLectura = archivo;
         idSol = idSolicitud;
     }
 
@@ -34,7 +33,7 @@ public class GestorLectura {
         //Retorna la el id nuevo de solicitud
         try {
             //Para leer el archivo y no hacerlo de caracter a caracter se suma buffered
-            BufferedReader br = new BufferedReader(new FileReader("archivoLectura"));
+            BufferedReader br = new BufferedReader(new FileReader(archivoLectura));
             String lineaArchivoLectura = "", stActual;
             StringTokenizer st;
             while ((lineaArchivoLectura = br.readLine()) != null) {
@@ -60,9 +59,8 @@ public class GestorLectura {
                         break;
                     case "P":
                         //Si es una Persona
-                        /*Forma:P;DNI;35678965;FERNANDEZ;JUAN CARLOS;299-4495117 */
-                        int nroDoc,
-                         tel;
+                        /*Forma:P;DNI;35678965;FERNANDEZ;JUAN CARLOS;299-4495117;email */
+                        int nroDoc;
                         String tipoDoc,
                          nroDocSt,
                          nombre,
@@ -76,8 +74,7 @@ public class GestorLectura {
                         telSt = st.nextToken();
                         email = st.nextToken();
                         nroDoc = Integer.parseInt(nroDocSt);
-                        tel = Integer.parseInt(telSt);
-                        gestorClientes.altaCliente(new ClaveCliente(tipoDoc, nroDoc), new DatosCliente(nombre, apellido, tel, email));
+                        gestorClientes.altaCliente(new ClaveCliente(tipoDoc, nroDoc), new DatosCliente(nombre, apellido, telSt, email));
                         break;
                     case "R":
                         //Si es una Ruta
@@ -126,7 +123,7 @@ public class GestorLectura {
                         cantMtsCubicos = Double.parseDouble(mtsCubicosSt);
                         cantBultos = Integer.parseInt(cantBultosSt);
                         estado = (estadoSt.equals("T"));//Si es T es verdadero, sino Falso
-                        gestorPedidos.altaPedido(codPostalSalida, codPostalLlegada, new SolicitudViaje(fecha, new ClaveCliente(tipoDoc, nroDoc), cantMtsCubicos, cantBultos, domRetiro, domEntrega, false, idSol));
+                        gestorPedidos.altaPedido(codPostalSalida, codPostalLlegada, new SolicitudViaje(fecha, new ClaveCliente(tipoDoc, nroDoc), cantMtsCubicos, cantBultos, domRetiro, domEntrega, estado, idSol));
                         break;
                     default:
                         //Otro caso no hace nada

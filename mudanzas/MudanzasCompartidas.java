@@ -474,8 +474,8 @@ public class MudanzasCompartidas {
     private void abmClientes() {
         Scanner sc = new Scanner(System.in);
         String opcion;
-        String tipoDoc, nombre, apellido, mail;
-        int nroDoc, telefono;
+        String tipoDoc, nombre, apellido, mail, telefono;
+        int nroDoc;
         System.out.println("Menú Clientes: \n"
                 + "1. Alta Cliente\n"
                 + "2. Baja Cliente\n"
@@ -498,7 +498,7 @@ public class MudanzasCompartidas {
                     System.out.println("Ingrese el apellido:");
                     apellido = sc.nextLine();
                     System.out.println("Ingrese el numero de telefono:");
-                    telefono = sc.nextInt();
+                    telefono = sc.nextLine();
                     System.out.println("Ingrese el mail:");
                     mail = sc.nextLine();
                     //intentamos insertar
@@ -543,8 +543,8 @@ public class MudanzasCompartidas {
     private void modificacionCliente() {
         Scanner sc = new Scanner(System.in);
         String opcion;
-        String tipoDoc, nombre, apellido, mail;
-        int nroDoc, telefono;
+        String tipoDoc, nombre, apellido, mail, telefono;
+        int nroDoc;
         System.out.println("MODIFICACIÓN CLIENTE:");
         System.out.println("Ingrese el tipo de documento de la persona a modificar:");
         tipoDoc = sc.nextLine();
@@ -582,7 +582,7 @@ public class MudanzasCompartidas {
                 case "3":
                     System.out.println("MODIFICACIÓN TELEFONO:");
                     System.out.println("Ingrese el nuevo telefono");
-                    telefono = sc.nextInt();
+                    telefono = sc.nextLine();
                     if (gestorClientes.modificarTelefono(new ClaveCliente(tipoDoc, nroDoc), telefono)) {
                         System.out.println("Telefono modificado con exito");
                     } else {
@@ -1083,7 +1083,7 @@ public class MudanzasCompartidas {
         if (!cargaInicial) {//Si la carga inicial todavía no se hizo
             idSolicitud = gestorLectura.leer();//Se hace la carga inicial
             //Se guarda en el log la estado del sistema luego de la carga incial
-            gestorEscritura.escrbirTexto("Estado del sistema al final de la ejecución:");
+            gestorEscritura.escrbirTexto("Estado del sistema luego de la carga inicial:");
             gestorEscritura.escrbirTexto("ESTRUCTURA CIUDADES:\n" + gestorCiudades.toStringEstructura());
             gestorEscritura.escrbirTexto("ESTRUCTURA CLIENTES:\n" + gestorClientes.toStringEstructura());
             gestorEscritura.escrbirTexto("ESTRUCTURA RUTAS:\n" + gestorRutas.toStringEstructura());

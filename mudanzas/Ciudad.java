@@ -42,6 +42,6 @@ public class Ciudad {
 
     //String
     public String toString() {
-        return "C;" + codPostal + ";" + provincia + ";" + nombreCiudad + "\n";
+        return "C;" + codPostal + ";" + nombreCiudad + ";" + provincia;
     }
 }

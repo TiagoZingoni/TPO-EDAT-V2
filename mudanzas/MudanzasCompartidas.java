@@ -22,9 +22,9 @@ public class MudanzasCompartidas {
     public void menu(File archivoLectura, File archivoEscritura) {
 
         gestorEscritura = new GestorEscritura(archivoEscritura);
-        gestorCiudades = new GestorCiudades(gestorEscritura);
-        gestorRutas = new GestorRutas();
-        gestorClientes = new GestorCliente(100);//Tamaño de la lista hash
+        gestorRutas = new GestorRutas(gestorEscritura);
+        gestorCiudades = new GestorCiudades(gestorEscritura, gestorRutas);
+        gestorClientes = new GestorCliente(100, gestorEscritura);//Tamaño de la lista hash
         gestorPedidos = new GestorDePedidos(gestorRutas, gestorCiudades, gestorEscritura);
         //Luego de crear lo anterior:
         gestorLectura = new GestorLectura(gestorEscritura, gestorCiudades, gestorRutas, gestorClientes, gestorPedidos, archivoLectura, idSolicitud);
@@ -82,9 +82,12 @@ public class MudanzasCompartidas {
                 case "10":
                     mostrarSistema();
                     break;
-                default:
+                case "11":
                     cargaFinDelSistema();
                     seguir = false;
+                    break;
+                default:
+                    //Sigue el bucle en caso de error de tipeo
                     break;
             }
 
@@ -122,7 +125,6 @@ public class MudanzasCompartidas {
                     exito = gestorCiudades.altaCiudad(unaCiudad);
                     if (exito) {
                         System.out.println("Ciudad " + unaCiudad.toString() + " creada con exito.");
-                        gestorRutas.altaCiudad(intCodPostal);//se agrega la ciudad (solo su clave) al grafo de rutas
                     } else {
                         System.out.println("Error, " + intCodPostal + " ya es un código postal en uso.");
                     }
@@ -141,7 +143,6 @@ public class MudanzasCompartidas {
                     exito = gestorCiudades.bajaCiudad(intCodPostal);
                     if (exito) {
                         System.out.println("Ciudad " + intCodPostal + " eliminada con exito.");
-                        gestorRutas.bajaCiudad(intCodPostal);//se elimina la ciudad del grafo de rutas
                     } else {
                         System.out.println("Ciudad " + intCodPostal + " no encontrada.");
                     }
@@ -293,7 +294,7 @@ public class MudanzasCompartidas {
 //==========================RED DE RUTAS==========================\\
     private void abmRedRutas() {
         Scanner sc = new Scanner(System.in);
-        String opcion;
+        String opcion, auxSt;
         int intCiudad1, intCiudad2;
         double kms;
         System.out.println("Menú Red de Rutas: \n"
@@ -308,11 +309,14 @@ public class MudanzasCompartidas {
                 try {
                     System.out.println("ALTA RUTA:");
                     System.out.println("Ingrese el codigo postal de la primer ciudad:");
-                    intCiudad1 = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    intCiudad1 = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el codigo postal de la segunda ciudad:");
-                    intCiudad2 = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    intCiudad2 = Integer.parseInt(auxSt);
                     System.out.println("Ingrese la cantidad de kms de la ruta de manera 'xx.yy', sin comillas:");
-                    kms = sc.nextDouble();
+                    auxSt = sc.nextLine();
+                    kms = Double.parseDouble(auxSt);
                     if (gestorRutas.altaRuta(intCiudad1, intCiudad2, kms)) {
                         System.out.println("Ruta agregada con exito");
                     } else {
@@ -327,9 +331,11 @@ public class MudanzasCompartidas {
                 System.out.println("BAJA RUTA:");
                 try {
                     System.out.println("Ingrese el codigo postal de la primer ciudad:");
-                    intCiudad1 = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    intCiudad1 = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el codigo postal de la segunda ciudad:");
-                    intCiudad2 = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    intCiudad2 = Integer.parseInt(auxSt);
                     if (gestorRutas.bajaRuta(intCiudad1, intCiudad2)) {
                         System.out.println("Ruta eliminada con exito");
                     } else {
@@ -345,11 +351,14 @@ public class MudanzasCompartidas {
                 try {
                     System.out.println("MODIFICACIÓN RUTA:");
                     System.out.println("Ingrese el codigo postal de la primer ciudad:");
-                    intCiudad1 = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    intCiudad1 = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el codigo postal de la segunda ciudad:");
-                    intCiudad2 = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    intCiudad2 = Integer.parseInt(auxSt);
                     System.out.println("Ingrese la cantidad de kms de la ruta de manera 'xx.yy', sin comillas:");
-                    kms = sc.nextDouble();
+                    auxSt = sc.nextLine();
+                    kms = Double.parseDouble(auxSt);
                     if (gestorRutas.modificarRuta(intCiudad1, intCiudad2, kms)) {
                         System.out.println("Ruta modificada con exito");
                     } else {
@@ -368,7 +377,7 @@ public class MudanzasCompartidas {
 
     private void consultaViaje() {
         Scanner sc = new Scanner(System.in);
-        String opcion;
+        String opcion, auxSt;
         int ciudadA, ciudadB, ciudadC;
         double kms;
         Lista listaAux;
@@ -385,9 +394,11 @@ public class MudanzasCompartidas {
                 System.out.println("MENOS CIUDADES:");
                 try {
                     System.out.println("Ingrese el codigo postal de la primer ciudad:");
-                    ciudadA = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    ciudadA = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el codigo postal de la segunda ciudad:");
-                    ciudadB = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    ciudadB = Integer.parseInt(auxSt);
                     listaAux = gestorRutas.caminoPorMenosCiudades(ciudadA, ciudadB);//Cargamos la lista con el camino
                     if (!listaAux.esVacia()) {
                         //Si la lista no está vacía, entonces existe un camino:
@@ -404,9 +415,11 @@ public class MudanzasCompartidas {
                 System.out.println("MENOS Kms:");
                 try {
                     System.out.println("Ingrese el codigo postal de la primer ciudad:");
-                    ciudadA = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    ciudadA = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el codigo postal de la segunda ciudad:");
-                    ciudadB = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    ciudadB = Integer.parseInt(auxSt);
                     listaAux = gestorRutas.caminoConMenorDistancia(ciudadA, ciudadB);//Cargamos la lista, el ultimo elemento es la cantidad de kms
                     if (!listaAux.esVacia()) {
                         //Si la lista no es vacía
@@ -424,11 +437,14 @@ public class MudanzasCompartidas {
                 System.out.println("PASAN POR C:");
                 try {
                     System.out.println("Ingrese el codigo postal de la primer ciudad:");
-                    ciudadA = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    ciudadA = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el codigo postal de la segunda ciudad:");
-                    ciudadB = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    ciudadB = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el codigo postal de la tercer ciudad:");
-                    ciudadC = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    ciudadC = Integer.parseInt(auxSt);
                     listaAux = gestorRutas.caminosPasanPorCiudad(ciudadA, ciudadB, ciudadC);//Cargamos la lista con la lista de caminos
                     if (!listaAux.esVacia()) {
                         //Si la lista no es vacía
@@ -450,11 +466,14 @@ public class MudanzasCompartidas {
                 System.out.println("ES POSIBLE:");
                 try {
                     System.out.println("Ingrese el codigo postal de la primer ciudad:");
-                    ciudadA = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    ciudadA = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el codigo postal de la segunda ciudad:");
-                    ciudadB = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    ciudadB = Integer.parseInt(auxSt);
                     System.out.println("Ingrese la cantidad de kms que no debe superar:");
-                    kms = sc.nextDouble();
+                    auxSt = sc.nextLine();
+                    kms = Double.parseDouble(auxSt);
                     if (gestorRutas.recorridoMenorA(ciudadA, ciudadB, kms)) {
                         System.out.println("Si, existe por lo menos un camino de " + ciudadA + " a " + ciudadB
                                 + " que requiere menos de " + kms + "kms ");
@@ -475,7 +494,7 @@ public class MudanzasCompartidas {
 //==========================CLIENTES==========================\\
     private void abmClientes() {
         Scanner sc = new Scanner(System.in);
-        String opcion;
+        String opcion, auxSt;
         String tipoDoc, nombre, apellido, mail, telefono;
         int nroDoc;
         System.out.println("Menú Clientes: \n"
@@ -493,7 +512,8 @@ public class MudanzasCompartidas {
                     System.out.println("Ingrese el tipo de documento:");
                     tipoDoc = sc.nextLine();
                     System.out.println("Ingrese el numero de documento:");
-                    nroDoc = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    nroDoc = Integer.parseInt(auxSt);
                     //Pedimos datos
                     System.out.println("Ingrese el nombre de la persona:");
                     nombre = sc.nextLine();
@@ -521,7 +541,8 @@ public class MudanzasCompartidas {
                     System.out.println("Ingrese el tipo de documento:");
                     tipoDoc = sc.nextLine();
                     System.out.println("Ingrese el numero de documento:");
-                    nroDoc = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    nroDoc = Integer.parseInt(auxSt);
                     //intentamos desasociar
                     if (gestorClientes.bajaCliente(new ClaveCliente(tipoDoc, nroDoc))) {
                         System.out.println("Cliente eliminado exitosamente");
@@ -544,7 +565,7 @@ public class MudanzasCompartidas {
 
     private void modificacionCliente() {
         Scanner sc = new Scanner(System.in);
-        String opcion;
+        String opcion, auxSt;
         String tipoDoc, nombre, apellido, mail, telefono;
         int nroDoc;
         System.out.println("MODIFICACIÓN CLIENTE:");
@@ -552,7 +573,8 @@ public class MudanzasCompartidas {
         tipoDoc = sc.nextLine();
         try {
             System.out.println("Ingrese el numero de documento:");
-            nroDoc = sc.nextInt();
+            auxSt = sc.nextLine();
+            nroDoc = Integer.parseInt(auxSt);
             System.out.println("1. Modificar Nombre\n"
                     + "2. Modificar Apellido\n"
                     + "3. Modificar Telefono\n"
@@ -611,7 +633,7 @@ public class MudanzasCompartidas {
 
     private void consultasClientes() {
         Scanner sc = new Scanner(System.in);
-        String opcion, tipoDoc;
+        String opcion, tipoDoc, auxSt;
         int nroDoc;
         ClaveCliente unaClaveCliente;
         DatosCliente unosDatos;
@@ -621,7 +643,8 @@ public class MudanzasCompartidas {
             System.out.println("Ingrese el tipo de documento del cliente:");
             tipoDoc = sc.nextLine();
             System.out.println("Ingrese el numero de documento del cliente:");
-            nroDoc = sc.nextInt();
+            auxSt = sc.nextLine();
+            nroDoc = Integer.parseInt(auxSt);
             unaClaveCliente = new ClaveCliente(tipoDoc, nroDoc);
             unosDatos = (DatosCliente) gestorClientes.obtenerCliente(unaClaveCliente);
             if (unosDatos != null) {
@@ -638,7 +661,7 @@ public class MudanzasCompartidas {
 
     private void abmPedidos() {
         Scanner sc = new Scanner(System.in);
-        String opcion;
+        String opcion, auxSt;
         System.out.println("Menú Pedidos: \n"
                 + "1. Alta Pedido\n"
                 + "2. Baja Pedido\n"
@@ -662,25 +685,31 @@ public class MudanzasCompartidas {
                 System.out.println("ALTA PEDIDO:");
                 try {
                     System.out.println("Ingrese el codigo postal de la ciudad de salida:");
-                    codPostalSalida = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    codPostalSalida = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el codigo postal de la ciudad de llegada:");
-                    codPostalLlegada = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    codPostalLlegada = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el tipo de documento del cliente:");
                     tipoDoc = sc.nextLine();
                     System.out.println("Ingrese el numero de documento del cliente:");
-                    nroDoc = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    nroDoc = Integer.parseInt(auxSt);
                     unaClaveCliente = new ClaveCliente(tipoDoc, nroDoc);
                     if (gestorClientes.existeCliente(unaClaveCliente)) {
                         System.out.println("Ingrese la cantidad de metros cubicos: (de la forma: numero.numero o numero)");
-                        cantMtsCubicos = sc.nextDouble();
+                        auxSt = sc.nextLine();
+                        cantMtsCubicos = Double.parseDouble(auxSt);
                         System.out.println("Ingrese la cantidad de bultos:");
-                        unaCantBultos = sc.nextInt();
+                        auxSt = sc.nextLine();
+                        unaCantBultos = Integer.parseInt(auxSt);
                         System.out.println("Ingrese el domicilio de retiro:");
                         domRetiro = sc.nextLine();
                         System.out.println("Ingrese el domicilio de entrega:");
                         domEntrega = sc.nextLine();
                         System.out.println("Si esta pago ingrese '1', sino '2' (Solo el numero):");
-                        opcionAux = sc.nextInt();
+                        auxSt = sc.nextLine();
+                        opcionAux = Integer.parseInt(auxSt);
                         estaPago = (opcionAux == 1);
                         if (gestorPedidos.altaPedido(codPostalLlegada, codPostalSalida, new SolicitudViaje((LocalDate.now()).toString(), unaClaveCliente, Math.abs(cantMtsCubicos), Math.abs(unaCantBultos), domRetiro, domEntrega, estaPago, idSolicitud++))) {
                             //Si se pudo insertar:
@@ -701,11 +730,14 @@ public class MudanzasCompartidas {
                 System.out.println("BAJA PEDIDO:");
                 try {
                     System.out.println("Ingrese el codigo postal de la ciudad de salida:");
-                    codPostalSalida = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    codPostalSalida = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el codigo postal de la ciudad de llegada:");
-                    codPostalLlegada = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    codPostalLlegada = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el identificador de la solicitud a eliminar:");
-                    idSolicitud = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    idSolicitud = Integer.parseInt(auxSt);
                     if (gestorPedidos.bajaPedido(codPostalSalida, codPostalLlegada, idSolicitud)) {
                         System.out.println("Pedido eliminado con exito");
                     } else {
@@ -722,11 +754,14 @@ public class MudanzasCompartidas {
                 try {
                     System.out.println("Modifcación Pedidos:");
                     System.out.println("Ingrese el codigo postal de la ciudad de salida:");
-                    codPostalSalida = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    codPostalSalida = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el codigo postal de la ciudad de llegada:");
-                    codPostalLlegada = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    codPostalLlegada = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el identificador de la solicitud a modificar:");
-                    idSolicitud = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    idSolicitud = Integer.parseInt(auxSt);
                     solicitudAModificar = gestorPedidos.obtenerSolicitud(codPostalSalida, codPostalLlegada, idSolicitud);
                     if (solicitudAModificar != null) {
                         modificacionPedido(solicitudAModificar, codPostalSalida, codPostalLlegada);
@@ -746,7 +781,7 @@ public class MudanzasCompartidas {
 
     private void modificacionPedido(SolicitudViaje solicitudAModificar, int ciudadSalida, int ciudadLlegada) {
         Scanner sc = new Scanner(System.in);
-        String opcion;
+        String opcion, auxSt;
         System.out.println("Menú Modifcación Pedidos: \n"
                 + "Para el pedido: " + solicitudAModificar.toString(ciudadSalida, ciudadLlegada) + "\n"
                 + "1. Modificar Fecha de Solicitud\n"
@@ -769,14 +804,22 @@ public class MudanzasCompartidas {
                 try {
                     System.out.println("La fecha debe ser del tipo dd/mm/yyyy, solo ingresar numeros");
                     System.out.println("Ingrese el nuevo día:");
-                    dia = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    dia = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el nuevo mes:");
-                    mes = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    mes = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el nuevo año:");
-                    año = sc.nextInt();
-                    fechaNueva = LocalDate.of(año, mes, dia).toString();
-                    gestorPedidos.modificarFecha(solicitudAModificar, fechaNueva);
-                    System.out.println("Fecha modificada con exito");
+                    auxSt = sc.nextLine();
+                    año = Integer.parseInt(auxSt);
+                    if (LocalDate.of(año, mes, dia).compareTo(LocalDate.now()) <= 0) {
+                        //Si la fecha es valida y no es mayor al dia de hoy
+                        fechaNueva = dia + "/" + mes + "/" + año;
+                        gestorPedidos.modificarFecha(solicitudAModificar, fechaNueva);
+                        System.out.println("Fecha modificada con exito");
+                    } else {
+                        System.out.println("Fecha invalida");
+                    }
                 } catch (Exception e) {
                     System.out.println("Tipo de fecha invalida");
                 }
@@ -791,7 +834,8 @@ public class MudanzasCompartidas {
                     System.out.println("Ingrese el tipo de documento del cliente:");
                     tipoDoc = sc.nextLine();
                     System.out.println("Ingrese el numero de documento del cliente:");
-                    nroDoc = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    nroDoc = Integer.parseInt(auxSt);
                     unaClaveCliente = new ClaveCliente(tipoDoc, nroDoc);
                     if (gestorClientes.existeCliente(unaClaveCliente)) {
                         //Si el cliente existe
@@ -810,7 +854,8 @@ public class MudanzasCompartidas {
                 System.out.println("MODFICACIÓN MTS CÚBICOS:");
                 try {
                     System.out.println("Ingrese la nueva cantidad de metros cúbicos:");
-                    cantMts = sc.nextDouble();
+                    auxSt = sc.nextLine();
+                    cantMts = Double.parseDouble(auxSt);
                     gestorPedidos.modificarMtsCubicos(solicitudAModificar, Math.abs(cantMts));
                     System.out.println("Pedido modificado con exito");
                 } catch (Exception e) {
@@ -823,7 +868,8 @@ public class MudanzasCompartidas {
                 System.out.println("MODFICACIÓN CANTIDAD BULTOS:");
                 try {
                     System.out.println("Ingrese la nueva cantidad de bultos:");
-                    nuevaCantBultos = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    nuevaCantBultos = Integer.parseInt(auxSt);
                     gestorPedidos.modificarCantidadBultos(solicitudAModificar, Math.abs(nuevaCantBultos));
                     System.out.println("Pedido modificado con exito");
                 } catch (Exception e) {
@@ -868,7 +914,7 @@ public class MudanzasCompartidas {
 
     private void verificarViaje() {
         Scanner sc = new Scanner(System.in);
-        String opcion;
+        String opcion, auxSt;
         int codPostalSalida, codPostalLlegada;
         System.out.println("Menú Verificar Viaje: \n"
                 + "1. Pedidos entre dos ciudades y espacio necesario\n"
@@ -885,9 +931,11 @@ public class MudanzasCompartidas {
                 try {
                     System.out.println("Pedidos entre dos ciudades y espacio necesario:");
                     System.out.println("Ingrese el codigo postal de la ciudad de salida:");
-                    codPostalSalida = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    codPostalSalida = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el codigo postal de la ciudad de llegada:");
-                    codPostalLlegada = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    codPostalLlegada = Integer.parseInt(auxSt);
                     listaAux = gestorPedidos.listaDePedidos(codPostalSalida, codPostalLlegada);
                     if (listaAux != null) {
                         System.out.println("Lista de Pedidos entre: " + codPostalSalida + " y " + codPostalLlegada);
@@ -920,11 +968,14 @@ public class MudanzasCompartidas {
                 System.out.println("Espacio sobrante para pedidos entre ciudades y posibles soliciutdes a sumar");
                 try {
                     System.out.println("Ingrese el codigo postal de la ciudad de salida:");
-                    codPostalSalida = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    codPostalSalida = Integer.parseInt(auxSt);
                     System.out.println("Ingrese el codigo postal de la ciudad de llegada:");
-                    codPostalLlegada = sc.nextInt();
+                    auxSt = sc.nextLine();
+                    codPostalLlegada = Integer.parseInt(auxSt);
                     System.out.println("Ingrese la cantidad de metros cubicos disponibles en el camión:");
-                    mtsDisponibles = sc.nextDouble();
+                    auxSt = sc.nextLine();
+                    mtsDisponibles = Double.parseDouble(auxSt);
                     listaCiudades = gestorRutas.caminoConMenorDistancia(codPostalSalida, codPostalLlegada);
 
                     if (listaCiudades != null && !listaCiudades.esVacia()) {
@@ -1005,15 +1056,18 @@ public class MudanzasCompartidas {
                         //Se carga la ruta a evaluar
                         iCiudad++;//nro de ciudad a agregar
                         System.out.println("Ingrese la ciudad " + iCiudad + ":");
-                        ciudadActual = sc.nextInt();
+                        auxSt = sc.nextLine();
+                        ciudadActual = Integer.parseInt(auxSt);
                         colaCiudadesEntrada.poner(ciudadActual);//Agregamos la ciudad a la lista
                         System.out.println("Ruta actual: " + colaCiudadesEntrada.toString());//Para que lo vea el usuario
                         System.out.println("Si quiere agregar otra ciudad ingrese 0 (Numero):");
-                        bucle = sc.nextInt();
+                        auxSt = sc.nextLine();
+                        bucle = Integer.parseInt(auxSt);
                     }
                     if (gestorRutas.caminoPosible(colaCiudadesEntrada.clone())) {
                         System.out.println("Ingrese la capacidad del camion: (de la forma: numero.numero o numero)");
-                        metrosRestantes = sc.nextDouble();
+                        auxSt = sc.nextLine();
+                        metrosRestantes = Double.parseDouble(auxSt);
                         //Si el camino ingresado por parametro existe
                         while (caminoPerfecto && !colaCiudadesEntrada.esVacia()) {
                             //Para cada ciudad de colaCiudadesEntrada, menos la ultima, y mientras siga siendo un camino perfecto verificamos que:

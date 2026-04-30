@@ -8,15 +8,19 @@ public class GestorRutas {
 
     //Clase utilizada para el ABM de Rutas
     GrafoEtiquetado almacenRutas;
+    GestorEscritura gestorEsc;
 
-    public GestorRutas() {
+    public GestorRutas(GestorEscritura gestorEscritura) {
         //Crea el grafo etiquetado sobre el que se trabaja 
         almacenRutas = new GrafoEtiquetado(null);
+        gestorEsc = gestorEscritura; //Para el log
     }
 
     //ALTA
     public boolean altaRuta(Object ciudad1, Object ciudad2, double distancia) {
-        return almacenRutas.insertarArco(ciudad1, ciudad2, distancia);
+        boolean exito = almacenRutas.insertarArco(ciudad1, ciudad2, distancia);
+        gestorEsc.objetoAgregado("Ruta", ciudad1 + ";" + ciudad2 + ";" + distancia, exito);
+        return exito;
     }
 
     public boolean altaCiudad(Object unaCiudad) {
@@ -26,7 +30,9 @@ public class GestorRutas {
 
     //BAJA
     public boolean bajaRuta(Object ciudad1, Object ciudad2) {
-        return almacenRutas.eliminarArco(ciudad1, ciudad2);
+        boolean exito = almacenRutas.eliminarArco(ciudad1, ciudad2);
+        gestorEsc.objetoEliminado("Ruta", ciudad1 + ";" + ciudad2, exito);
+        return exito;
     }
 
     public boolean bajaCiudad(Object unaCiudad) {
@@ -42,6 +48,7 @@ public class GestorRutas {
             //si el arco se elimino
             almacenRutas.insertarArco(ciudad1, ciudad2, kms);
         }
+        gestorEsc.objetoModificado("Ruta", ciudad1 + ";" + ciudad2, ciudad1 + ";" + ciudad2 + ";" + kms, modificado);
         return modificado;
     }
 

@@ -11,10 +11,12 @@ public class GestorCiudades {
     //Las ciudades son almacenadas en un TDA Diccionario que implementa un Árbol AVL.
     private Diccionario almacenCiudades;
     private GestorEscritura gestorEscritura;
+    private GestorRutas gestorRutas;//Para agregar y sacar ciudades cuando se da el alta y baja
 
-    public GestorCiudades(GestorEscritura unGestorE) {
+    public GestorCiudades(GestorEscritura unGestorE, GestorRutas unGestorRutas) {
         almacenCiudades = new Diccionario();
         gestorEscritura = unGestorE;
+        gestorRutas = unGestorRutas;
     }
 
     //ABM Ciudades
@@ -26,6 +28,9 @@ public class GestorCiudades {
          */
         boolean agregada = false;
         agregada = almacenCiudades.insertar(unaCiudad.getCodigoPostal(), unaCiudad);
+        if (agregada) {
+            gestorRutas.altaCiudad(unaCiudad.getCodigoPostal());//se agrega la ciudad (solo su clave) al grafo de rutas
+        }
         //.log alta:
         gestorEscritura.objetoAgregado("Ciudad", unaCiudad.toString(), agregada);
         return agregada;
@@ -35,6 +40,9 @@ public class GestorCiudades {
         boolean eliminada = false;
         //Si existe una ciudad con el codigo postal dado se eliminará del almacen y retornara true, sino false.
         eliminada = almacenCiudades.eliminar(codigoPostal);
+        if (eliminada) {
+            gestorRutas.bajaCiudad(codigoPostal);//se elimina la ciudad del grafo de rutas
+        }
         //.log baja
         gestorEscritura.objetoEliminado("Ciudad", codigoPostal + "", eliminada);
         return eliminada;

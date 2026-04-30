@@ -32,6 +32,7 @@ public class GestorDePedidos {
             pedidosActual = ciudadSalida.getSolicitudesViajes();//Obtenemos la colección de pedidos de ciudad
             pedidosActual.altaCiudadLlegada(codPostalLlegada);
             pedidosActual.altaPedido(codPostalLlegada, unaSolicitud);
+            exito = true;
         }
         gestorEscritura.objetoAgregado("Solicitud", unaSolicitud.toString(codPostalSalida, codPostalSalida), exito);
         return exito;

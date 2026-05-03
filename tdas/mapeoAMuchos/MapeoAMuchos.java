@@ -1,6 +1,6 @@
 package tdas.mapeoAMuchos;
 
-import tdas.Lista;
+import tdas.lineales.Lista;
 
 public class MapeoAMuchos {
 

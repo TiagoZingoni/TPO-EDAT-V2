@@ -1,8 +1,8 @@
 package mudanzas.gestores;
 
-import tdas.Cola;
-import tdas.Lista;
 import tdas.grafo.GrafoEtiquetado;
+import tdas.lineales.Cola;
+import tdas.lineales.Lista;
 
 public class GestorRutas {
 

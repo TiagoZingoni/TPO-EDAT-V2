@@ -4,10 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.StringTokenizer;
-import mudanzas.Ciudad;
-import mudanzas.ClaveCliente;
-import mudanzas.DatosCliente;
-import mudanzas.SolicitudViaje;
+
+import mudanzas.entidades.Ciudad;
+import mudanzas.entidades.ClaveCliente;
+import mudanzas.entidades.DatosCliente;
+import mudanzas.entidades.SolicitudViaje;
 
 public class GestorLectura {
 

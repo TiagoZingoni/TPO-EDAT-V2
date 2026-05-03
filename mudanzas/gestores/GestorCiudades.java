@@ -1,10 +1,10 @@
 package mudanzas.gestores;
 
-import mudanzas.Ciudad;
-import mudanzas.Pedidos;
-import mudanzas.SolicitudViaje;
-import tdas.Lista;
+import mudanzas.entidades.Ciudad;
+import mudanzas.entidades.Pedidos;
+import mudanzas.entidades.SolicitudViaje;
 import tdas.diccionario.Diccionario;
+import tdas.lineales.Lista;
 
 public class GestorCiudades {
 

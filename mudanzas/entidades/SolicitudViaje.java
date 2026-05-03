@@ -1,4 +1,4 @@
-package mudanzas;
+package mudanzas.entidades;
 
 public class SolicitudViaje {
 

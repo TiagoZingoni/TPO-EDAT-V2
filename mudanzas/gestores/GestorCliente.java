@@ -1,9 +1,9 @@
 package mudanzas.gestores;
 
-import mudanzas.ClaveCliente;
-import mudanzas.DatosCliente;
-import tdas.Lista;
+import mudanzas.entidades.ClaveCliente;
+import mudanzas.entidades.DatosCliente;
 import tdas.MapeoAUno;
+import tdas.lineales.Lista;
 
 public class GestorCliente {
 

@@ -7,9 +7,9 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            File archivoLog = new File("archivoLog");
+            File archivoLog = new File("archivos/archivoLog");
             FileWriter fw = new FileWriter(archivoLog, false);//Vacío el archivo en cada ejecución nueva 
-            File archivoLectura = new File("archivoLectura");
+            File archivoLectura = new File("archivos/archivoLectura");
             MudanzasCompartidas sistema = new MudanzasCompartidas();
             sistema.menu(archivoLectura, archivoLog);
         } catch (Exception e) {

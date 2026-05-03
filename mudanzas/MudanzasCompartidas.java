@@ -4,9 +4,14 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+
+import mudanzas.entidades.Ciudad;
+import mudanzas.entidades.ClaveCliente;
+import mudanzas.entidades.DatosCliente;
+import mudanzas.entidades.SolicitudViaje;
 import mudanzas.gestores.*;
-import tdas.Cola;
-import tdas.Lista;
+import tdas.lineales.Cola;
+import tdas.lineales.Lista;
 
 public class MudanzasCompartidas {
 

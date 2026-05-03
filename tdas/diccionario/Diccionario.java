@@ -1,6 +1,6 @@
 package tdas.diccionario;
 
-import tdas.Lista;
+import tdas.lineales.Lista;
 
 public class Diccionario {
 

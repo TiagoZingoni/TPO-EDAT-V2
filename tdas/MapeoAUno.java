@@ -1,5 +1,7 @@
 package tdas;
 
+import tdas.lineales.Lista;
+
 public class MapeoAUno {
 
     private int TAMANO; //Constante del limite

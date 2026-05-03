@@ -1,6 +1,6 @@
-package mudanzas;
+package mudanzas.entidades;
 
-import tdas.Lista;
+import tdas.lineales.Lista;
 import tdas.mapeoAMuchos.MapeoAMuchos;
 
 public class Pedidos {

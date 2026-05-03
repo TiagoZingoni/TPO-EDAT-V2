@@ -1,4 +1,4 @@
-package tdas;
+package tdas.lineales;
 
 public class Lista {
 

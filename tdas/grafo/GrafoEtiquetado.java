@@ -1,7 +1,7 @@
 package tdas.grafo;
 
-import tdas.Cola;
-import tdas.Lista;
+import tdas.lineales.Cola;
+import tdas.lineales.Lista;
 
 public class GrafoEtiquetado {
 

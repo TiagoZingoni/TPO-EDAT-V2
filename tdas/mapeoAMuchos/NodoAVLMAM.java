@@ -1,5 +1,5 @@
 package tdas.mapeoAMuchos;
-import tdas.Lista;
+import tdas.lineales.Lista;
 public class NodoAVLMAM {
     //Nodo del arbol avl de Mapeo a Muchos
 

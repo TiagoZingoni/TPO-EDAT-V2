@@ -3,8 +3,8 @@ package mudanzas;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
-
 import mudanzas.entidades.Ciudad;
 import mudanzas.entidades.ClaveCliente;
 import mudanzas.entidades.DatosCliente;
@@ -30,7 +30,7 @@ public class MudanzasCompartidas {
         gestorEscritura = new GestorEscritura(archivoEscritura);
         gestorRutas = new GestorRutas(gestorEscritura);
         gestorCiudades = new GestorCiudades(gestorEscritura, gestorRutas);
-        gestorClientes = new GestorCliente(100, gestorEscritura);//Tamaño de la lista hash
+        gestorClientes = new GestorCliente(50, gestorEscritura);//Tamaño de la lista hash
         gestorPedidos = new GestorDePedidos(gestorRutas, gestorCiudades, gestorEscritura);
         //Luego de crear lo anterior:
         gestorLectura = new GestorLectura(gestorEscritura, gestorCiudades, gestorRutas, gestorClientes, gestorPedidos, archivoLectura);
@@ -39,7 +39,7 @@ public class MudanzasCompartidas {
         String opcion;
         boolean seguir = true;
 
-        while (seguir == true) {
+        while (seguir) {
             //Menú
             //String menu
             System.out.println("MENÚ:");
@@ -136,7 +136,10 @@ public class MudanzasCompartidas {
                             System.out.println("Error, " + intCodPostal + " ya es un código postal en uso.");
                         }
                     } catch (NumberFormatException e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Número invalido");
+                    } catch (Exception e) {
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "2":
@@ -153,7 +156,10 @@ public class MudanzasCompartidas {
                             System.out.println("Ciudad " + intCodPostal + " no encontrada.");
                         }
                     } catch (NumberFormatException e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Número invalido");
+                    } catch (Exception e) {
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "3":
@@ -195,7 +201,10 @@ public class MudanzasCompartidas {
                     }
 
                 } catch (NumberFormatException e) {
-                    System.out.println("Numero invalido");
+                    System.out.println("Número invalido");
+                } catch (Exception e) {
+                    System.out.println("Error interno");
+                    e.printStackTrace();
                 }
                 break;
             case "2":
@@ -213,7 +222,10 @@ public class MudanzasCompartidas {
                     }
 
                 } catch (NumberFormatException e) {
-                    System.out.println("Numero invalido");
+                    System.out.println("Número invalido");
+                } catch (Exception e) {
+                    System.out.println("Error interno");
+                    e.printStackTrace();
                 }
                 break;
             case "3":
@@ -232,7 +244,10 @@ public class MudanzasCompartidas {
                         System.out.println("Ciudad no encontrada");
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Numero invalido");
+                    System.out.println("Número invalido");
+                } catch (Exception e) {
+                    System.out.println("Error interno");
+                    e.printStackTrace();
                 }
                 break;
             default:
@@ -267,7 +282,10 @@ public class MudanzasCompartidas {
                     }
 
                 } catch (NumberFormatException e) {
-                    System.out.println("Numero invalido");
+                    System.out.println("Número invalido");
+                } catch (Exception e) {
+                    System.out.println("Error interno");
+                    e.printStackTrace();
                 }
                 break;
             case "2":
@@ -287,7 +305,10 @@ public class MudanzasCompartidas {
 
                     System.out.println();
                 } catch (NumberFormatException e) {
-                    System.out.println("Numero invalido");
+                    System.out.println("Número invalido");
+                } catch (Exception e) {
+                    System.out.println("Error interno");
+                    e.printStackTrace();
                 }
                 break;
             default:
@@ -329,8 +350,11 @@ public class MudanzasCompartidas {
                         } else {
                             System.out.println("Alguna de las ciudades dadas no existe o Ruta existente");
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "2":
@@ -347,8 +371,11 @@ public class MudanzasCompartidas {
                         } else {
                             System.out.println("Ruta o Ciudad/es inexistente, no se elimino nada");
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
 
@@ -369,8 +396,11 @@ public class MudanzasCompartidas {
                         } else {
                             System.out.println("Ruta o Ciudad/es inexistente, no hubieron modificaciones");
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
 
@@ -406,14 +436,17 @@ public class MudanzasCompartidas {
                         auxSt = sc.nextLine();
                         ciudadB = Integer.parseInt(auxSt);
                         listaAux = gestorRutas.caminoPorMenosCiudades(ciudadA, ciudadB);//Cargamos la lista con el camino
-                        if (!listaAux.esVacia()) {
+                        if (listaAux != null && !listaAux.esVacia()) {
                             //Si la lista no está vacía, entonces existe un camino:
                             System.out.println("Camino que pasa por menos ciudades:\n" + listaAux.toStringElementos());
                         } else {
                             System.out.println("No se encontró ningun camino entre " + ciudadA + " y " + ciudadB);
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "2":
@@ -426,14 +459,17 @@ public class MudanzasCompartidas {
                         auxSt = sc.nextLine();
                         ciudadB = Integer.parseInt(auxSt);
                         listaAux = gestorRutas.caminoConMenorDistancia(ciudadA, ciudadB);//Cargamos la lista, el ultimo elemento es la cantidad de kms
-                        if (!listaAux.esVacia()) {
+                        if (listaAux != null && !listaAux.esVacia()) {
                             //Si la lista no es vacía
                             System.out.println("Camino que recorre menos kilometros:\n" + listaAux.toStringElementos() + "kms");
                         } else {
                             System.out.println("No se encontró ningun camino entre " + ciudadA + " y " + ciudadB);
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "3":
@@ -461,8 +497,11 @@ public class MudanzasCompartidas {
                         } else {
                             System.out.println("No se encontró ningun camino entre " + ciudadA + " y " + ciudadB);
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "4":
@@ -484,8 +523,11 @@ public class MudanzasCompartidas {
                             System.out.println("No existe ningun camino de " + ciudadA + " a " + ciudadB
                                     + " que requiera menos de " + kms + "kms ");
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 default:
@@ -533,8 +575,11 @@ public class MudanzasCompartidas {
                         } else {
                             System.out.println("Error: persona ya existente");
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "2":
@@ -552,8 +597,11 @@ public class MudanzasCompartidas {
                         } else {
                             System.out.println("Error: Cliente inexistente");
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "3":
@@ -628,8 +676,11 @@ public class MudanzasCompartidas {
                 default:
                     break;
             }
+        } catch (NumberFormatException e) {
+            System.out.println("Número invalido");
         } catch (Exception e) {
-            System.out.println("Numero invalido");
+            System.out.println("Error interno");
+            e.printStackTrace();
         }
     }
 
@@ -655,8 +706,11 @@ public class MudanzasCompartidas {
             } else {
                 System.out.println("Cliente: " + unaClaveCliente.toString() + " no encontrado");
             }
+        } catch (NumberFormatException e) {
+            System.out.println("Número invalido");
         } catch (Exception e) {
-            System.out.println("Numero invalido");
+            System.out.println("Error interno");
+            e.printStackTrace();
         }
     }
 //===========================PEDIDOS===========================\\
@@ -678,14 +732,14 @@ public class MudanzasCompartidas {
                      codPostalLlegada,
                      nroDoc,
                      unaCantBultos,
-                     opcionAux;
+                     opcionAux = 0;//para el bucle de pedir pago
                     String tipoDoc,
                      domRetiro,
                      domEntrega,
                      fecha;
                     ClaveCliente unaClaveCliente;
                     double cantMtsCubicos;
-                    boolean estaPago;
+                    boolean estaPago = false;
                     System.out.println("ALTA PEDIDO:");
                     try {
                         System.out.println("Ingrese el codigo postal de la ciudad de salida:");
@@ -711,12 +765,15 @@ public class MudanzasCompartidas {
                             domRetiro = sc.nextLine();
                             System.out.println("Ingrese el domicilio de entrega:");
                             domEntrega = sc.nextLine();
-                            System.out.println("Si esta pago ingrese '1', sino '2' (Solo el numero):");
-                            auxSt = sc.nextLine();
-                            opcionAux = Integer.parseInt(auxSt);
-                            estaPago = (opcionAux == 1);
-                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                            fecha = (LocalDate.now()).format(formatter);//Lo pasamos a formato
+                            while (opcionAux != 1 && opcionAux != 2) {
+                                //Pedimos hasta que sea 1 o 2 para definir si está pago
+                                System.out.println("Si esta pago ingrese '1', sino '2' (Solo el numero):");
+                                auxSt = sc.nextLine();
+                                opcionAux = Integer.parseInt(auxSt);
+                                estaPago = (opcionAux == 1);
+                            }
+                            DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                            fecha = (LocalDate.now()).format(formatoFecha);//Lo pasamos a formato
                             if (gestorPedidos.altaPedido(codPostalSalida, codPostalLlegada, new SolicitudViaje(fecha, unaClaveCliente, Math.abs(cantMtsCubicos), Math.abs(unaCantBultos), domRetiro, domEntrega, estaPago, idSolicitud++))) {
                                 //Si se pudo insertar:
                                 System.out.println("Pedido insertado con exito ");
@@ -727,8 +784,11 @@ public class MudanzasCompartidas {
                         } else {
                             System.out.println("Cliente inexistente");
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "2":
@@ -749,8 +809,11 @@ public class MudanzasCompartidas {
                         } else {
                             System.out.println("Pedido no econtrado");
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "3":
@@ -773,8 +836,11 @@ public class MudanzasCompartidas {
                         } else {
                             System.out.println("Solicitud: " + idSol + " de " + codPostalSalida + " a " + codPostalLlegada + " no encontrada");
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
 
@@ -826,8 +892,13 @@ public class MudanzasCompartidas {
                         } else {
                             System.out.println("Fecha invalida");
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Tipo de fecha invalido");
                     } catch (Exception e) {
-                        System.out.println("Tipo de fecha invalida");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "2":
@@ -849,8 +920,11 @@ public class MudanzasCompartidas {
                         } else {
                             System.out.println("Cliente " + unaClaveCliente.toString() + " no encontrado");
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "3":
@@ -862,8 +936,11 @@ public class MudanzasCompartidas {
                         cantMts = Double.parseDouble(auxSt);
                         gestorPedidos.modificarMtsCubicos(solicitudAModificar, Math.abs(cantMts));
                         System.out.println("Pedido modificado con exito");
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "4":
@@ -875,8 +952,11 @@ public class MudanzasCompartidas {
                         nuevaCantBultos = Integer.parseInt(auxSt);
                         gestorPedidos.modificarCantidadBultos(solicitudAModificar, Math.abs(nuevaCantBultos));
                         System.out.println("Pedido modificado con exito");
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "5":
@@ -887,8 +967,11 @@ public class MudanzasCompartidas {
                         nuevoDom = sc.nextLine();
                         gestorPedidos.modificarDomEntrega(solicitudAModificar, nuevoDom);
                         System.out.println("Pedido modificado con exito");
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "6":
@@ -898,8 +981,11 @@ public class MudanzasCompartidas {
                         nuevoDom = sc.nextLine();
                         gestorPedidos.modificarDomRetiro(solicitudAModificar, nuevoDom);
                         System.out.println("Pedido modificado con exito");
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "7":
@@ -949,8 +1035,11 @@ public class MudanzasCompartidas {
                         } else {
                             System.out.println("No se encontraron pedidos entre: " + codPostalSalida + " y " + codPostalLlegada);
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "2":
@@ -1028,8 +1117,11 @@ public class MudanzasCompartidas {
                         } else {
                             System.out.println("No existen pedidos o camino entre " + codPostalSalida + " y " + codPostalLlegada);
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 case "3":
@@ -1087,8 +1179,11 @@ public class MudanzasCompartidas {
                         } else {
                             System.out.println("Ruta no encontrada");
                         }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Número invalido");
                     } catch (Exception e) {
-                        System.out.println("Numero invalido");
+                        System.out.println("Error interno");
+                        e.printStackTrace();
                     }
                     break;
                 default:

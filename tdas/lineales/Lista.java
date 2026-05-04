@@ -46,10 +46,8 @@ public class Lista {
             exito = false;
         } else {
             if (pos == 1) {
-                //Si existe mÃ¡s de un elemento enlaza la cabecera con el siguiente.
-                if (cabecera.getEnlace() != null) {
-                    this.cabecera = cabecera.getEnlace();
-                }
+                //Si existe más de un elemento enlaza la cabecera con el siguiente.
+                this.cabecera = cabecera.getEnlace();
             } else {
                 Nodo aux = this.cabecera;
                 int i = 1;
@@ -88,7 +86,7 @@ public class Lista {
 
         while (i <= longitud && !encontrado) {
             elementoPrueba = aux.getElemento();
-            if (elemento == elementoPrueba) {
+            if (elemento.equals(elementoPrueba)) {
                 encontrado = true;
                 pos = i;
             }
@@ -100,6 +98,7 @@ public class Lista {
 
     public void vaciar() {
         this.cabecera = null;
+        longitud = 0;
     }
 
     public boolean esVacia() {

@@ -43,7 +43,7 @@ public class GestorRutas {
     //MODIFICACIÓN
     public boolean modificarRuta(Object ciudad1, Object ciudad2, double kms) {
         //Modifica la distancia de la ruta entre ciudad1 y ciudad2
-        boolean modificado = almacenRutas.eliminarArco(ciudad2, ciudad2);
+        boolean modificado = almacenRutas.eliminarArco(ciudad1, ciudad2);
         if (modificado) {
             //si el arco se elimino
             almacenRutas.insertarArco(ciudad1, ciudad2, kms);
@@ -68,21 +68,21 @@ public class GestorRutas {
     public Lista caminosPasanPorCiudad(Object ciudad1, Object ciudad2, Object ciudad3) {
         //Obtener todos los caminos posibles para llegar de 1 a 2 que pasen por una ciudad 3 dada sin pasar dos veces por la misma ciudad
         Lista caminosDe1A2 = almacenRutas.listarCaminos(ciudad1, ciudad2);//Tomamos todos los caminos de 1 a 2
-        Lista listaAux = new Lista();
+        Lista listaAux = new Lista(), listaCamino = new Lista();
         for (int i = 1; i <= caminosDe1A2.longitud(); i++) {
             //Para cada camino de la lista obtenida, si pasa por 3 lo agrego al String
-            listaAux = (Lista) caminosDe1A2.recuperar(i);
+            listaAux = (Lista) caminosDe1A2.recuperar(i);//obtenemos un camino de la lista
             if (listaAux.localizar(ciudad3) > 0) {
-                listaAux.insertar(ciudad3, listaAux.longitud());//si pasa por 3 agregamos el camino a la lista
+                listaCamino.insertar(listaAux.clone(), listaCamino.longitud() + 1);//si pasa por 3 agregamos el camino a la lista de camino que pasa por C a retornar
             }
         }
-        return listaAux;
+        return listaCamino;
     }
 
     public boolean recorridoMenorA(Object ciudad1, Object ciudad2, double km) {
         //Verificar si es posible llegar de A a B recorriendo como máximo una cantidad km de kilómetros
         Lista listaAux = almacenRutas.caminoMenorRecorrido(ciudad1, ciudad2);
-        boolean posible = (listaAux != null && (double) listaAux.recuperar(listaAux.longitud()) <= km);
+        boolean posible = (listaAux != null && !listaAux.esVacia() && (double) listaAux.recuperar(listaAux.longitud()) <= km);
         return posible;
     }
 

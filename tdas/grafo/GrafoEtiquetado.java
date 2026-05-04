@@ -266,7 +266,7 @@ public class GrafoEtiquetado {
     }
 
     public Lista caminoMenorRecorrido(Object origen, Object destino) {
-        //Retorna el camino entre origen y destino que menor recorrido tenga, la ultima posicion del arreglo es la distancia
+        //Retorna el camino entre origen y destino que menor recorrido tenga, la ultima posicion del arreglo es la distancia, si no hay camino la lista a retornar será vacía
         Lista camino = new Lista(); //Lista a retornar con el camino hallado
         NodoVert nodoOrigen = ubicarVertice(origen);
         NodoVert nodoDestino = ubicarVertice(destino);
@@ -300,7 +300,7 @@ public class GrafoEtiquetado {
                 while (nodoAdyAux != null) {
                     //para cada nodo adyacente
                     nodoVertAux = nodoAdyAux.getVertice();
-                    if (caminoActual.localizar(nodoVertAux.getElem()) < 0) {
+                    if (caminoActual.localizar(nodoVertAux.getElem()) <= 0) {
                         //Si el nodo actual no está ya en el camino
                         distanciaAux = (double) nodoAdyAux.getEtiqueta();//se obtiene la distancia a este vertice
                         mejorDistancia = caminoMenorRecorridoAux(nodoVertAux, destino, caminoActual, mejorCamino, mejorDistancia, (distanciaAcumulada + distanciaAux));

@@ -3,6 +3,7 @@ package mudanzas.gestores;
 import java.io.File;
 import java.io.FileWriter;
 import java.time.LocalDateTime; //Para la lectura de archivos (carga inicial)
+import java.time.format.DateTimeFormatter;
 
 public class GestorEscritura {
 
@@ -53,15 +54,19 @@ public class GestorEscritura {
     }
 
     private void escrituraLog(String txt) {
+        //Para altas, bajas y modificaciones
         try {
+            DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");//
+            String momentoActual = (LocalDateTime.now()).format(formatoFecha);
             FileWriter escritor = new FileWriter(archivoLog, true);//Se agrega al .log
-            escritor.write(LocalDateTime.now().toString() + ": " + txt);
+            escritor.write(momentoActual + ": " + txt);
             escritor.close();
         } catch (Exception e) {
         }
     }
 
     public void escrbirTexto(String texto) {
+        //Para estructuras
         try {
             FileWriter escritor = new FileWriter(archivoLog, true);//Se agrega al .log
             escritor.write(texto + "\n");

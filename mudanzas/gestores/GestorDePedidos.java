@@ -140,7 +140,7 @@ public class GestorDePedidos {
         return solicitudBuscada;
     }
 
-    public Lista listaDePedidos(int ciudadA, int ciudadB) {
+    private Lista listaDePedidos(int ciudadA, int ciudadB) {
         /* Dada una ciudad A y una ciudad B retorna todos los pedidos entre estas. */
         Ciudad ciudadSalida = gestorCiudad.obtenerCiudad(ciudadA);
         Pedidos pedidosAux;
@@ -158,7 +158,90 @@ public class GestorDePedidos {
         return listaDePedidos;
     }
 
-    public double tramoPerfecto(int ciudadA, Cola colaCiudades, double mtsRestantes) {
+    public String pedidosYEspacio(int ciudadA, int ciudadB) {
+        //Para la consulta Pedidos entre dos ciudades y espacio necesario
+        Lista listaAux = this.listaDePedidos(ciudadA, ciudadB);
+        SolicitudViaje solActual;
+        double mtsNecesarios = 0;
+        String pedidosYEspacioSt = "";
+        if (listaAux != null) {
+            pedidosYEspacioSt += "Lista de Pedidos entre: " + ciudadA + " y " + ciudadB + "\n";
+            for (int i = 1; i <= listaAux.longitud(); i++) {
+                solActual = (SolicitudViaje) listaAux.recuperar(i);
+                mtsNecesarios += solActual.getCantidadMetrosCubicos();
+                pedidosYEspacioSt += solActual.toString(ciudadA, ciudadB) + "\n";
+            }
+            pedidosYEspacioSt += "Se necesita un espacio minimo de " + mtsNecesarios + " mts cubicos\n";
+        } else {
+            pedidosYEspacioSt = "No se encontraron pedidos entre: " + ciudadA + " y " + ciudadB;
+        }
+        return pedidosYEspacioSt;
+    }
+
+    public String posiblesPedidosXEspacio(int codPostalSalida, int codPostalLlegada, double mtsEntrada) {
+        Lista listaCiudades = gestorRutas.caminoConMenorDistancia(codPostalSalida, codPostalLlegada);
+        Lista listaAux;
+        String posiblesPedidosXEspacioSt = "";
+        SolicitudViaje solActual, solicitudAux;
+        double mtsNecesarios = 0, mtsDisponibles = mtsEntrada;
+        Cola colaRutaAux = new Cola();
+        int ciudadSalidaAux,
+                ciudadLlegadaAux;
+
+        if (listaCiudades != null && !listaCiudades.esVacia()) {
+            //Obtenemos cuanto sobra de espacio, si es que sobra
+            listaAux = this.listaDePedidos(codPostalSalida, codPostalLlegada);
+            if (listaAux != null && !listaAux.esVacia()) {//Si hay pedidos:
+                posiblesPedidosXEspacioSt += "Para los Pedidos entre: " + codPostalSalida + " y " + codPostalLlegada + " sobran: \n";
+                for (int i = 1; i <= listaAux.longitud(); i++) {
+                    //Para cada solicitud viaje de la lista:
+                    solActual = (SolicitudViaje) listaAux.recuperar(i);
+                    mtsNecesarios += solActual.getCantidadMetrosCubicos();
+                }
+            } else {
+                posiblesPedidosXEspacioSt += "No hay pedidos entre" + codPostalSalida + " y " + codPostalLlegada + " sobran:\n";
+            }
+            mtsDisponibles = mtsDisponibles - mtsNecesarios; //Metros cubicos que nos quedan disponible post proceso
+            posiblesPedidosXEspacioSt += mtsDisponibles + "mts cubicos\n";
+            if (mtsDisponibles > 0) {
+                posiblesPedidosXEspacioSt += "Pedidos que ocupan menos que eso y quedan de pasada:\n";
+                for (int i = 1; i <= listaCiudades.longitud(); i++) {
+                    //agrego cada ciudad a una cola, para poder después obtener los pedidos
+                    colaRutaAux.poner(listaCiudades.recuperar(i));
+                }
+                int nAux = 1;
+                while (!colaRutaAux.esVacia()) {
+                    //Buscamos todas las solicitudes de viaje dentro de la ruta obtenida
+                    ciudadSalidaAux = (int) colaRutaAux.obtenerFrente();//Para la ciudad actual chequeamos las que faltan de la ruta
+                    nAux++;//Se empieza desde 2
+                    for (int a = nAux; a <= listaCiudades.longitud(); a++) {
+                        //Para cada elemento de la lista chequeamos sus siguientes solicitudes
+                        ciudadLlegadaAux = (int) listaCiudades.recuperar(a);
+                        if (!(ciudadSalidaAux == codPostalSalida && ciudadLlegadaAux == codPostalLlegada)) {
+                            //Para no volver a chequear todos los pedidos de la ciudadA y B original entre si
+                            listaAux = this.listaDePedidos(ciudadSalidaAux, ciudadLlegadaAux);
+                            if (listaAux != null) {
+                                for (int i = 1; i <= listaAux.longitud(); i++) {
+                                    //Para cada pedido nuevo, chequeamos si cuple con el requisito, si si la imprimimos
+                                    solicitudAux = (SolicitudViaje) listaAux.recuperar(i);
+                                    if (solicitudAux.getCantidadMetrosCubicos() <= mtsDisponibles) {
+                                        posiblesPedidosXEspacioSt += solicitudAux.toString(ciudadSalidaAux, ciudadLlegadaAux) + "\n";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    colaRutaAux.sacar();//Ya usado
+                }
+            }
+
+        } else {
+            posiblesPedidosXEspacioSt += "No existen pedidos o camino entre " + codPostalSalida + " y " + codPostalLlegada;
+        }
+        return posiblesPedidosXEspacioSt;
+    }
+
+    private double tramoPerfecto(int ciudadA, Cola colaCiudades, double mtsRestantes) {
         /*Dados un codigo postal, y una coleccion de codigos postales, retorna si existe alguna 
         solicitud viaje que vaya de la ciudadA a cualquier ciudad de colaCiudades. Ademas de existir una solicitud
         se debe retornar cuantos mts cubicos requiere, si el valor es negativo es porque no existe o se excede
@@ -199,6 +282,33 @@ public class GestorDePedidos {
             mtsRestantes = mtsRestantes - menoresMtsSolicitados;//Si el menor caso ocupa más de los disponibles retorna negativo
         }
         return mtsRestantes;
+    }
+
+    public String caminoPerfecto(Cola colaCiudadesEntrada, double metrosRestantes) {
+        String caminoPerfectoSt = "";
+        boolean caminoPerfecto = true;
+        int ciudadActual;
+        if (gestorRutas.caminoPosible(colaCiudadesEntrada.clone())) {
+            //Si el camino ingresado por parametro existe
+            while (caminoPerfecto && !colaCiudadesEntrada.esVacia()) {
+                //Para cada ciudad de colaCiudadesEntrada, menos la ultima, y mientras siga siendo un camino perfecto verificamos que:
+                ciudadActual = (int) colaCiudadesEntrada.obtenerFrente();
+                colaCiudadesEntrada.sacar();
+                if (!colaCiudadesEntrada.esVacia()) {
+                    //Si el sacado no es el ultimo de la lista, se revisa camino perfecto
+                    metrosRestantes = this.tramoPerfecto(ciudadActual, colaCiudadesEntrada, metrosRestantes);
+                }
+                caminoPerfecto = metrosRestantes >= 0;
+            }
+            if (caminoPerfecto) {
+                caminoPerfectoSt += "El camino dado SI es un camino perfecto\n";
+            } else {
+                caminoPerfectoSt += "El camino dado NO es un camino perfecto\n";
+            }
+        } else {
+            caminoPerfectoSt += "Ruta no encontrada\n";
+        }
+        return caminoPerfectoSt;
     }
 
     public String toStringEstructura() {

@@ -486,7 +486,7 @@ public class MudanzasCompartidas {
                         auxSt = sc.nextLine();
                         ciudadC = Integer.parseInt(auxSt);
                         listaAux = gestorRutas.caminosPasanPorCiudad(ciudadA, ciudadB, ciudadC);//Cargamos la lista con la lista de caminos
-                        if (!listaAux.esVacia()) {
+                        if (listaAux != null && !listaAux.esVacia()) {
                             //Si la lista no es vacía
                             System.out.println("Camino pasa por " + ciudadC + ":\n");
                             for (int i = 1; i <= listaAux.longitud(); i++) {
@@ -1023,18 +1023,7 @@ public class MudanzasCompartidas {
                         System.out.println("Ingrese el codigo postal de la ciudad de llegada:");
                         auxSt = sc.nextLine();
                         codPostalLlegada = Integer.parseInt(auxSt);
-                        listaAux = gestorPedidos.listaDePedidos(codPostalSalida, codPostalLlegada);
-                        if (listaAux != null) {
-                            System.out.println("Lista de Pedidos entre: " + codPostalSalida + " y " + codPostalLlegada);
-                            for (int i = 1; i <= listaAux.longitud(); i++) {
-                                solActual = (SolicitudViaje) listaAux.recuperar(i);
-                                mtsNecesarios += solActual.getCantidadMetrosCubicos();
-                                System.out.println(solActual.toString(codPostalSalida, codPostalLlegada));
-                            }
-                            System.out.println("Se necesita un espacio minimo de " + mtsNecesarios + " mts cubicos");
-                        } else {
-                            System.out.println("No se encontraron pedidos entre: " + codPostalSalida + " y " + codPostalLlegada);
-                        }
+                        System.out.println(gestorPedidos.pedidosYEspacio(codPostalSalida, codPostalLlegada));
                     } catch (NumberFormatException e) {
                         System.out.println("Número invalido");
                     } catch (Exception e) {
@@ -1065,58 +1054,7 @@ public class MudanzasCompartidas {
                         System.out.println("Ingrese la cantidad de metros cubicos disponibles en el camión:");
                         auxSt = sc.nextLine();
                         mtsDisponibles = Double.parseDouble(auxSt);
-                        listaCiudades = gestorRutas.caminoConMenorDistancia(codPostalSalida, codPostalLlegada);
-
-                        if (listaCiudades != null && !listaCiudades.esVacia()) {
-                            //Obtenemos cuanto sobra de espacio, si es que sobra
-                            listaAux = gestorPedidos.listaDePedidos(codPostalSalida, codPostalLlegada);
-                            if (listaAux != null && !listaAux.esVacia()) {//Si hay pedidos:
-                                System.out.println("Para los Pedidos entre: " + codPostalSalida + " y " + codPostalLlegada + " sobran: ");
-                                for (int i = 1; i <= listaAux.longitud(); i++) {
-                                    //Para cada solicitud viaje de la lista:
-                                    solActual = (SolicitudViaje) listaAux.recuperar(i);
-                                    mtsNecesarios += solActual.getCantidadMetrosCubicos();
-                                }
-                            } else {
-                                System.out.println("No hay pedidos entre" + codPostalSalida + " y " + codPostalLlegada + " sobran:");
-                            }
-                            mtsDisponibles = mtsDisponibles - mtsNecesarios; //Metros cubicos que nos quedan disponible post proceso
-                            System.out.println(mtsDisponibles + "mts cubicos");
-                            if (mtsDisponibles > 0) {
-                                System.out.println("Pedidos que ocupan menos que eso y quedan de pasada:");
-                                for (int i = 1; i <= listaCiudades.longitud(); i++) {
-                                    //agrego cada ciudad a una cola, para poder después obtener los pedidos
-                                    colaRutaAux.poner(listaCiudades.recuperar(i));
-                                }
-                                int nAux = 1;
-                                while (!colaRutaAux.esVacia()) {
-                                    //Buscamos todas las solicitudes de viaje dentro de la ruta obtenida
-                                    ciudadSalidaAux = (int) colaRutaAux.obtenerFrente();//Para la ciudad actual chequeamos las que faltan de la ruta
-                                    nAux++;//Se empieza desde 2
-                                    for (int a = nAux; a <= listaCiudades.longitud(); a++) {
-                                        //Para cada elemento de la lista chequeamos sus siguientes solicitudes
-                                        ciudadLlegadaAux = (int) listaCiudades.recuperar(a);
-                                        if (!(ciudadSalidaAux == codPostalSalida && ciudadLlegadaAux == codPostalLlegada)) {
-                                            //Para no volver a chequear todos los pedidos de la ciudadA y B original entre si
-                                            listaAux = gestorPedidos.listaDePedidos(ciudadSalidaAux, ciudadLlegadaAux);
-                                            if (listaAux != null) {
-                                                for (int i = 1; i <= listaAux.longitud(); i++) {
-                                                    //Para cada pedido nuevo, chequeamos si cuple con el requisito, si si la imprimimos
-                                                    solicitudAux = (SolicitudViaje) listaAux.recuperar(i);
-                                                    if (solicitudAux.getCantidadMetrosCubicos() <= mtsDisponibles) {
-                                                        System.out.println(solicitudAux.toString(ciudadSalidaAux, ciudadLlegadaAux));
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                    colaRutaAux.sacar();//Ya usado
-                                }
-                            }
-
-                        } else {
-                            System.out.println("No existen pedidos o camino entre " + codPostalSalida + " y " + codPostalLlegada);
-                        }
+                        System.out.println(gestorPedidos.posiblesPedidosXEspacio(codPostalSalida, codPostalLlegada, mtsDisponibles));
                     } catch (NumberFormatException e) {
                         System.out.println("Número invalido");
                     } catch (Exception e) {
@@ -1140,7 +1078,6 @@ public class MudanzasCompartidas {
                      iCiudad = 0;
                     double metrosRestantes;
                     Cola colaCiudadesEntrada = new Cola();
-                    boolean caminoPerfecto = true;
                     System.out.println("Camino perfecto entre dos ciudades y una capacidad:");
                     try {
                         while (bucle == 0) {
@@ -1156,29 +1093,10 @@ public class MudanzasCompartidas {
                             auxSt = sc.nextLine();
                             bucle = Integer.parseInt(auxSt);
                         }
-                        if (gestorRutas.caminoPosible(colaCiudadesEntrada.clone())) {
-                            System.out.println("Ingrese la capacidad del camion: (de la forma: numero.numero o numero)");
-                            auxSt = sc.nextLine();
-                            metrosRestantes = Double.parseDouble(auxSt);
-                            //Si el camino ingresado por parametro existe
-                            while (caminoPerfecto && !colaCiudadesEntrada.esVacia()) {
-                                //Para cada ciudad de colaCiudadesEntrada, menos la ultima, y mientras siga siendo un camino perfecto verificamos que:
-                                ciudadActual = (int) colaCiudadesEntrada.obtenerFrente();
-                                colaCiudadesEntrada.sacar();
-                                if (!colaCiudadesEntrada.esVacia()) {
-                                    //Si el sacado no es el ultimo de la lista, se revisa camino perfecto
-                                    metrosRestantes = gestorPedidos.tramoPerfecto(ciudadActual, colaCiudadesEntrada, metrosRestantes);
-                                }
-                                caminoPerfecto = metrosRestantes >= 0;
-                            }
-                            if (caminoPerfecto) {
-                                System.out.println("El camino dado SI es un camino perfecto");
-                            } else {
-                                System.out.println("El camino dado NO es un camino perfecto");
-                            }
-                        } else {
-                            System.out.println("Ruta no encontrada");
-                        }
+                        System.out.println("Ingrese la capacidad del camion: (de la forma: numero.numero o numero)");
+                        auxSt = sc.nextLine();
+                        metrosRestantes = Double.parseDouble(auxSt);
+                        System.out.println(gestorPedidos.caminoPerfecto(colaCiudadesEntrada, metrosRestantes));
                     } catch (NumberFormatException e) {
                         System.out.println("Número invalido");
                     } catch (Exception e) {

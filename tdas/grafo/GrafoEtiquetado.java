@@ -361,22 +361,25 @@ public class GrafoEtiquetado {
             camino.sacar();
             if (nodoActual != null) {
                 nodoAdyActual = nodoActual.getPrimerAdy();
-            }
-            while (exito && !camino.esVacia()) {
-                //Mientras no se compruebe que el camino existe o no exsite
-                if (nodoAdyActual == null) {
-                    exito = false; //Si recorrimos todos los posibles y el camino no siguio, se retorna falso
-                } else {
-                    nodoAux = nodoAdyActual.getVertice();
-                    if (nodoAux.getElem().equals(camino.obtenerFrente())) {
-                        //Si el tramo de la ruta se encontro, se pasa con la siguiente
-                        camino.sacar();
-                        nodoActual = nodoAux;
-                        nodoAdyActual = nodoActual.getPrimerAdy();//Nos paramos sobre los nuevos posibles caminos
+
+                while (exito && !camino.esVacia()) {
+                    //Mientras no se compruebe que el camino existe o no exsite
+                    if (nodoAdyActual == null) {
+                        exito = false; //Si recorrimos todos los posibles y el camino no siguio, se retorna falso
                     } else {
-                        nodoAdyActual = nodoAdyActual.getSigAdy();
+                        nodoAux = nodoAdyActual.getVertice();
+                        if (nodoAux.getElem().equals(camino.obtenerFrente())) {
+                            //Si el tramo de la ruta se encontro, se pasa con la siguiente
+                            camino.sacar();
+                            nodoActual = nodoAux;
+                            nodoAdyActual = nodoActual.getPrimerAdy();//Nos paramos sobre los nuevos posibles caminos
+                        } else {
+                            nodoAdyActual = nodoAdyActual.getSigAdy();
+                        }
                     }
                 }
+            } else {
+                exito = false;
             }
 
         }

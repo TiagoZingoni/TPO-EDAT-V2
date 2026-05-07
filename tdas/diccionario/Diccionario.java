@@ -49,19 +49,59 @@ public class Diccionario {
         Si no existe en la estructura un elemento con igual clave, agrega el par 
         (clave, dato) a la estructura. Si la operación termina con éxito devuelve
         verdadero y falso en caso contrario.*/
-        boolean insertado = true;
-        if (this.raiz == null) {
-            this.raiz = new NodoAVLDicc(clave, elemento);
-        } else {
-            insertado = insertarAux(this.raiz, clave, elemento);
-        }
-        //Rotaciones para asegurar balance si se insertó el elemento
-        if (insertado) {
-            this.raiz = ajustaAVL(clave, this.raiz);
-        }
-        return insertado;
+        boolean[] insertado = new boolean[1];
+        insertado[0] = true;//Es false solo si no se pudo insertar
+        this.raiz = insertarAux(this.raiz, clave, elemento, insertado);
+
+        return insertado[0];
     }
 
+    private NodoAVLDicc insertarAux(NodoAVLDicc nodo, Comparable clave, Object dato, boolean[] insertado) {
+        int comparado;
+        NodoAVLDicc nRetorno = null;
+        if (nodo != null) {
+            comparado = clave.compareTo(nodo.getClave());//para no recalcular todas las veces
+
+            if (comparado < 0) {
+                nodo.setIzquierdo(insertarAux(nodo.getIzquierdo(), clave, dato, insertado));//si es menor
+            } else if (comparado > 0) {
+                nodo.setDerecho(insertarAux(nodo.getDerecho(), clave, dato, insertado));//Si el elemento es mayor
+            } else {
+                //Si el elemento ya está en el arbol, no inserto nada
+                insertado[0] = false;
+            }
+            if (insertado[0]) {//Si se insertó
+                nRetorno = ajustaAVL(nodo);
+            }
+        } else {
+            nRetorno = new NodoAVLDicc(clave, dato);
+        }
+        return nRetorno;
+    }
+
+    private NodoAVLDicc ajustaAVL(NodoAVLDicc nodo) {
+        /*Función auxiliar para implementar las funciones de inserción y de borrado. 
+        Consiste en ajustar los nodos que existen desde el nodo conteniendo la clave e hasta el nodo raiz del subarbol actual */
+        //La versión anterior bajaba hasta el nodo, acá se modifica directamente
+        int balance = nodo.calcularBalance();
+        if (balance == 2) {
+            if (nodo.getIzquierdo().calcularBalance() >= 0) {
+                nodo = rotacionDerecha(nodo);
+            } else {
+                nodo = rotacionIzquierdaDerecha(nodo);
+            }
+        }//Si el arbol cae por derecha
+        else if (balance == -2) {
+            if (nodo.getDerecho().calcularBalance() <= 0) {
+                nodo = rotacionIzquierda(nodo);
+            } else {
+                nodo = rotacionDerechaIzquierda(nodo);
+            }
+        }
+        return nodo;
+    }
+
+    /* Metodo viejo (Bastante cambiado igual)
     private boolean insertarAux(NodoAVLDicc nodo, Comparable clave, Object dato) {
         //precondicion de n no nulo
         boolean insertado = true;
@@ -73,6 +113,9 @@ public class Diccionario {
             //Si no tiene HI se crea un nodo para almacenar "elemento" y se coloca como HI del actual
             if (nodo.getIzquierdo() != null) {
                 insertado = insertarAux(nodo.getIzquierdo(), clave, dato);
+                if (insertado) {
+                    nodo.setIzquierdo(ajustaAVL(clave, nodo.getIzquierdo()));
+                }
             } else {
                 nodo.setIzquierdo(new NodoAVLDicc(clave, dato));
             }
@@ -81,13 +124,16 @@ public class Diccionario {
             //Si no tiene HD se crea un nodo para almacenar "elemento" y se coloca como HD del actual
             if (nodo.getDerecho() != null) {
                 insertado = insertarAux(nodo.getDerecho(), clave, dato);
+                if (insertado) {
+                    nodo.setDerecho(ajustaAVL(clave, nodo.getDerecho()));
+                }
             } else {
                 nodo.setDerecho(new NodoAVLDicc(clave, dato));
             }
         }
         return insertado;
     }
-
+     */
     private NodoAVLDicc ajustaAVL(Comparable clave, NodoAVLDicc nodo) {
         /* 
         Función auxiliar para implementar las funciones de inserción y de borrado. 
@@ -126,51 +172,45 @@ public class Diccionario {
     //Inicio ELIMINAR
     public boolean eliminar(Comparable clave) {
         //Si encuentra el elemento por clave lo elimina y reacomoda el arbol, retornando true, si no existe dicho elemento retorna false.
-        boolean eliminado = true;
-        if (this.raiz == null) {
-            eliminado = false;
-        } else {
-            eliminado = eliminarAux(this.raiz, this.raiz, clave);
-        }
-        if (eliminado) {
-            this.raiz = ajustaAVL(clave, this.raiz);
-        }
-        return eliminado;
+        boolean[] eliminado = new boolean[1];
+        eliminado[0] = true;//Es false solo si no se pudo eliminar
+        this.raiz = eliminarAux(this.raiz, this.raiz, clave, eliminado);
+        return eliminado[0];
     }
 
-    private boolean eliminarAux(NodoAVLDicc n, NodoAVLDicc padre, Comparable clave) {
-        //recorrido iterativo del arbol.
-        boolean eliminado = true;
-        if (clave.compareTo(n.getClave()) == 0) {
-            //Cuando estamos sobre el elemento buscado lo eliminamos y reacomodamos el arbol según se necesite.
-            if (n.getIzquierdo() == null && n.getDerecho() == null) //caso 1, el elemento es una hoja del arbol.
-            {
-                eliminado = caso1(padre, clave);
-            } else if ((n.getIzquierdo() != null && n.getDerecho() == null)) //caso 2 Izq, el elemento tiene solo hijo izquierdo.
-            {
-                eliminado = caso2(n.getIzquierdo(), padre, clave);
-            } else if (n.getIzquierdo() == null && n.getDerecho() != null) //caso 2 Der, el elemento tiene solo hijo derecho.
-            {
-                eliminado = caso2(n.getDerecho(), padre, clave);
-            } else if (n.getIzquierdo() != null && n.getDerecho() != null) //caso 3, el elemento tiene 2 hijos.
-            {
-                eliminado = caso3(n, padre, clave);
-            }
-        } else if (clave.compareTo(n.getClave()) < 0) {
-            //Si n no es el nodo, se continua el recorrido del arbol hasta encontrarlo o terminarlo.
-            if (n.getIzquierdo() != null) {
-                eliminado = eliminarAux(n.getIzquierdo(), n, clave);
+    private NodoAVLDicc eliminarAux(NodoAVLDicc n, NodoAVLDicc padre, Comparable clave, boolean[] eliminado) {
+        if (n != null) {
+            if (clave.compareTo(n.getClave()) == 0) {
+                //Cuando estamos sobre el elemento buscado lo eliminamos y reacomodamos el arbol según se necesite.
+                if (n.getIzquierdo() == null && n.getDerecho() == null) //caso 1, el elemento es una hoja del arbol.
+                {
+                    eliminado[0] = caso1(padre, clave);
+                } else if ((n.getIzquierdo() != null && n.getDerecho() == null)) //caso 2 Izq, el elemento tiene solo hijo izquierdo.
+                {
+                    eliminado[0] = caso2(n.getIzquierdo(), padre, clave);
+                } else if (n.getIzquierdo() == null && n.getDerecho() != null) //caso 2 Der, el elemento tiene solo hijo derecho.
+                {
+                    eliminado[0] = caso2(n.getDerecho(), padre, clave);
+                } else if (n.getIzquierdo() != null && n.getDerecho() != null) //caso 3, el elemento tiene 2 hijos.
+                {
+                    eliminado[0] = caso3(n, padre, clave);
+                }
+            } else if (clave.compareTo(n.getClave()) < 0) {
+                //Si n no es el nodo, se continua el recorrido del arbol hasta encontrarlo o terminarlo.
+                if (n.getIzquierdo() != null) {
+                    n = eliminarAux(n.getIzquierdo(), n, clave, eliminado);
+                } else {
+                    eliminado[0] = false; //Si el nodo no existía en el arbol
+                }
             } else {
-                eliminado = false;
-            }
-        } else {
-            if (n.getDerecho() != null) {
-                eliminado = eliminarAux(n.getDerecho(), n, clave);
-            } else {
-                eliminado = false;
+                if (n.getDerecho() != null) {
+                    n = eliminarAux(n.getDerecho(), n, clave, eliminado);
+                } else {
+                    eliminado[0] = false;//Si el nodo no existía en el arbol
+                }
             }
         }
-        return eliminado;
+        return n;
     }
 
     private boolean caso1(NodoAVLDicc padre, Comparable elemento) {
@@ -180,6 +220,7 @@ public class Diccionario {
         } else {
             padre.setIzquierdo(null);
         }
+        padre = ajustaAVL(padre);//Se recalcula y ajusta al padre
         return true;
     }
 
@@ -190,6 +231,7 @@ public class Diccionario {
         } else {
             padre.setIzquierdo(nuevoHijo);
         }
+        padre = ajustaAVL(padre);//Se recalcula y ajusta al padre
         return true;
     }
 
@@ -215,6 +257,7 @@ public class Diccionario {
                 nodoReemp.setDerecho(null);
             }
         }
+        padre = ajustaAVL(padre);//Se recalcula y ajusta al padre
         return true;
     }
 

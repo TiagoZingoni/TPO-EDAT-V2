@@ -1,162 +1,162 @@
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;5000;Córdoba;Córdoba
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;2000;Rosario;Santa Fe
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;3000;Santa Fe;Santa Fe
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;4000;San Miguel de Tucumán;Tucumán
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;5500;Mendoza;Mendoza
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;8300;Neuquén;Neuquén
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;8500;Viedma;Río Negro
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;8324;Cipolletti;Río Negro
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;8400;San Carlos de Bariloche;Río Negro
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;9000;Comodoro Rivadavia;Chubut
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;9100;Trelew;Chubut
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;9120;Puerto Madryn;Chubut
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;9400;Río Gallegos;Santa Cruz
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;9410;Ushuaia;Tierra del Fuego
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;4600;San Salvador de Jujuy;Jujuy
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;4400;Salta;Salta
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;4700;San Fernando del Valle de Catamarca;Catamarca
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;5300;La Rioja;La Rioja
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;5700;San Luis;San Luis
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;6300;Santa Rosa;La Pampa
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;3100;Paraná;Entre Ríos
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;3200;Concordia;Entre Ríos
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;3400;Corrientes;Corrientes
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;3500;Resistencia;Chaco
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;3600;Formosa;Formosa
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;3300;Posadas;Misiones
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;2800;Zárate;Buenos Aires
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;2900;San Nicolás de los Arroyos;Buenos Aires
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;7600;Mar del Plata;Buenos Aires
-04/05/2026 10:18:43: Ciudad agregado/a con exito: C;8000;Bahía Blanca;Buenos Aires
-04/05/2026 10:18:43: Ruta agregado/a con exito: 5000;2000;400.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 5000;3000;330.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 5000;4000;700.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 5000;5500;650.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 5000;8300;1200.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 8324;8300;10.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 8324;8400;430.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 8400;8500;800.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 8500;8300;300.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 8300;9000;750.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 9000;9100;380.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 9100;9120;70.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 9120;9400;1300.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 9400;9410;580.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 4600;4400;300.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 4400;4700;600.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 4700;5300;450.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 5300;5000;430.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 5700;5000;400.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 6300;5700;500.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 3100;3000;30.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 3100;3200;260.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 3200;3400;430.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 3400;3500;20.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 3500;3600;160.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 3600;3300;300.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 3300;3400;320.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 2800;2900;100.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 2900;2000;70.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 2000;7600;500.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 7600;8000;400.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 8000;8300;650.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 5500;5700;250.0
-04/05/2026 10:18:43: Fallo al agregar el/laRuta: 5700;6300;300.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 6300;8000;500.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 3000;2000;170.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 4000;4600;350.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 4400;4000;320.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 8300;8400;430.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 8500;8000;900.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 8500;2900;900.5
-04/05/2026 10:18:43: Ruta agregado/a con exito: 2900;6300;400.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 6300;8300;600.0
-04/05/2026 10:18:43: Fallo al agregar el/laRuta: 8300;8500;200.0
-04/05/2026 10:18:43: Ruta agregado/a con exito: 8500;2000;30.0
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;30111222;RICARDO ENRIQUE;BOCHINI;11-23456789;ricardoBochini@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;28999888;DANIEL ALBERTO;BERTONI;11-22334455;danielBertoni@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;31222333;GABRIEL OMAR;MILITO;11-34567890;gabrielMilito@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;33444555;SERGIO LEONEL;AGÜERO;11-45678901;sergioAguero@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;27888999;RICARDO ELBIO;PAVONI;11-56789012;ricardoPavoni@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;29999111;MIGUEL ANGEL;SANTORO;11-67890123;miguelSantoro@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;35555222;FEDERICO;INSUA;11-78901234;federicoInsua@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;36666333;DANIEL GASTON;MONTENEGRO;11-89012345;danielMontenegro@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;37777444;DIEGO MARTIN;FORLAN;11-90123456;diegoForlan@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;38888555;PATRICIO;RODRIGUEZ;11-91234567;patricioRodriguez@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;39999666;EZEQUIEL;BARCO;11-92345678;ezequielBarco@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;34444777;MARTIN;BENITEZ;11-93456789;martinBenitez@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;33333888;NICOLAS;TAGLIAFICO;11-94567890;nicolasTagliafico@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;32222999;MAXIMILIANO;MEZA;11-95678901;maximilianoMeza@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;31111000;DIEGO;SILVA;11-96789012;diegoSilva@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;30000111;DOMINGO;BLANCO;11-97890123;domingoBlanco@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;38999222;ALAN;SOÑORA;11-98901234;alanSonora@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;37888333;ALAN;VELASCO;11-99012345;alanVelasco@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;36777444;LEANDRO;FERNANDEZ;11-90112233;leandroFernandez@gmail.com;
-04/05/2026 10:18:43: Cliente agregado/a con exito: DNI;35666555;ANDRES;CUERO;11-91223344;andresCuero@gmail.com;
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;5000;8300;15/06/2023;DNI;30111222;10.0;3;San Martin 123;Belgrano 456;T;1
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;5000;8400;16/06/2023;DNI;28999888;8.0;2;Roca 210;Sarmiento 340;F;2
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;5000;5500;17/06/2023;DNI;31222333;6.0;2;Colon 890;Mitre 120;T;3
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;5000;2000;18/06/2023;DNI;33444555;12.0;4;San Luis 450;Cordoba 780;F;4
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;8300;5000;19/06/2023;DNI;27888999;20.0;6;Neuquen 321;Buenos Aires 654;T;5
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;8300;8400;20/06/2023;DNI;29999111;7.0;2;Belgrano 100;Moreno 200;T;6
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;8300;8500;21/06/2023;DNI;35555222;9.0;3;Rivadavia 450;25 de Mayo 670;F;7
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;8400;8300;22/06/2023;DNI;36666333;6.0;2;Onelli 111;Mitre 222;T;8
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;8400;8500;23/06/2023;DNI;37777444;11.0;5;España 345;Italia 567;F;9
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;8400;9000;24/06/2023;DNI;38888555;4.0;1;Moreno 123;San Martin 456;T;10
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;2000;3000;25/06/2023;DNI;39999666;14.0;4;Avellaneda 890;Urquiza 120;T;11
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;3000;2000;26/06/2023;DNI;34444777;3.0;1;San Martin 300;Rivadavia 200;F;12
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;5500;5000;27/06/2023;DNI;33333888;16.0;5;Lavalle 100;Colon 200;T;13
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;5500;5700;28/06/2023;DNI;32222999;18.0;6;San Juan 789;Pringles 456;F;14
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;3100;3200;29/06/2023;DNI;31111000;2.0;1;Buenos Aires 234;San Martin 567;T;15
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;3200;3400;30/06/2023;DNI;30000111;13.0;4;Entre Rios 321;Belgrano 654;T;16
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;3400;3500;01/07/2023;DNI;38999222;6.0;2;Junin 222;Italia 333;F;17
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;9000;9100;02/07/2023;DNI;37888333;7.0;3;España 100;San Martin 200;T;18
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;9120;9400;03/07/2023;DNI;36777444;9.0;2;Roca 400;Kirchner 500;F;19
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;9400;9410;04/07/2023;DNI;35666555;5.0;1;Santa Cruz 123;Fuegia 456;T;20
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;2000;5000;05/07/2023;DNI;30111222;7.0;2;Mitre 123;San Martin 456;T;21
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;3000;5000;06/07/2023;DNI;28999888;9.0;3;Belgrano 210;Rivadavia 340;F;22
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;3000;5000;06/07/2023;DNI;30111222;9.0;3;Catamarca 12;Santa Fe 32;T;23
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;5500;8300;07/07/2023;DNI;31222333;5.0;1;Lavalle 890;Neuquen 120;T;24
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;5700;8300;08/07/2023;DNI;33444555;11.0;4;San Luis 450;Buenos Aires 780;F;25
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;6300;8400;09/07/2023;DNI;27888999;6.0;2;Roca 321;Onelli 654;T;26
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;3200;8400;10/07/2023;DNI;29999111;8.0;3;Urquiza 100;Moreno 200;T;27
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;3400;2000;11/07/2023;DNI;35555222;10.0;3;Junin 450;Cordoba 670;F;28
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;3500;3000;12/07/2023;DNI;36666333;4.0;1;Italia 111;San Martin 222;T;29
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;9100;5000;13/07/2023;DNI;37777444;12.0;5;España 345;Colon 567;F;30
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;9120;5000;14/07/2023;DNI;38888555;3.0;1;Roca 123;San Luis 456;T;31
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;6300;2000;26/01/2021;DNI;30111222;32.0;1;Roca 123;San Luis 456;T;32
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;8300;8500;26/01/2021;DNI;30111222;32.0;1;Roca 123;San Luis 456;T;33
-04/05/2026 10:18:43: Solicitud agregado/a con exito: S;8500;2000;26/01/2021;DNI;30111222;32.0;1;Roca 123;San Luis 456;F;34
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;5000;Córdoba;Córdoba
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;2000;Rosario;Santa Fe
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;3000;Santa Fe;Santa Fe
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;4000;San Miguel de Tucumán;Tucumán
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;5500;Mendoza;Mendoza
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;8300;Neuquén;Neuquén
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;8500;Viedma;Río Negro
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;8324;Cipolletti;Río Negro
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;8400;San Carlos de Bariloche;Río Negro
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;9000;Comodoro Rivadavia;Chubut
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;9100;Trelew;Chubut
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;9120;Puerto Madryn;Chubut
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;9400;Río Gallegos;Santa Cruz
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;9410;Ushuaia;Tierra del Fuego
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;4600;San Salvador de Jujuy;Jujuy
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;4400;Salta;Salta
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;4700;San Fernando del Valle de Catamarca;Catamarca
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;5300;La Rioja;La Rioja
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;5700;San Luis;San Luis
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;6300;Santa Rosa;La Pampa
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;3100;Paraná;Entre Ríos
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;3200;Concordia;Entre Ríos
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;3400;Corrientes;Corrientes
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;3500;Resistencia;Chaco
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;3600;Formosa;Formosa
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;3300;Posadas;Misiones
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;2800;Zárate;Buenos Aires
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;2900;San Nicolás de los Arroyos;Buenos Aires
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;7600;Mar del Plata;Buenos Aires
+07/05/2026 11:18:03: Ciudad agregado/a con exito: C;8000;Bahía Blanca;Buenos Aires
+07/05/2026 11:18:03: Ruta agregado/a con exito: 5000;2000;400.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 5000;3000;330.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 5000;4000;700.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 5000;5500;650.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 5000;8300;1200.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 8324;8300;10.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 8324;8400;430.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 8400;8500;800.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 8500;8300;300.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 8300;9000;750.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 9000;9100;380.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 9100;9120;70.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 9120;9400;1300.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 9400;9410;580.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 4600;4400;300.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 4400;4700;600.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 4700;5300;450.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 5300;5000;430.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 5700;5000;400.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 6300;5700;500.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 3100;3000;30.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 3100;3200;260.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 3200;3400;430.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 3400;3500;20.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 3500;3600;160.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 3600;3300;300.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 3300;3400;320.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 2800;2900;100.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 2900;2000;70.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 2000;7600;500.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 7600;8000;400.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 8000;8300;650.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 5500;5700;250.0
+07/05/2026 11:18:03: Fallo al agregar el/laRuta: 5700;6300;300.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 6300;8000;500.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 3000;2000;170.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 4000;4600;350.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 4400;4000;320.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 8300;8400;430.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 8500;8000;900.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 8500;2900;900.5
+07/05/2026 11:18:03: Ruta agregado/a con exito: 2900;6300;400.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 6300;8300;600.0
+07/05/2026 11:18:03: Fallo al agregar el/laRuta: 8300;8500;200.0
+07/05/2026 11:18:03: Ruta agregado/a con exito: 8500;2000;30.0
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;30111222;RICARDO ENRIQUE;BOCHINI;11-23456789;ricardoBochini@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;28999888;DANIEL ALBERTO;BERTONI;11-22334455;danielBertoni@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;31222333;GABRIEL OMAR;MILITO;11-34567890;gabrielMilito@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;33444555;SERGIO LEONEL;AGÜERO;11-45678901;sergioAguero@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;27888999;RICARDO ELBIO;PAVONI;11-56789012;ricardoPavoni@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;29999111;MIGUEL ANGEL;SANTORO;11-67890123;miguelSantoro@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;35555222;FEDERICO;INSUA;11-78901234;federicoInsua@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;36666333;DANIEL GASTON;MONTENEGRO;11-89012345;danielMontenegro@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;37777444;DIEGO MARTIN;FORLAN;11-90123456;diegoForlan@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;38888555;PATRICIO;RODRIGUEZ;11-91234567;patricioRodriguez@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;39999666;EZEQUIEL;BARCO;11-92345678;ezequielBarco@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;34444777;MARTIN;BENITEZ;11-93456789;martinBenitez@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;33333888;NICOLAS;TAGLIAFICO;11-94567890;nicolasTagliafico@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;32222999;MAXIMILIANO;MEZA;11-95678901;maximilianoMeza@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;31111000;DIEGO;SILVA;11-96789012;diegoSilva@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;30000111;DOMINGO;BLANCO;11-97890123;domingoBlanco@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;38999222;ALAN;SOÑORA;11-98901234;alanSonora@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;37888333;ALAN;VELASCO;11-99012345;alanVelasco@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;36777444;LEANDRO;FERNANDEZ;11-90112233;leandroFernandez@gmail.com;
+07/05/2026 11:18:03: Cliente agregado/a con exito: DNI;35666555;ANDRES;CUERO;11-91223344;andresCuero@gmail.com;
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;5000;8300;15/06/2023;DNI;30111222;10.0;3;San Martin 123;Belgrano 456;T;1
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;5000;8400;16/06/2023;DNI;28999888;8.0;2;Roca 210;Sarmiento 340;F;2
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;5000;5500;17/06/2023;DNI;31222333;6.0;2;Colon 890;Mitre 120;T;3
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;5000;2000;18/06/2023;DNI;33444555;12.0;4;San Luis 450;Cordoba 780;F;4
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;8300;5000;19/06/2023;DNI;27888999;20.0;6;Neuquen 321;Buenos Aires 654;T;5
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;8300;8400;20/06/2023;DNI;29999111;7.0;2;Belgrano 100;Moreno 200;T;6
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;8300;8500;21/06/2023;DNI;35555222;9.0;3;Rivadavia 450;25 de Mayo 670;F;7
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;8400;8300;22/06/2023;DNI;36666333;6.0;2;Onelli 111;Mitre 222;T;8
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;8400;8500;23/06/2023;DNI;37777444;11.0;5;España 345;Italia 567;F;9
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;8400;9000;24/06/2023;DNI;38888555;4.0;1;Moreno 123;San Martin 456;T;10
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;2000;3000;25/06/2023;DNI;39999666;14.0;4;Avellaneda 890;Urquiza 120;T;11
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;3000;2000;26/06/2023;DNI;34444777;3.0;1;San Martin 300;Rivadavia 200;F;12
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;5500;5000;27/06/2023;DNI;33333888;16.0;5;Lavalle 100;Colon 200;T;13
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;5500;5700;28/06/2023;DNI;32222999;18.0;6;San Juan 789;Pringles 456;F;14
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;3100;3200;29/06/2023;DNI;31111000;2.0;1;Buenos Aires 234;San Martin 567;T;15
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;3200;3400;30/06/2023;DNI;30000111;13.0;4;Entre Rios 321;Belgrano 654;T;16
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;3400;3500;01/07/2023;DNI;38999222;6.0;2;Junin 222;Italia 333;F;17
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;9000;9100;02/07/2023;DNI;37888333;7.0;3;España 100;San Martin 200;T;18
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;9120;9400;03/07/2023;DNI;36777444;9.0;2;Roca 400;Kirchner 500;F;19
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;9400;9410;04/07/2023;DNI;35666555;5.0;1;Santa Cruz 123;Fuegia 456;T;20
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;2000;5000;05/07/2023;DNI;30111222;7.0;2;Mitre 123;San Martin 456;T;21
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;3000;5000;06/07/2023;DNI;28999888;9.0;3;Belgrano 210;Rivadavia 340;F;22
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;3000;5000;06/07/2023;DNI;30111222;9.0;3;Catamarca 12;Santa Fe 32;T;23
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;5500;8300;07/07/2023;DNI;31222333;5.0;1;Lavalle 890;Neuquen 120;T;24
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;5700;8300;08/07/2023;DNI;33444555;11.0;4;San Luis 450;Buenos Aires 780;F;25
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;6300;8400;09/07/2023;DNI;27888999;6.0;2;Roca 321;Onelli 654;T;26
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;3200;8400;10/07/2023;DNI;29999111;8.0;3;Urquiza 100;Moreno 200;T;27
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;3400;2000;11/07/2023;DNI;35555222;10.0;3;Junin 450;Cordoba 670;F;28
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;3500;3000;12/07/2023;DNI;36666333;4.0;1;Italia 111;San Martin 222;T;29
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;9100;5000;13/07/2023;DNI;37777444;12.0;5;España 345;Colon 567;F;30
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;9120;5000;14/07/2023;DNI;38888555;3.0;1;Roca 123;San Luis 456;T;31
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;6300;2000;26/01/2021;DNI;30111222;32.0;1;Roca 123;San Luis 456;T;32
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;8300;8500;26/01/2021;DNI;30111222;32.0;1;Roca 123;San Luis 456;T;33
+07/05/2026 11:18:03: Solicitud agregado/a con exito: S;8500;2000;26/01/2021;DNI;30111222;32.0;1;Roca 123;San Luis 456;F;34
 Estado del sistema luego de la carga inicial:
 ESTRUCTURA CIUDADES:
-5000->izq: 3500, der: 8400
-3500->izq: 3200, der: 4400
-3200->izq: 3000, der: 3400
-3000->izq: 2800, der: 3100
-2800->izq: 2000, der: 2900
-2000->
+5000->izq: 2000, der: 5500
+2000->der: 3000
+3000->izq: 2800, der: 4000
+2800->der: 2900
 2900->
-3100->
-3400->izq: 3300, 
+4000->izq: 3100, der: 4600
+3100->der: 3200
+3200->der: 3400
+3400->izq: 3300, der: 3500
 3300->
-4400->izq: 4000, der: 4600
-4000->izq: 3600, 
+3500->der: 3600
 3600->
-4600->der: 4700
+4600->izq: 4400, der: 4700
+4400->
 4700->
-8400->izq: 5700, der: 9120
-5700->izq: 5500, der: 8300
-5500->izq: 5300, 
+5500->izq: 5300, der: 8300
 5300->
-8300->izq: 7600, der: 8324
-7600->izq: 6300, der: 8000
-6300->
+8300->izq: 5700, der: 8500
+5700->der: 6300
+6300->der: 7600
+7600->der: 8000
 8000->
-8324->
-9120->izq: 9000, der: 9400
-9000->izq: 8500, der: 9100
-8500->
-9100->
+8500->izq: 8324, der: 9000
+8324->der: 8400
+8400->
+9000->der: 9100
+9100->der: 9120
+9120->der: 9400
 9400->der: 9410
 9410->
 

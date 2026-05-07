@@ -131,6 +131,31 @@ public class Lista {
         return clon;
     }
 
+    public boolean copiar(Lista otraLista) {
+        //cambia la lista actual por la nueva
+        boolean exito = false;
+        if (otraLista != null) {
+            //si la otra lista existe, la copiamos
+            exito = true;
+            this.vaciar();
+            if (!otraLista.esVacia()) {
+                //Si hay elementos a copiar
+                Nodo auxOtraLista = otraLista.cabecera;
+                Nodo auxListaActual;
+                this.cabecera = new Nodo(auxOtraLista.getElemento(), null);
+                auxListaActual = this.cabecera;//Ultimo nodo de la lista actual
+                while (auxOtraLista.getEnlace() != null) {
+                    //Mientras hayan elementos a copiar
+                    auxOtraLista = auxOtraLista.getEnlace();
+                    auxListaActual.setEnlace(new Nodo(auxOtraLista.getElemento(), null));
+                    auxListaActual = auxListaActual.getEnlace();
+                }
+                this.longitud = otraLista.longitud();
+            }
+        }
+        return exito;
+    }
+
     public String toString() {
         Nodo aux = this.cabecera;
         String cadena = "[ ";

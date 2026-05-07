@@ -290,11 +290,14 @@ public class GrafoEtiquetado {
             if (nodoActual.equals(destino)) {
                 //Si llegamos al objetivo reemplazamos y modificamos la distancia
                 mejorDistancia = distanciaAcumulada;
+                /* 
                 mejorCamino.vaciar();
                 for (int i = 1; i <= caminoActual.longitud(); i++) {
                     //se reemplaza el anterior mejor camino
                     mejorCamino.insertar((caminoActual.recuperar(i)), i);
                 }
+                 */
+                mejorCamino.copiar(caminoActual);//Copiamos en mejorCamino, el caminoActual. De O(n^2) a O(n), y no es clone() para no crear otra instancia innecesariamente en cada  repetición
                 mejorCamino.insertar(mejorDistancia, mejorCamino.longitud() + 1);//se inserta al final la distancia
             } else {
                 while (nodoAdyAux != null) {

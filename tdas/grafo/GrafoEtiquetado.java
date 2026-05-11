@@ -226,6 +226,47 @@ public class GrafoEtiquetado {
         return caminoResultado;
     }
 
+    public Lista caminoMasCorto2(Object vertice1, Object vertice2) {
+        //Retorna el camino más corto del vertice1 al vertice2. Entre dos caminos de igual longitud devuelve cualquiera. Si no existe un camino,
+        //o alguno de los vertices, se retorna una lista vacía.
+        Lista camino = new Lista(); //Lista a retornar con el camino hallado
+        NodoVert nodoOrigen = ubicarVertice(vertice1);
+        NodoVert nodoDestino = ubicarVertice(vertice2);
+        if ((nodoOrigen != null && nodoDestino != null) && !(vertice1.equals(vertice2))) {
+            caminoMasCortoAux(nodoOrigen, vertice2, new Lista(), camino); //Carga camino con el camino más corto
+        } else if ((nodoOrigen != null && nodoDestino != null) && vertice1.equals(vertice2)) {
+            camino.insertar(vertice1, 1);
+        }
+        return camino;
+    }
+
+    public void caminoMasCortoAux(NodoVert origen, Object destino, Lista caminoActual, Lista caminoMasCorto) {
+        //Carga la Lista caminoMasCorto, con lo que dice su nombre, caminoActual es un auxiliar
+        NodoAdy nodoAdyAux; //Es un nodo auxiliar para recorrer los adyacentes del actual.
+        NodoVert nodoVertAux; //Es un nodo auxiliar para almacenar los nodos vert de los adyacentes.
+        caminoActual.insertar(origen.getElem(), caminoActual.longitud() + 1);//Guardamos el nodo actual en el camino actual
+        if (origen.getElem().equals(destino)) {
+            caminoMasCorto.copiar(caminoActual);//Si se encontró un camino la condición de más corto o vacío se cumple automaticamente, cargamos el camino más corto
+        } else {
+            //si no es el nodo actual
+            nodoAdyAux = origen.getPrimerAdy();
+            if ((caminoMasCorto.esVacia() || caminoActual.longitud() + 1 < caminoMasCorto.longitud())) {
+                //Si todavía no supera el camino más corto, o este sigue sin llenarse entramos a buscar sus adyacentes. +1 para evitar chequear los vecinos si ya se pasa
+                while (nodoAdyAux != null) {
+                    //mientras el nodo adyacente no sea nulo, continua la busqueda por cada camino posible
+                    nodoVertAux = nodoAdyAux.getVertice();
+                    if (caminoActual.localizar(nodoVertAux.getElem()) < 0) {//CONSULTAR OPTIMIZACIÓN
+                        //Si el nodo a buscar no forma ya parte de la lista
+                        //Aca se evitan los bucles
+                        caminoMasCortoAux(nodoVertAux, destino, caminoActual, caminoMasCorto);
+                    }
+                    nodoAdyAux = nodoAdyAux.getSigAdy();//siguiente nodo ady
+                }
+            }
+        }
+        caminoActual.eliminar(caminoActual.longitud());//Se elimina el ultimo elemento puesto antes de volver a la it anterior
+    }
+
     //Lista de todos los caminos desde un nodo A a un nodo B
     public Lista listarCaminos(Object origen, Object destino) {
         //Retorna todos los caminos que unen origen con destino, si no existe ningun camino o alguno de los nodos, retorna una lista vacía

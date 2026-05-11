@@ -20,7 +20,7 @@ public class NodoAVLDicc {
         return clave;
     }
 
-    public void auxCabmio(Comparable id, Object dato) {
+    public void auxCambio(Comparable id, Object dato) {
         //Solo se utiliza para reemplazo al eliminar
         clave = id;
         this.dato = dato;

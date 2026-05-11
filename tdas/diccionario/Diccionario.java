@@ -83,6 +83,7 @@ public class Diccionario {
         /*Función auxiliar para implementar las funciones de inserción y de borrado. 
         Consiste en ajustar los nodos que existen desde el nodo conteniendo la clave e hasta el nodo raiz del subarbol actual */
         //La versión anterior bajaba hasta el nodo, acá se modifica directamente
+        nodo.recalcularAltura(); // Primero se recalcula la altura del nodo actual
         int balance = nodo.calcularBalance();
         if (balance == 2) {
             if (nodo.getIzquierdo().calcularBalance() >= 0) {
@@ -134,11 +135,12 @@ public class Diccionario {
         return insertado;
     }
      */
+ /* Metodo viejo 
     private NodoAVLDicc ajustaAVL(Comparable clave, NodoAVLDicc nodo) {
         /* 
         Función auxiliar para implementar las funciones de inserción y de borrado. 
         Consiste en ajustar los nodos que existen desde el nodo conteniendo la clave e hasta el nodo raiz del subarbol actual
-         */
+         /
         if (nodo != null) {
             //Se baja por el camino en el que estaría el nodo(clave)
             //No hace falta comparar si la clave existe ya que solo retornaría null
@@ -167,98 +169,79 @@ public class Diccionario {
             }
         }
         return nodo;
-    }
-
+    }*/
     //Inicio ELIMINAR
     public boolean eliminar(Comparable clave) {
         //Si encuentra el elemento por clave lo elimina y reacomoda el arbol, retornando true, si no existe dicho elemento retorna false.
         boolean[] eliminado = new boolean[1];
-        eliminado[0] = true;//Es false solo si no se pudo eliminar
+        eliminado[0] = false;//Solo es true cuando el elemento se econtró
         this.raiz = eliminarAux(this.raiz, this.raiz, clave, eliminado);
         return eliminado[0];
     }
 
     private NodoAVLDicc eliminarAux(NodoAVLDicc n, NodoAVLDicc padre, Comparable clave, boolean[] eliminado) {
+        NodoAVLDicc nRetorno = n; //Si no hay cambios retorna el mismo n de entrada, sirve para retornar los subarboles con las rotaciones
+        int comparacion;
         if (n != null) {
-            if (clave.compareTo(n.getClave()) == 0) {
+            //Si n no es nulo. Sino se retorna nulo
+            comparacion = clave.compareTo(n.getClave()); //Para no calcularlo de más
+            if (comparacion == 0) {
                 //Cuando estamos sobre el elemento buscado lo eliminamos y reacomodamos el arbol según se necesite.
+                eliminado[0] = true;//Se encontro el elemento, por ende se puede eliminar
                 if (n.getIzquierdo() == null && n.getDerecho() == null) //caso 1, el elemento es una hoja del arbol.
                 {
-                    eliminado[0] = caso1(padre, clave);
+                    nRetorno = null;//Ya no hace falta caso 1, solo eliminaba una hoja
                 } else if ((n.getIzquierdo() != null && n.getDerecho() == null)) //caso 2 Izq, el elemento tiene solo hijo izquierdo.
                 {
-                    eliminado[0] = caso2(n.getIzquierdo(), padre, clave);
+                    nRetorno = n.getIzquierdo();//Se reemplaza el padre con el hijo ezquierdo
                 } else if (n.getIzquierdo() == null && n.getDerecho() != null) //caso 2 Der, el elemento tiene solo hijo derecho.
                 {
-                    eliminado[0] = caso2(n.getDerecho(), padre, clave);
+                    nRetorno = n.getDerecho();//Se reemplaza el padre con el hijo derecho
                 } else if (n.getIzquierdo() != null && n.getDerecho() != null) //caso 3, el elemento tiene 2 hijos.
                 {
-                    eliminado[0] = caso3(n, padre, clave);
+                    nRetorno = caso3(n);
                 }
-            } else if (clave.compareTo(n.getClave()) < 0) {
+                nRetorno = ajustaAVL(nRetorno);
+            } else if (comparacion < 0) {
                 //Si n no es el nodo, se continua el recorrido del arbol hasta encontrarlo o terminarlo.
-                if (n.getIzquierdo() != null) {
-                    n = eliminarAux(n.getIzquierdo(), n, clave, eliminado);
-                } else {
-                    eliminado[0] = false; //Si el nodo no existía en el arbol
-                }
+                n.setIzquierdo(eliminarAux(n.getIzquierdo(), n, clave, eliminado));//Se sigue por izquierda y se reconecta el subarbol izquierdo
+                nRetorno = ajustaAVL(nRetorno);//Se reajusta el arbol al subir
             } else {
-                if (n.getDerecho() != null) {
-                    n = eliminarAux(n.getDerecho(), n, clave, eliminado);
-                } else {
-                    eliminado[0] = false;//Si el nodo no existía en el arbol
-                }
+                n.setDerecho(eliminarAux(n.getDerecho(), n, clave, eliminado));//Se sigue por derecha y se reconecta el subarbol derecho
+                nRetorno = ajustaAVL(nRetorno);//Se reajusta el arbol al subir
             }
         }
-        return n;
+        return nRetorno;
     }
 
-    private boolean caso1(NodoAVLDicc padre, Comparable elemento) {
-        //Compara el elemento del hijo Derecho, si es el solicitado lo borra, sino elimina el izquierdo.
-        if (padre.getDerecho() != null && elemento.compareTo(padre.getDerecho().getClave()) == 0) {
-            padre.setDerecho(null);
+    private NodoAVLDicc caso3(NodoAVLDicc nodoReemp) {
+        //Reemplaza el nodo a eliminar por el menor elemento de su subarbol derecho (nSiguiente).
+        NodoAVLDicc padre, nSiguiente;
+        padre = buscarPadreCandidato(nodoReemp.getDerecho());
+        if (padre == null) {
+            //no tiene subarbol izquierdo, nSiguiente es el derecho del original
+            nSiguiente = nodoReemp.getDerecho();
         } else {
-            padre.setIzquierdo(null);
+            //Si existe subarbol izquierdo
+            nSiguiente = padre.getIzquierdo();
         }
-        padre = ajustaAVL(padre);//Se recalcula y ajusta al padre
-        return true;
-    }
-
-    private boolean caso2(NodoAVLDicc nuevoHijo, NodoAVLDicc padre, Comparable elemento) {
-        //Elimina el nodo solicitado y su hijo pasa a tomar su lugar en el arbol.
-        if (padre.getDerecho() != null && elemento.compareTo(padre.getDerecho().getClave()) == 0) {
-            padre.setDerecho(nuevoHijo);
+        //Se reemplaza el nodo a reemplazar por nSiguiente.
+        nodoReemp.auxCabmio(nSiguiente.getClave(), nSiguiente.getDato());
+        //Ahora elimino nodo que quedó duplicado después de actualizar el nodo a reemplazar
+        if (padre == null) {
+            nodoReemp.setDerecho(nSiguiente.getDerecho());//era el derecho del original
         } else {
-            padre.setIzquierdo(nuevoHijo);
-        }
-        padre = ajustaAVL(padre);//Se recalcula y ajusta al padre
-        return true;
-    }
-
-    private boolean caso3(NodoAVLDicc nodoReemp, NodoAVLDicc padre, Comparable elemento) {
-        //Reemplaza el nodo a eliminar por el menor elemento de su subarbol derecho.
-        NodoAVLDicc aux = padre;
-        //Si su hijo derecho no es el que queremos reemplazar, buscamoss el padre del que queremos reemplazar.
-        if (nodoReemp.getDerecho().getIzquierdo() != null) {
-            aux = buscarPadreCandidato(nodoReemp.getDerecho());
-            //Con el padre de dicho elemento menor reemplazamos el que queremos eliminar.
-            nodoReemp.auxCabmio(aux.getIzquierdo().getClave(), aux.getIzquierdo().getDato());
-            //eliminamos el duplicado que quedo del que menor elemento, y si tenia un hijo derecho lo dejamos como izquierdo del padre.
-            if (aux.getIzquierdo().getDerecho() != null) {
-                aux.setIzquierdo(aux.getIzquierdo().getDerecho());
+            //había subarbol izquierdo
+            if (nSiguiente.getDerecho() != null) {
+                //Si nSiguiente no era una hoja
+                padre.setIzquierdo(nSiguiente.getDerecho());
             } else {
-                aux.setIzquierdo(null);
+                //si nSiguiente era una hoja
+                padre.setIzquierdo(null);
             }
-        } else {
-            nodoReemp.auxCabmio(nodoReemp.getDerecho().getClave(), nodoReemp.getDerecho().getDato());
-            if (nodoReemp.getDerecho().getDerecho() != null) {
-                nodoReemp.setDerecho(nodoReemp.getDerecho().getDerecho());
-            } else {
-                nodoReemp.setDerecho(null);
-            }
+            padre = ajustaAVL(padre);//Se reajusta el padre luego de las eliminaciones y rotaciones
         }
-        padre = ajustaAVL(padre);//Se recalcula y ajusta al padre
-        return true;
+        return ajustaAVL(nodoReemp);//Se reajusta el hijo (donde estaba el eliminado)
     }
 
     private NodoAVLDicc buscarPadreCandidato(NodoAVLDicc padreCandidato) {
@@ -421,18 +404,41 @@ public class Diccionario {
 
     private NodoAVLDicc rotacionIzquierdaDerecha(NodoAVLDicc r) {
         //Esta rotación se aplica cuando el nodo padre está caído hacia la izquierda (balance 2) y su hijo izquierdo está caído hacia el lado contrario (balance -1).
-        NodoAVLDicc hijoIzq = null;
-        NodoAVLDicc nodoRetorno = null;
-        if (r != null && r.getIzquierdo() != null) {
-            hijoIzq = r.getIzquierdo();
-            nodoRetorno = r.getIzquierdo().getDerecho();//Nodo que queda como raiz.
-            this.rotacionIzquierda(hijoIzq);
-            r.setIzquierdo(nodoRetorno);
-            this.rotacionDerecha(r);
-        }
-        return nodoRetorno;
+        r.setIzquierdo(rotacionIzquierda(r.getIzquierdo()));//Se rota a izquierda el nodo izquierdo de r (y se actualiza con el set)
+        return rotacionDerecha(r); //Se rota a derecha la actualización anterior
     }
 
+    private NodoAVLDicc rotacionDerechaIzquierda(NodoAVLDicc r) {
+        //Esta rotación se aplica cuando el nodo padre está caído a la derecha (balance -2) y su hijo derecho está caído hacia el lado contrario (balance 1).
+        r.setDerecho(rotacionDerecha(r.getDerecho()));//Se rota a derecha el nodo derecho de r (y se actualiza con el set)
+        return rotacionIzquierda(r); //Se rota a izquierda la actualización anterior
+    }
+
+}
+/* Eran innecesarios
+    private NodoAVLDicc caso1(NodoAVLDicc padre, Comparable elemento) {
+        //Compara el elemento del hijo Derecho, si es el solicitado lo borra, sino elimina el izquierdo.
+        if (padre.getDerecho() != null && elemento.compareTo(padre.getDerecho().getClave()) == 0) {
+            padre.setDerecho(null);
+        } else {
+            padre.setIzquierdo(null);
+        }
+        padre = ajustaAVL(padre);//Se recalcula y ajusta al padre
+        return padre;
+    }
+     
+    private NodoAVLDicc caso2(NodoAVLDicc nuevoHijo, NodoAVLDicc padre, Comparable elemento) {
+        //Elimina el nodo solicitado y su hijo pasa a tomar su lugar en el arbol.
+        if (padre.getDerecho() != null && elemento.compareTo(padre.getDerecho().getClave()) == 0) {
+            padre.setDerecho(nuevoHijo);
+        } else {
+            padre.setIzquierdo(nuevoHijo);
+        }
+        padre = ajustaAVL(padre);//Se recalcula y ajusta al padre
+        return padre;
+    }
+ */
+ /* Metodo viejo
     private NodoAVLDicc rotacionDerechaIzquierda(NodoAVLDicc r) {
         //Esta rotación se aplica cuando el nodo padre está caído a la derecha (balance -2) y su hijo derecho está caído hacia el lado contrario (balance 1).
         NodoAVLDicc hijoDer = null;
@@ -445,5 +451,19 @@ public class Diccionario {
             this.rotacionIzquierda(r);
         }
         return nodoRetorno;
+    }*/
+ /* Metodo viejo
+    private NodoAVLDicc rotacionIzquierdaDerecha(NodoAVLDicc r) {
+        //Esta rotación se aplica cuando el nodo padre está caído hacia la izquierda (balance 2) y su hijo izquierdo está caído hacia el lado contrario (balance -1).
+        NodoAVLDicc hijoIzq = null;
+        NodoAVLDicc nodoRetorno = null;
+        if (r != null && r.getIzquierdo() != null) {
+            hijoIzq = r.getIzquierdo();
+            nodoRetorno = r.getIzquierdo().getDerecho();//Nodo que queda como raiz.
+            this.rotacionIzquierda(hijoIzq);
+            r.setIzquierdo(nodoRetorno);
+            this.rotacionDerecha(r);
+        }
+        return nodoRetorno;
     }
-}
+ */
